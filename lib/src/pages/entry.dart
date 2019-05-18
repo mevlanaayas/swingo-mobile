@@ -27,7 +27,7 @@ class _IndexPageState extends State<IndexPage> {
                       Image.asset('assets/2.0x/wallet.png'),
                       const SizedBox(height: 16.0),
                       Text(
-                        'Pocket Finance',
+                        'Swingo',
                         style: Theme.of(context)
                             .textTheme
                             .headline
@@ -47,17 +47,13 @@ class _IndexPageState extends State<IndexPage> {
                     PfButton(
                       text: 'Login',
                       onPressed: () {
-                        final RouterBloc _router =
-                            BlocProvider.of<RouterBloc>(context);
-                        _router.dispatch(PushLogin());
+
                       },
                     ),
                     PfButton(
                       text: 'Register',
                       onPressed: () {
-                        final RouterBloc _router =
-                            BlocProvider.of<RouterBloc>(context);
-                        _router.dispatch(PushRegister());
+
                       },
                     ),
                   ],
@@ -66,49 +62,5 @@ class _IndexPageState extends State<IndexPage> {
             ],
           ),
         ));
-    /*
-      child: Padding(
-        padding: EdgeInsets.all(36.0),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: screenSize.size.height / 12.0),
-            ListView(
-              children: <Widget>[
-                Image.asset('assets/2.0x/wallet.png'),
-                const SizedBox(height: 16.0),
-                Text(
-                  'Pocket Finance',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline
-                      .copyWith(fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            SizedBox(height: screenSize.size.height / 2.0),
-            Container(
-                child: PfButton(
-              text: 'Login',
-              onPressed: () {
-                BlocProvider.of(context)
-                    .changeRoute(RouteData(PAGES.LOGIN, null));
-              },
-            )),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              child: PfButton(
-                text: 'Register',
-                onPressed: () {
-                  BlocProvider.of(context)
-                      .changeRoute(RouteData(PAGES.REGISTER, null));
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-          */
   }
 }

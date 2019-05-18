@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/colors.dart';
 
-final ThemeData myTheme = _buildMyTheme();
+final ThemeData swTheme = _buildMyTheme();
 
 ThemeData _buildMyTheme() {
   final ThemeData base = ThemeData.light();
