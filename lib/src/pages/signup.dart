@@ -46,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 15.0,
                     ),
-                    PfTextField(
+                    SwTextField(
                         onChanged: (String value) {
                           _password = value;
                         },
@@ -56,20 +56,20 @@ class _RegisterPageState extends State<RegisterPage> {
                         errorText: 'Error'),
                     Row(
                       children: <Widget>[
-                        PfCheckbox(
+                        SwCheckbox(
                             value: _confirm,
                             onChanged: (bool value) {
                               setState(() {
                                 _confirm = value;
                               });
                             }),
-                        PfHyperlink(
+                        SwHyperlink(
                           onTap: () => launch('https://goswingo.com/'),
                           text: Text('Accept terms'),
                         )
                       ],
                     ),
-                    PfButton(
+                    SwButton(
                       onPressed: null,
                       text: 'Register',
                     ),
@@ -81,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 5.0,
                       color: Colors.black38,
                     ),
-                    PfHyperlink(
+                    SwHyperlink(
                       onTap: () {},
                       text: Text(
                         'Already a member? Login',

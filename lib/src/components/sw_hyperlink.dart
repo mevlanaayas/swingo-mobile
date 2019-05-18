@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PfHyperlink extends StatelessWidget {
-  const PfHyperlink({@required this.onTap, @required this.text});
+class SwHyperlink extends StatelessWidget {
+  const SwHyperlink({@required this.onTap, @required this.text});
 
   final GestureTapCallback onTap;
   final Text text;

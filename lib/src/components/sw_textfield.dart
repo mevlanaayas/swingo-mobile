@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/colors.dart';
 
-class PfTextField extends StatelessWidget {
-  const PfTextField(
+class SwTextField extends StatelessWidget {
+  const SwTextField(
       {this.onChanged,
       this.textInputType,
       this.hintText,

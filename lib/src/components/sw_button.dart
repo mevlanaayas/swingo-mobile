@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/colors.dart';
 
-class PfIconButton extends StatelessWidget {
-  const PfIconButton({@required this.onPressed, @required this.icon});
+class SwIconButton extends StatelessWidget {
+  const SwIconButton({@required this.onPressed, @required this.icon});
 
   final GestureTapCallback onPressed;
   final IconData icon;
@@ -16,8 +16,8 @@ class PfIconButton extends StatelessWidget {
   }
 }
 
-class PfButton extends StatelessWidget {
-  const PfButton(
+class SwButton extends StatelessWidget {
+  const SwButton(
       {@required this.onPressed, @required this.text, this.iconData});
 
   final GestureTapCallback onPressed;

@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: PfTextField(
+                          child: SwTextField(
                               onChanged: (String value) {
                                 _password = value;
                               },
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        PfButton(
+                        SwButton(
                           onPressed: null,
                           text: 'Login',
                         )
@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: screenSize.size.height / 8.0,
                     ),
-                    PfHyperlink(
+                    SwHyperlink(
                       onTap: () {},
                       text: Text(
                         'I dont remember my password :)',
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 5.0,
                       color: Colors.black38,
                     ),
-                    PfHyperlink(
+                    SwHyperlink(
                       onTap: () {},
                       text: Text(
                         'No account yet? Crate one',

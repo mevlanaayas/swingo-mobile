@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
-import 'package:swingo/src/models/product.dart';
-import 'package:swingo/src/pages/signin.dart';
 import 'package:swingo/src/theme/themes.dart';
 
 
-// TODO: Add _FrontLayer class (104)
 class FrontLayer extends StatelessWidget {
-  // TODO: Add on-tap callback (104)
   const FrontLayer({Key key, this.child, this.onTap}) : super(key: key);
 
   final VoidCallback onTap;
@@ -25,7 +20,6 @@ class FrontLayer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          // TODO: Add a GestureDetector (104)
           SizedBox(height: 15),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
@@ -46,4 +40,3 @@ class FrontLayer extends StatelessWidget {
     );
   }
 }
-// TODO: Add _BackdropTitle class (104)

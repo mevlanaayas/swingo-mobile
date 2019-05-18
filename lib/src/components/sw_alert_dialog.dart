@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PfAlertDialog extends StatelessWidget {
-  const PfAlertDialog({
+class SwAlertDialog extends StatelessWidget {
+  const SwAlertDialog({
     @required this.title,
     @required this.onPressed,
   });

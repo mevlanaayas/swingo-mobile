@@ -44,13 +44,13 @@ class _IndexPageState extends State<IndexPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    PfButton(
+                    SwButton(
                       text: 'Login',
                       onPressed: () {
 
                       },
                     ),
-                    PfButton(
+                    SwButton(
                       text: 'Register',
                       onPressed: () {
 

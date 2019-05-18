@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/colors.dart';
 
-class PfCheckbox extends StatelessWidget {
-  const PfCheckbox({@required this.value, @required this.onChanged});
+class SwCheckbox extends StatelessWidget {
+  const SwCheckbox({@required this.value, @required this.onChanged});
 
   final bool value;
   final Function onChanged;
