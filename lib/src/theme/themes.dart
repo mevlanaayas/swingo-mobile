@@ -6,11 +6,11 @@ final ThemeData swTheme = _buildMyTheme();
 ThemeData _buildMyTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
+      splashColor: altDarkBlue,
       accentColor: swPink900,
       primaryColor: altDarkBlue,
       buttonTheme: base.buttonTheme.copyWith(
-          buttonColor: swLivingCoral100,
-          textTheme: ButtonTextTheme.normal),
+          buttonColor: swLivingCoral100, textTheme: ButtonTextTheme.normal),
       scaffoldBackgroundColor: kswBackgroundWhite,
       cardColor: kswBackgroundWhite,
       textSelectionColor: swLivingCoral100,
@@ -56,7 +56,8 @@ ThemeData _buildMyDarkTheme() {
 }
 
 TextTheme _buildMyDarkTextTheme(TextTheme base) {
-  return base.copyWith(
+  return base
+      .copyWith(
           headline: base.headline.copyWith(fontWeight: FontWeight.w500),
           title: base.title.copyWith(fontSize: 18.0),
           caption: base.caption

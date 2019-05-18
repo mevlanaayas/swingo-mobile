@@ -109,11 +109,10 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     TabController _tabController =
-        TabController(initialIndex: general, length: 3, vsync: this);
+        TabController(initialIndex: general, length: 2, vsync: this);
 
     void _handleTabSelection() {
       if (_tabController.indexIsChanging) {
-        print("tab");
         print(_tabController.index);
         setState(() {
           general = _tabController.index;
@@ -136,29 +135,61 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
       super.dispose();
     }
 
-    var appBar = AppBar(
-        brightness: Brightness.light,
-        elevation: 0.0,
-        titleSpacing: 0.0,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: _toggleBackdropLayerVisibility,
-        ),
-        title: Text('Swingo'),
-        bottom: TabBar(
-          unselectedLabelColor: Colors.deepPurple.withOpacity(0.6),
-          indicator: BoxDecoration(
-              border: Border.all(color: altDeepPurple, width: 3),
-              borderRadius: BorderRadius.all(Radius.circular(40.0))),
-          controller: _tabController,
-          tabs: [
-            Tab(icon: Icon(Icons.directions_car)),
-            Tab(icon: Icon(Icons.directions_transit)),
-            Tab(icon: Icon(Icons.directions_bike)),
-          ],
+    var appBar = PreferredSize(
+        // TODO: inanıyorsan +8.0'ı kaldır
+        preferredSize: Size.fromHeight(kToolbarHeight + 8.0),
+        child: Container(
+          color: altDarkBlue,
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: AppBar(
+              brightness: Brightness.light,
+              elevation: 0.0,
+              flexibleSpace: FlexibleSpaceBar(
+                title: Container(
+                  padding: EdgeInsets.only(left: 70.0, right: 25.0),
+                  child: SafeArea(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TabBar(
+                          unselectedLabelColor:
+                              Colors.deepPurple.withOpacity(0.6),
+                          indicator: BoxDecoration(
+                              border:
+                                  Border.all(color: altDeepPurple, width: 2.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(40.0))),
+                          indicatorWeight: 0.0,
+                          controller: _tabController,
+                          tabs: [
+                            Tab(
+                                child: Text('Send',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0))),
+                            Tab(
+                                child: Text('Carry',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0))),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                centerTitle: true,
+                collapseMode: CollapseMode.parallax,
+              ),
+              centerTitle: true,
+              leading: IconButton(
+                icon: Icon(Icons.menu, size: 30.0,),
+                onPressed: _toggleBackdropLayerVisibility,
+              )),
         ));
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: Scaffold(
           appBar: appBar,
           body: LayoutBuilder(builder: _buildStack),

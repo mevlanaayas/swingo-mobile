@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/themes.dart';
 
-
 class FrontLayer extends StatelessWidget {
   const FrontLayer({Key key, this.child, this.onTap}) : super(key: key);
 
@@ -12,7 +11,7 @@ class FrontLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
-      elevation: 40.0,
+      elevation: 0.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
@@ -20,17 +19,17 @@ class FrontLayer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          SizedBox(height: 15),
+          SizedBox(height: 15.0),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: onTap,
             child: Text(
-              "Explore",
-              style: swTheme.textTheme.subhead,
+              'Explore',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 15.0),
           Divider(),
           Expanded(
             child: child,
