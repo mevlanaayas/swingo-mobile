@@ -7,7 +7,7 @@ ThemeData _buildMyTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
       accentColor: swPink900,
-      primaryColor: swLivingCoral100,
+      primaryColor: altDarkBlue,
       buttonTheme: base.buttonTheme.copyWith(
           buttonColor: swLivingCoral100,
           textTheme: ButtonTextTheme.normal),
@@ -18,7 +18,7 @@ ThemeData _buildMyTheme() {
       textTheme: _buildMyTextTheme(base.textTheme),
       primaryTextTheme: _buildMyTextTheme(base.primaryTextTheme),
       accentTextTheme: _buildMyTextTheme(base.accentTextTheme),
-      primaryIconTheme: base.iconTheme.copyWith(color: swPink900),
+      primaryIconTheme: base.iconTheme.copyWith(color: altDeepPurple),
       inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder()));
 }
 
@@ -31,8 +31,8 @@ TextTheme _buildMyTextTheme(TextTheme base) {
               .copyWith(fontWeight: FontWeight.w400, fontSize: 14.0))
       .apply(
           fontFamily: 'Titillium Web',
-          displayColor: swPink900,
-          bodyColor: swPink900);
+          displayColor: altDeepPurple,
+          bodyColor: altDeepPurple);
 }
 
 // not to use, just proof

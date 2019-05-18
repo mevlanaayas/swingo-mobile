@@ -1,28 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:swingo/src/models/product.dart';
 
 class HomePage extends StatelessWidget {
+  final Category category;
+
+  HomePage({this.category: Category.all});
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Your Wallet',
-            style: Theme.of(context)
-                .textTheme
-                .title
-                .copyWith(fontWeight: FontWeight.w700)),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        items: [
-          BottomNavigationBarItem(
-              title: Text('A'), icon: Icon(Icons.arrow_drop_up)),
-          BottomNavigationBarItem(title: Text('B'), icon: Icon(Icons.history)),
-          BottomNavigationBarItem(
-              title: Text('C'), icon: Icon(Icons.add_to_queue)),
-        ],
-      ),
-    );
+    return Text(category.toString());
   }
 }
