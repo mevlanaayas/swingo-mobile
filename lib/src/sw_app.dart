@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:swingo/src/models/product.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/theme/themes.dart';
+import 'package:swingo/src/components/navbar.dart';
 
 import 'components/components.dart';
 
@@ -31,6 +32,7 @@ class _SwAppState extends State<SwApp> {
         ),
         frontTitle: Text('SHRINE'),
         backTitle: Text('MENU'),
+        navbar: NavBar(),
       ),
       theme: swTheme,
     );

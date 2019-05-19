@@ -16,6 +16,7 @@ class Backdrop extends StatefulWidget {
   final Widget frontTitle;
   final Widget backTitle;
   final Widget subheader;
+  final Widget navbar;
 
   Backdrop(
       {@required this.currentCategory,
@@ -23,12 +24,14 @@ class Backdrop extends StatefulWidget {
       @required this.backLayer,
       @required this.frontTitle,
       @required this.backTitle,
+      @required this.navbar,
       this.subheader})
       : assert(currentCategory != null),
         assert(frontLayer != null),
         assert(backLayer != null),
         assert(frontTitle != null),
-        assert(backTitle != null);
+        assert(backTitle != null),
+        assert(navbar != null);
 
   @override
   _BackdropState createState() => _BackdropState();
@@ -198,6 +201,7 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
         child: Scaffold(
           appBar: appBar,
           body: LayoutBuilder(builder: _buildStack),
+          bottomNavigationBar: widget.navbar,
         ));
   }
 }
