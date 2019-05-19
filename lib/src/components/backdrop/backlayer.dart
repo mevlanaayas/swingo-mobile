@@ -100,6 +100,7 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
           child: FrontLayer(
             onTap: _toggleBackdropLayerVisibility,
             child: widget.frontLayer,
+            backlayer: this,
           ),
         ),
       ],
@@ -111,9 +112,10 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
     TabController _tabController =
         TabController(initialIndex: general, length: 2, vsync: this);
 
+    _tabController.index = general;
+
     void _handleTabSelection() {
       if (_tabController.indexIsChanging) {
-        print(_tabController.index);
         setState(() {
           general = _tabController.index;
           if (_tabController.index == 0) {
