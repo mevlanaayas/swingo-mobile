@@ -2,24 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/themes.dart';
 
 class FrontLayer extends StatelessWidget {
-  const FrontLayer({Key key, this.child, this.onTap, this.backlayer}) : super(key: key);
+  const FrontLayer({Key key, this.child, this.onTap, this.tabController}) : super(key: key);
 
   final VoidCallback onTap;
   final Widget child;
-  final backlayer;
+  final tabController;
 
   @override
   Widget build(BuildContext context) {
-    PageController _pageController = PageController();
-
-    void handlePageSliding(){
-      this.backlayer.setState((){
-        this.backlayer.general = _pageController.page.round(); //TODO: burası değiştirilecek
-      });
-    }
-
-    _pageController.addListener(handlePageSliding);
-
     Widget createFrontLayer(text){
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,13 +42,11 @@ class FrontLayer extends StatelessWidget {
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
       ),
-      child: PageView(
-        controller: _pageController,
-        children: <Widget>[
-          createFrontLayer('Send'),
-          createFrontLayer('Carry')
-        ],
-      ),
+      child: TabBarView(children: [
+        createFrontLayer('Send'),
+        createFrontLayer('Carry')
+      ],
+      controller: tabController)
     );
   }
 }

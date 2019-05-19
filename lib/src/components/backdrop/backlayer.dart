@@ -38,7 +38,8 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
 
   AnimationController _controller;
-  int general = 0;
+  int general = 0; // tab index
+  TabController _tabController;
 
   @override
   void initState() {
@@ -101,7 +102,7 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
           child: FrontLayer(
             onTap: _toggleBackdropLayerVisibility,
             child: widget.frontLayer,
-            backlayer: this,
+            tabController: _tabController
           ),
         ),
       ],
@@ -110,9 +111,7 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    TabController _tabController =
-        TabController(initialIndex: general, length: 2, vsync: this);
-
+    _tabController = TabController(initialIndex: general, length: 2, vsync: this);
     _tabController.index = general;
 
     void _handleTabSelection() {
@@ -128,7 +127,7 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
       }
     }
 
-    _tabController.addListener(_handleTabSelection);
+    //_tabController.addListener(_handleTabSelection);
 
     @override
     void dispose() {
@@ -186,12 +185,13 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
               ),
               centerTitle: true,
               leading: IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  size: 30.0,
-                ),
-                onPressed: _toggleBackdropLayerVisibility,
-              )),
+                  icon: new AnimatedIcon(
+                      size: 30,
+                      icon: AnimatedIcons.close_menu,
+                      progress: _controller.view),
+                  onPressed: _toggleBackdropLayerVisibility
+              )
+          ),
         ));
     return DefaultTabController(
         length: 2,
