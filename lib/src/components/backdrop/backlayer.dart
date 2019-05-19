@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart';
 import 'package:swingo/src/models/product.dart';
+import 'package:swingo/src/pages/list.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/theme/colors.dart';
 import 'package:swingo/src/utils/constans.dart';
@@ -121,9 +122,7 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
           if (_tabController.index == 0) {
             widget.frontLayer = HomePage();
           } else if (_tabController.index == 1) {
-            widget.frontLayer = LoginPage();
-          } else {
-            widget.frontLayer = RegisterPage();
+            widget.frontLayer = ListPage();
           }
         });
       }
@@ -157,12 +156,13 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
                         TabBar(
                           unselectedLabelColor:
                               Colors.deepPurple.withOpacity(0.6),
-                          indicator: BoxDecoration(
+                          /*indicator: BoxDecoration(
                               border:
                                   Border.all(color: altDeepPurple, width: 2.0),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(40.0))),
-                          indicatorWeight: 0.0,
+                          indicatorWeight: 0.0,*/
+                          indicatorColor: altDeepPurple,
                           controller: _tabController,
                           tabs: [
                             Tab(
@@ -186,7 +186,10 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
               ),
               centerTitle: true,
               leading: IconButton(
-                icon: Icon(Icons.menu, size: 30.0,),
+                icon: Icon(
+                  Icons.menu,
+                  size: 30.0,
+                ),
                 onPressed: _toggleBackdropLayerVisibility,
               )),
         ));

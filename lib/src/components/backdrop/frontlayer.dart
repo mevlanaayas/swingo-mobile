@@ -30,7 +30,9 @@ class FrontLayer extends StatelessWidget {
             onTap: onTap,
             child: Text(
               text,
-              style: swTheme.textTheme.subhead,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0),
               textAlign: TextAlign.center,
             ),
           ),
@@ -53,8 +55,8 @@ class FrontLayer extends StatelessWidget {
       child: PageView(
         controller: _pageController,
         children: <Widget>[
-          createFrontLayer('Page 1'),
-          createFrontLayer('Page 2')
+          createFrontLayer('Send'),
+          createFrontLayer('Carry')
         ],
       ),
     );
