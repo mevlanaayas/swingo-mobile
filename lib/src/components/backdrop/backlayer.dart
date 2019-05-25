@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart';
-import 'package:swingo/src/models/product.dart';
+import 'package:swingo/src/models/filter.dart';
 import 'package:swingo/src/pages/list.dart';
-import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/theme/colors.dart';
 import 'package:swingo/src/utils/constans.dart';
 
 import 'frontlayer.dart';
 
 class Backdrop extends StatefulWidget {
-  final Category currentCategory;
-  Widget frontLayer;
+  final Filter currentFilter;
+  List<Widget> frontLayer;
   final Widget backLayer;
   final Widget frontTitle;
   final Widget backTitle;
@@ -19,15 +18,14 @@ class Backdrop extends StatefulWidget {
   final Widget navbar;
 
   Backdrop(
-      {@required this.currentCategory,
+      {@required this.currentFilter,
       @required this.frontLayer,
       @required this.backLayer,
       @required this.frontTitle,
       @required this.backTitle,
       @required this.navbar,
       this.subheader})
-      : assert(currentCategory != null),
-        assert(frontLayer != null),
+      : assert(frontLayer != null),
         assert(backLayer != null),
         assert(frontTitle != null),
         assert(backTitle != null),
@@ -57,10 +55,7 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(Backdrop old) {
     super.didUpdateWidget(old);
-
-    if (widget.currentCategory != old.currentCategory) {
-      _toggleBackdropLayerVisibility();
-    } else if (!_frontLayerVisible) {
+    if (!_frontLayerVisible) {
       _controller.fling(velocity: swFlingVelocity);
     }
   }
@@ -104,7 +99,7 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
           rect: layerAnimation,
           child: FrontLayer(
             onTap: _toggleBackdropLayerVisibility,
-            child: widget.frontLayer,
+            children: widget.frontLayer,
             tabController: _tabController
           ),
         ),
@@ -116,21 +111,6 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     _tabController = TabController(initialIndex: general, length: 2, vsync: this);
     _tabController.index = general;
-
-    void _handleTabSelection() {
-      if (_tabController.indexIsChanging) {
-        setState(() {
-          general = _tabController.index;
-          if (_tabController.index == 0) {
-            widget.frontLayer = HomePage();
-          } else if (_tabController.index == 1) {
-            widget.frontLayer = ListPage();
-          }
-        });
-      }
-    }
-
-    //_tabController.addListener(_handleTabSelection);
 
     @override
     void dispose() {

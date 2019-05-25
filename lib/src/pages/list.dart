@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:swingo/src/models/product.dart';
 import 'package:swingo/src/theme/colors.dart';
 
 class ListPage extends StatelessWidget {
-  final Category category;
   final List<String> entries = <String>[
     'Lisbon',
     'Bursa',
@@ -15,7 +13,7 @@ class ListPage extends StatelessWidget {
     'Lisbon'
   ];
 
-  ListPage({this.category: Category.all});
+  ListPage();
 
   @override
   Widget build(BuildContext context) {

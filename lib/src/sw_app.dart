@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:swingo/src/models/product.dart';
+import 'package:swingo/src/models/filter.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/theme/themes.dart';
 import 'package:swingo/src/components/navbar.dart';
@@ -15,7 +15,7 @@ class SwApp extends StatefulWidget {
 }
 
 class _SwAppState extends State<SwApp> {
-  Category _currentCategory = Category.all;
+  Filter _currentFilter = Filter(fromCity: null, toCity: null, fromDate: null, toDate: null);
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,15 @@ class _SwAppState extends State<SwApp> {
       debugShowCheckedModeBanner: false,
       title: 'Swingo',
       home: Backdrop(
-        currentCategory: _currentCategory,
-        frontLayer: HomePage(category: _currentCategory),
-        backLayer: CategoryMenuPage(
-          currentCategory: _currentCategory,
-          onCategoryTap: _onCategoryTap,
+        currentFilter: _currentFilter,
+        //frontLayer: HomePage(filter: _currentFilter), // TODO: alttaki array bunun içine yazılmalı
+        frontLayer: <Widget>[
+          ListPage(),
+          ListPage(),
+        ],
+        backLayer: FilterMenuPage(
+          currentFilter: _currentFilter,
+          onFilterChange: _onFilterChange,
         ),
         frontTitle: Text('SHRINE'),
         backTitle: Text('MENU'),
@@ -38,9 +42,9 @@ class _SwAppState extends State<SwApp> {
     );
   }
 
-  void _onCategoryTap(Category category) {
+  void _onFilterChange(Filter filter){
     setState(() {
-      _currentCategory = category;
+      _currentFilter = filter;
     });
   }
 }

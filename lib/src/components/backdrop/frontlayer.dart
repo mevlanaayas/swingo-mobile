@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/themes.dart';
 
+
 class FrontLayer extends StatelessWidget {
-  const FrontLayer({Key key, this.child, this.onTap, this.tabController}) : super(key: key);
+  const FrontLayer({Key key, this.children, this.onTap, this.tabController}) : super(key: key);
 
   final VoidCallback onTap;
-  final Widget child;
+  final List<Widget> children;
   final tabController;
 
   @override
   Widget build(BuildContext context) {
-    Widget createFrontLayer(text){
+    Widget _buildFrontLayer(String title, Widget page, BuildContext context){
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -19,7 +20,7 @@ class FrontLayer extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onTap: onTap,
             child: Text(
-              text,
+              title,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20.0),
@@ -29,7 +30,7 @@ class FrontLayer extends StatelessWidget {
           SizedBox(height: 15.0),
           Divider(),
           Expanded(
-            child: child,
+            child: page,
           ),
         ],
       );
@@ -43,8 +44,8 @@ class FrontLayer extends StatelessWidget {
             topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
       ),
       child: TabBarView(children: [
-        createFrontLayer('Send'),
-        createFrontLayer('Carry')
+        _buildFrontLayer('Send', children[0], context),
+        _buildFrontLayer('Cary', children[1], context)
       ],
       controller: tabController)
     );
