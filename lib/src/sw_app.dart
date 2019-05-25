@@ -45,6 +45,7 @@ class _SwAppState extends State<SwApp> {
   void _onFilterChange(Filter filter){
     setState(() {
       _currentFilter = filter;
+      print('Filter state: $_currentFilter');
     });
   }
 }

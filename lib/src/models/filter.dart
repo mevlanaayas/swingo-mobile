@@ -12,6 +12,6 @@ class Filter {
   String toDate;
 
   @override
-  String toString() => 'fromCity=$fromCity';
+  String toString() => 'fromCity=$fromCity fromDate=$fromDate';
 
 }

@@ -33,7 +33,8 @@ class FilterMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> _filters = [
-      FromCity(currentFilter: this.currentFilter, onFilterChange: this.onFilterChange)
+      FromCity(currentFilter: this.currentFilter, onFilterChange: this.onFilterChange),
+      FromDate(currentFilter: this.currentFilter, onFilterChange: this.onFilterChange)
     ];
     return Center(
       child: Container(
@@ -50,7 +51,47 @@ class FilterMenuPage extends StatelessWidget {
 
 
 
+class FromDate extends StatefulWidget{
+ final Filter currentFilter;
+ final ValueChanged<Filter> onFilterChange;
 
+ FromDate({
+   Key key,
+   @required this.currentFilter,
+   @required this.onFilterChange
+ }) : assert(currentFilter != null),
+      assert(onFilterChange != null);
+
+  _FromDateState createState() => _FromDateState();
+}
+
+class _FromDateState extends State<FromDate>{
+  String _value = '';
+  Future _selectDate() async {
+    DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime(2016),
+        lastDate: new DateTime(2020)
+    );
+    if(picked != null){
+      setState(() {
+        _value = picked.toString();
+        widget.currentFilter.fromDate = _value;
+        widget.onFilterChange(widget.currentFilter);
+      });;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return RaisedButton(
+        onPressed: _selectDate,
+        child: Text('Click Me!')
+    );
+  }
+}
 
 
 class FromCity extends StatefulWidget{
