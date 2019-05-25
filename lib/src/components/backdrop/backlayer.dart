@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:meta/meta.dart';
 import 'package:swingo/src/models/filter.dart';
-import 'package:swingo/src/pages/list.dart';
+import 'package:swingo/src/pages/frontlayer.dart';
 import 'package:swingo/src/theme/colors.dart';
 import 'package:swingo/src/utils/constans.dart';
 
@@ -10,7 +10,7 @@ import 'frontlayer.dart';
 
 class Backdrop extends StatefulWidget {
   final Filter currentFilter;
-  List<Widget> frontLayer;
+  List<FrontlayerPage> frontLayer;
   final Widget backLayer;
   final Widget frontTitle;
   final Widget backTitle;
@@ -55,9 +55,14 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(Backdrop old) {
     super.didUpdateWidget(old);
-    if (!_frontLayerVisible) {
+    /*
+    print(_frontLayerVisible);
+    if (widget.currentCategory != old.currentCategory) {
+      _toggleBackdropLayerVisibility();
+    } else if (!_frontLayerVisible) {
       _controller.fling(velocity: swFlingVelocity);
     }
+    */
   }
 
   @override

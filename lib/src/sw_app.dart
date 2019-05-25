@@ -26,9 +26,9 @@ class _SwAppState extends State<SwApp> {
       home: Backdrop(
         currentFilter: _currentFilter,
         //frontLayer: HomePage(filter: _currentFilter), // TODO: alttaki array bunun içine yazılmalı
-        frontLayer: <Widget>[
-          ListPage(),
-          ListPage(),
+        frontLayer: <FrontlayerPage>[
+          FrontlayerPage(title: 'Send', child: ListPage()),
+          FrontlayerPage(title: 'Carry', child: ListPage()),
         ],
         backLayer: FilterMenuPage(
           currentFilter: _currentFilter,
