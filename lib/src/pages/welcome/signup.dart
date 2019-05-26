@@ -4,7 +4,7 @@ import 'package:swingo/src/theme/style.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
-  static const double _horizontalPadding = 33;
+  static const double _horizontalPadding = 25;
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -55,18 +55,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SwInputText(
+                          faIcon: FontAwesomeIcons.user,
                           obscureText: false,
                         ),
                         const SizedBox(height: 12),
                         SwInputText(
+                          faIcon: FontAwesomeIcons.userAlt,
                           obscureText: false,
                         ),
                         const SizedBox(height: 12),
                         SwInputText(
+                          faIcon: FontAwesomeIcons.unlock,
                           obscureText: true,
                         ),
                         const SizedBox(height: 12),
                         SwInputText(
+                          faIcon: FontAwesomeIcons.unlockAlt,
                           obscureText: true,
                         ),
                         const SizedBox(height: 23),
