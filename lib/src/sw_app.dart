@@ -1,13 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:swingo/src/models/product.dart';
 import 'package:swingo/src/pages/pages.dart';
-import 'package:swingo/src/theme/themes.dart';
-import 'package:swingo/src/components/navbar.dart';
-
-import 'components/components.dart';
-
+import 'package:swingo/src/pages/welcome/about.dart';
+import 'package:swingo/src/pages/welcome/welcome.dart';
 
 class SwApp extends StatefulWidget {
   @override
@@ -15,7 +12,6 @@ class SwApp extends StatefulWidget {
 }
 
 class _SwAppState extends State<SwApp> {
-  Category _currentCategory = Category.all;
 
   @override
   Widget build(BuildContext context) {
@@ -23,24 +19,12 @@ class _SwAppState extends State<SwApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Swingo',
-      home: Backdrop(
-        currentCategory: _currentCategory,
-        frontLayer: HomePage(category: _currentCategory),
-        backLayer: CategoryMenuPage(
-          currentCategory: _currentCategory,
-          onCategoryTap: _onCategoryTap,
-        ),
-        frontTitle: Text('SHRINE'),
-        backTitle: Text('MENU'),
-        navbar: NavBar(),
-      ),
-      theme: swTheme,
+      routes: {
+        '/': (context) => WelcomeScreen(),
+        '/signin': (context) => SignInScreen(),
+        '/signup': (context) => SignUpScreen(),
+        '/home': (context) => AboutScreen()
+      },
     );
-  }
-
-  void _onCategoryTap(Category category) {
-    setState(() {
-      _currentCategory = category;
-    });
   }
 }
