@@ -52,6 +52,7 @@ flutter:
     - assets/slanted_menu.png
     - assets/wallet.png
     - assets/walletColor.png
+    - assets/images/chat-background.jpg
   fonts:
     - family: Titillium Web
       fonts:
