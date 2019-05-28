@@ -85,11 +85,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         alignment: Alignment.center,
         // add pageStyle.contentColor here to customize bg color of welcome page
         color: contentColor,
-        child: _WelcomeScreenSlim(
-            signIn: _pressSignin,
-            signUp: _pressSignup,
-            home: _pressHome,
-            part: pageStyle),
+        child: SingleChildScrollView(
+          child: _WelcomeScreenSlim(
+              signIn: _pressSignin,
+              signUp: _pressSignup,
+              home: _pressHome,
+              part: pageStyle),
+        ),
       ),
     );
   }
@@ -126,7 +128,7 @@ class _WelcomeScreenSlim extends StatelessWidget {
                   onPressed: signIn,
                   background: primaryColor,
                   icon: FontAwesomeIcons.signInAlt,
-                  label: 'Login'),
+                  label: 'Sign In'),
             ),
             ConstrainedBox(
               constraints: const BoxConstraints(minWidth: double.infinity),
@@ -134,7 +136,7 @@ class _WelcomeScreenSlim extends StatelessWidget {
                   onPressed: signUp,
                   background: secondaryColor,
                   icon: FontAwesomeIcons.userCheck,
-                  label: 'Register'),
+                  label: 'Sign Up'),
             ),
             ConstrainedBox(
               constraints: const BoxConstraints(minWidth: double.infinity),

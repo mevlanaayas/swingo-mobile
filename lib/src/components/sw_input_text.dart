@@ -10,7 +10,11 @@ class SwInputText extends StatelessWidget {
       this.controller,
       this.errorText,
       this.faIcon,
-      @required this.obscureText});
+      @required this.obscureText,
+      @required this.autoFocus,
+      this.textInputAction,
+      this.focusNode,
+      this.onFieldSubmitted});
 
   final Function onChanged;
   final TextInputType textInputType;
@@ -20,10 +24,18 @@ class SwInputText extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
   final IconData faIcon;
+  final bool autoFocus;
+  final TextInputAction textInputAction;
+  final FocusNode focusNode;
+  final Function onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onSubmitted: onFieldSubmitted,
+      focusNode: focusNode,
+      textInputAction: textInputAction,
+      autofocus: autoFocus,
       controller: controller,
       style: inputFieldStyle,
       obscureText: obscureText,

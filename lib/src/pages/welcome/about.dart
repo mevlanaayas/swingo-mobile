@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:flutter/material.dart';
 
@@ -27,12 +28,13 @@ class AboutScreen extends StatelessWidget {
                     shape: null,
                     onPressed: () => Navigator.pop(context, null),
                     child: const Icon(
-                      Icons.arrow_back,
+                      FontAwesomeIcons.chevronLeft,
                       color: secondaryColor,
                     ),
                   ),
                 ),
               ),
+              SizedBox(height: 10),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
