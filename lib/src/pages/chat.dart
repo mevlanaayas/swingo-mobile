@@ -12,6 +12,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage>{
+  ValueChanged<String> onSubmitted;
   TextEditingController textEditingController = TextEditingController();
   int userId = 2; // TODO: user kendi bilgisini alınca burası düzeltilecek
   List<Message> messages = [
@@ -21,8 +22,6 @@ class _ChatPageState extends State<ChatPage>{
     new Message(2, 'Sorry?'),
     new Message(1, 'Hacı abi canım hamsi çekayi.'),
   ];
-
-
 
   Widget _buildMessageBox(Message message, Color color, Alignment alignment){
     double screenWidth = MediaQuery.of(context).size.width; //TODO: Bu bir yerde saklanılabilir.
@@ -59,16 +58,25 @@ class _ChatPageState extends State<ChatPage>{
     return messageRow;
   }
 
-  void onSendPressed(){
-    setState(() {
-      if(textEditingController.text != ''){
-        messages.insert(0, new Message(userId, textEditingController.text));
-      }
-    });
+  void _onEmojiPressed(){
+    print("Emojiye tıklandı");
   }
 
-  void onEmojiPressed(){
-    print("Emojiye tıklandı");
+  void _onSendButtonPressed(){
+    if(textEditingController.text != ''){
+      _insertMessageToList(Message(userId, textEditingController.text));
+    }
+  }
+
+  void _handleSubmission(String text){
+    _insertMessageToList(Message(userId, text));
+  }
+
+  void _insertMessageToList(Message message){
+    setState(() {
+        messages.insert(0, message);
+    });
+    textEditingController.text = '';
   }
 
   @override
@@ -97,6 +105,7 @@ class _ChatPageState extends State<ChatPage>{
                     ),
                   ),
                   TextField(
+                    onSubmitted: _handleSubmission,
                     controller: textEditingController,
                     style: TextStyle(
                       color: Colors.white
@@ -111,12 +120,12 @@ class _ChatPageState extends State<ChatPage>{
                       prefixIcon: IconButton(
                         color: Colors.white,
                         icon: Icon(Icons.insert_emoticon),
-                        onPressed: onEmojiPressed,
+                        onPressed: _onEmojiPressed,
                       ),
                       suffixIcon: IconButton(
                           color: altDarkBlue,
                           icon: Icon(Icons.send),
-                          onPressed: onSendPressed
+                          onPressed: _onSendButtonPressed
                       ),
                     ),
                   )
