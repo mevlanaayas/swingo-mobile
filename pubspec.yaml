@@ -67,6 +67,7 @@ flutter:
     - assets/flare/
     - assets/docs/code_chomper_alpha.dart
     - assets/docs/code_chomper_beta.dart
+    - assets/images/chat-background.jpg
   fonts:
     - family: Titillium Web
       fonts:

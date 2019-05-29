@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:swingo/src/models/product.dart';
+import 'package:swingo/src/models/filter.dart';
 
 class HomePage extends StatelessWidget {
-  final Category category;
+  final Filter filter;
 
-  HomePage({this.category: Category.all});
+  HomePage({this.filter});
 
   @override
   Widget build(BuildContext context) {
-    return Text(category.toString());
+    return Text(filter.toString());
   }
 }
