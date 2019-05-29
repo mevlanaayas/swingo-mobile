@@ -7,7 +7,14 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.8"
+    version: "2.1.0"
+  auto_size_text:
+    dependency: "direct main"
+    description:
+      name: auto_size_text
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -49,7 +56,25 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.5"
+  flare_dart:
+    dependency: transitive
+    description:
+      path: flare_dart
+      ref: dev
+      resolved-ref: "396cd88df7638b86e55b4467364fa2c41cde1558"
+      url: "git://github.com/2d-inc/Flare-Flutter.git"
+    source: git
+    version: "1.4.1"
+  flare_flutter:
+    dependency: "direct main"
+    description:
+      path: flare_flutter
+      ref: "4aebb0ff5b98c7bcf2183c6bac8226cc7ddf5402"
+      resolved-ref: "4aebb0ff5b98c7bcf2183c6bac8226cc7ddf5402"
+      url: "git://github.com/2d-inc/Flare-Flutter.git"
+    source: git
+    version: "1.5.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -60,13 +85,27 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  font_awesome_flutter:
+    dependency: "direct main"
+    description:
+      name: font_awesome_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "8.4.0"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.15.8"
   matcher:
     dependency: transitive
     description:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.3+1"
+    version: "0.12.5"
   meta:
     dependency: transitive
     description:
@@ -87,14 +126,14 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.0"
+    version: "1.5.0"
   quiver:
     dependency: transitive
     description:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -106,7 +145,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.4"
+    version: "1.5.5"
   stack_trace:
     dependency: transitive
     description:
@@ -120,7 +159,7 @@ packages:
       name: stream_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.8"
+    version: "2.0.0"
   string_scanner:
     dependency: transitive
     description:
@@ -141,7 +180,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.2"
+    version: "0.2.4"
   typed_data:
     dependency: transitive
     description:
@@ -164,5 +203,5 @@ packages:
     source: hosted
     version: "2.0.8"
 sdks:
-  dart: ">=2.1.0 <3.0.0"
+  dart: ">=2.2.0 <3.0.0"
   flutter: ">=0.5.6 <2.0.0"
