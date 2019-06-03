@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/welcome/welcome.dart';
+import 'package:swingo/src/theme/themes.dart';
 
 class SwApp extends StatefulWidget {
   @override
@@ -17,11 +18,13 @@ class _SwAppState extends State<SwApp> {
       debugShowCheckedModeBanner: false,
       title: 'Swingo',
       routes: {
-        '/': (context) => WelcomeScreen(),
+        '/': (context) => HomePage(),
         '/signin': (context) => SignInScreen(),
         '/signup': (context) => SignUpScreen(),
-        '/home': (context) => HomePage()
+        '/profile': (context) => ProfileScreen(),
+        '/route': (context) => WelcomeScreen()
       },
+      theme: swTheme,
     );
   }
 }

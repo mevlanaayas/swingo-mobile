@@ -12,8 +12,6 @@ class Backdrop extends StatefulWidget {
   final Filter currentFilter;
   List<FrontlayerPage> frontLayer;
   final Widget backLayer;
-  final Widget frontTitle;
-  final Widget backTitle;
   final Widget subheader;
   final Widget navbar;
 
@@ -21,14 +19,10 @@ class Backdrop extends StatefulWidget {
       {@required this.currentFilter,
       @required this.frontLayer,
       @required this.backLayer,
-      @required this.frontTitle,
-      @required this.backTitle,
       @required this.navbar,
       this.subheader})
       : assert(frontLayer != null),
         assert(backLayer != null),
-        assert(frontTitle != null),
-        assert(backTitle != null),
         assert(navbar != null);
 
   @override
