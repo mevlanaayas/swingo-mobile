@@ -32,6 +32,7 @@ class Backdrop extends StatefulWidget {
 
 class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
+  final isLoggedIn = false; //todo: backendden alınması gerekiyor
 
   AnimationController _controller;
   AnimationController _fabAnimationController;
@@ -96,6 +97,22 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
     );
   }
 
+  void _navigateToCreateSendOrder(BuildContext context){
+    if(isLoggedIn){
+      Navigator.of(context).pushNamed('/create-send-order');
+    } else {
+      Navigator.of(context).pushNamed('/route');
+    }
+  }
+
+  void _navigateToCreateCarryOrder(BuildContext context){
+    if(isLoggedIn){
+      Navigator.of(context).pushNamed('/create-carry-order');
+    } else {
+      Navigator.of(context).pushNamed('/route');
+    }
+  }
+
   Widget _buildStack(BuildContext context, BoxConstraints constraints) {
     const double layerTitleHeight = 248.0;
     final Size layerSize = constraints.biggest;
@@ -138,12 +155,18 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
                   Spacer(flex: 5),
                   FadeTransition(
                     opacity: _fadeAnimation,
-                    child: SwButton(onPressed: (){print('dokunmaa');}, text: 'Send') //todo: route eklenecek
+                    child: SwButton(
+                        onPressed: () => _navigateToCreateSendOrder(context),
+                        text: 'Send'
+                    )
                   ),
                   Spacer(flex: 2),
                   FadeTransition(
                       opacity: _fadeAnimation,
-                      child: SwButton(onPressed: (){print('dokunmaa');}, text: 'Carry') //todo: route eklenecek
+                      child: SwButton(
+                          onPressed: () => _navigateToCreateCarryOrder(context),
+                          text: 'Carry'
+                      )
                   ),
                   Spacer(flex: 5),
                 ],
