@@ -22,7 +22,11 @@ class _SwAppState extends State<SwApp> {
         '/signin': (context) => SignInScreen(),
         '/signup': (context) => SignUpScreen(),
         '/profile': (context) => ProfileScreen(),
-        '/route': (context) => WelcomeScreen()
+        '/route': (context) => WelcomeScreen(),
+        '/orders': (context) => OrdersScreen(),
+        '/bids': (context) => BidsScreen(),
+        '/create-send-order': (context) => CreateOrdersScreen(),
+        '/create-carry-order': (context) => CreateOrdersScreen(),
       },
       theme: swTheme,
     );
