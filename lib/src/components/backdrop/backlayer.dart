@@ -232,14 +232,12 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
           bottomNavigationBar: widget.navbar,
           floatingActionButton: FloatingActionButton(
             backgroundColor: Theme.of(context).primaryColor,
-            child: IconButton(
-              icon: new AnimatedIcon(
-                  size: 30,
-                  icon: AnimatedIcons.add_event,
-                  progress: _fabAnimationController.view
-              ),
-                onPressed: _onFloatingActionButtonPressed
-              )
+            child: new AnimatedIcon(
+              size: 30,
+              icon: AnimatedIcons.add_event,
+              progress: _fabAnimationController.view
+            ),
+            onPressed: _onFloatingActionButtonPressed,
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         )
