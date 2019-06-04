@@ -102,6 +102,10 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
             tabController: _tabController
           ),
         ),
+        Align(
+         alignment: Alignment.bottomCenter,
+         child: Text('LALALALALALŞALAL')
+        )
       ],
     );
   }
@@ -178,9 +182,26 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
+          extendBody: true,
           appBar: appBar,
           body: LayoutBuilder(builder: _buildStack),
-          bottomNavigationBar: widget.navbar,
-        ));
+          bottomNavigationBar: BottomAppBar(
+            color: Theme.of(context).accentColor,
+            shape: CircularNotchedRectangle(),
+            child: widget.navbar,
+          ),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor,
+            child: Center(
+              child: Icon(
+                Icons.add,
+                size: 32.0,
+              ),
+            ),
+            onPressed: () {print('aıshd');},
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        )
+    );
   }
 }

@@ -40,7 +40,17 @@ class _HomePageState extends State<HomePage> {
           currentFilter: _currentFilter,
           onFilterChange: _onFilterChange,
         ),
-        navbar: NavBar(),
+        navbar: NavBar(
+          onTabSelected: (index){
+            print('wihii ${index}');
+          },
+          items: [
+            NavBarItem(iconData: Icons.home, text: 'Home'),
+            NavBarItem(iconData: Icons.content_paste, text: 'Orders'),
+            NavBarItem(iconData: Icons.monetization_on, text: 'Bids'),
+            NavBarItem(iconData: Icons.account_circle, text: 'Profile'),
+          ],
+        ),
       ),
     );
   }
