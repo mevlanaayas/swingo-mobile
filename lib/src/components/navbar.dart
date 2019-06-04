@@ -23,9 +23,6 @@ class _NavBarState extends State<NavBar> {
     }
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     void onTabTapped(int index){
@@ -43,6 +40,7 @@ class _NavBarState extends State<NavBar> {
 
     return BottomNavigationBar(
         onTap: onTabTapped,
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         items: [
           BottomNavigationBarItem(
@@ -50,16 +48,20 @@ class _NavBarState extends State<NavBar> {
               title: new Text('Home')
           ),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.account_box),
-              title: new Text('Profile')
+              icon: new Icon(Icons.content_paste),
+              title: new Text('Orders')
           ),
           BottomNavigationBarItem(
               icon: new Icon(Icons.add_circle),
               title: new Text('Add')
           ),
           BottomNavigationBarItem(
-              icon: new Icon(Icons.message),
-              title: new Text('Messages')
+              icon: new Icon(Icons.monetization_on),
+              title: new Text('Bids')
+          ),
+          BottomNavigationBarItem(
+              icon: new Icon(Icons.account_circle),
+              title: new Text('Profile')
           ),
         ]
     );
