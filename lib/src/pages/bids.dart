@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/theme/style.dart';
+import 'package:swingo/src/pages/pages.dart';
 
 class BidsScreen extends StatelessWidget {
   final List<String> entries = <String>[
@@ -15,6 +17,26 @@ class BidsScreen extends StatelessWidget {
     'Londra'
   ];
 
+  Widget _buildHeading() {
+    return Row(
+      children: <Widget>[
+        const Icon(
+          FontAwesomeIcons.user,
+          color: secondaryColor,
+          size: 11.0,
+        ),
+        SizedBox(
+          width: 10.0,
+        ),
+        Text(
+          "username",
+          style: itemUsernameContentStyle,
+        ),
+        Text("Price", style: itemPriceContentStyle)
+      ],
+    );
+  }
+
   void _buildSection(List<Widget> slivers, double scale, List<String> items) {
     if (items.isNotEmpty) {
       slivers.add(SliverList(
@@ -22,7 +44,7 @@ class BidsScreen extends StatelessWidget {
           String item = items[index];
           return ListItem(
             item: item,
-            heading: const Icon(Icons.check_circle, color: disabledColor),
+            heading: _buildHeading(),
           );
         }, childCount: items.length),
       ));
@@ -34,9 +56,38 @@ class BidsScreen extends StatelessWidget {
     var slivers = <Widget>[];
     const scale = 1.0;
     _buildSection(slivers, scale, entries);
-    return Material(
-        color: primaryColor50,
-        child: SafeArea(child: CustomScrollView(slivers: slivers)));
+    return Scaffold(
+        body: Container(
+            constraints: const BoxConstraints(minWidth: double.infinity),
+            color: primaryColor50,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top,
+                bottom: MediaQuery.of(context).padding.bottom + 33,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: ButtonTheme(
+                      minWidth: 0,
+                      child: FlatButton(
+                        padding: const EdgeInsets.all(0),
+                        shape: null,
+                        onPressed: () => Navigator.pop(context, null),
+                        child: const Icon(
+                          FontAwesomeIcons.chevronLeft,
+                          color: secondaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Expanded(child: CustomScrollView(slivers: slivers)),
+                ],
+              ),
+            )));
   }
 }
 
@@ -56,7 +107,7 @@ class ListItem extends StatefulWidget {
 class _ListItemState extends State<ListItem> {
   bool isExpanded = false;
 
-  BoxDecoration get workListItemDecoration => BoxDecoration(
+  BoxDecoration get listItemDecoration => BoxDecoration(
         boxShadow: [
           BoxShadow(
               color: Colors.black.withOpacity(0.03),
@@ -64,23 +115,28 @@ class _ListItemState extends State<ListItem> {
               blurRadius: 10,
               spreadRadius: 0),
         ],
+        // border: isExpanded ? Border.all(color: primaryColor) : null,
         borderRadius: const BorderRadius.all(Radius.circular(9)),
         color: Colors.white,
       );
 
-  Future<void> _handleTap(BuildContext context, String workItem) async {
-    setState(() {
-      isExpanded = isExpanded ? false : true;
-    });
+  Future<void> _handleTap(BuildContext context, String item) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetailScreen(item: item),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
       child: Container(
-        decoration: workListItemDecoration,
+        decoration: listItemDecoration,
         child: Material(
+          elevation: 0.0,
           type: MaterialType.transparency,
           borderRadius: const BorderRadius.all(Radius.circular(9)),
           clipBehavior: Clip.antiAlias,

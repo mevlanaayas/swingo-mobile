@@ -75,6 +75,24 @@ const TextStyle contentSmallStyle = TextStyle(
   color: secondaryContentColor,
 );
 
+const TextStyle blackContentStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 16,
+  color: Colors.black,
+);
+
+const TextStyle itemUsernameContentStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 15,
+  color: Colors.black38,
+);
+
+const TextStyle itemPriceContentStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 15,
+  color: Colors.greenAccent,
+);
+
 const TextStyle contentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 16,
