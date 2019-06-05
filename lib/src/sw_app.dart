@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:swingo/src/pages/pages.dart';
-import 'package:swingo/src/components/navbar.dart';
+import 'package:swingo/src/components/sw_navbar.dart';
 import 'package:swingo/src/components/sw_button.dart';
 import 'package:swingo/src/utils/constans.dart';
 
