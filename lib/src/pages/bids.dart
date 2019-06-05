@@ -73,6 +73,7 @@ class BidsScreen extends StatelessWidget {
                     child: ButtonTheme(
                       minWidth: 0,
                       child: FlatButton(
+                        splashColor: Colors.transparent,
                         padding: const EdgeInsets.all(0),
                         shape: null,
                         onPressed: () => Navigator.pop(context, null),
@@ -123,9 +124,7 @@ class _ListItemState extends State<ListItem> {
   Future<void> _handleTap(BuildContext context, String item) async {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => DetailScreen(item: item),
-      ),
+      SlideTopRoute(page: DetailScreen(item: item)),
     );
   }
 
@@ -198,4 +197,31 @@ class ItemDetails extends StatelessWidget {
             ],
           );
   }
+}
+
+class SlideTopRoute extends PageRouteBuilder {
+  final Widget page;
+
+  SlideTopRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0, 1),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child,
+              ),
+        );
 }
