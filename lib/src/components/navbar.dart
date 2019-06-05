@@ -10,10 +10,12 @@ class NavBarItem {
 class NavBar extends StatefulWidget{
   final List<NavBarItem> items;
   final ValueChanged<int> onTabSelected;
+  final int index;
 
   NavBar({
     this.items,
-    this.onTabSelected
+    this.onTabSelected,
+    this.index
   });
 
   @override
@@ -23,53 +25,8 @@ class NavBar extends StatefulWidget{
 }
 
 class _NavBarState extends State<NavBar> {
-  int _currentIndex = 0;
-  bool isLoggedIn = false; //TODO: backende istek atılınca düzeltilmesi gerek.
-
-  void _navigateToHome(BuildContext context){
-    Navigator.of(context).pushNamed('/');
-  }
-
-  void _navigateToOrders(BuildContext context){
-    if(isLoggedIn){
-      Navigator.of(context).pushNamed('/orders');
-    } else {
-      Navigator.of(context).pushNamed('/route');
-    }
-  }
-
-  void _navigateToBids(BuildContext context){
-    if(isLoggedIn){
-      Navigator.of(context).pushNamed('/bids');
-    } else {
-      Navigator.of(context).pushNamed('/route');
-    }
-  }
-
-  void _navigateToProfile(BuildContext context){
-    if(isLoggedIn){
-      Navigator.of(context).pushNamed('/profile');
-    } else {
-      Navigator.of(context).pushNamed('/route');
-    }
-  }
-
-  _updateIndex(int index) {
-    widget.onTabSelected(index);
-    setState(() {
-      if(_currentIndex == index) return
-        _currentIndex = index;
-      switch (index){
-        case 0: { _navigateToHome(context); } break;
-        case 1: { _navigateToOrders(context); } break;
-        case 2: { _navigateToBids(context); } break;
-        case 3: { _navigateToProfile(context); } break;
-      }
-    });
-  }
-
-  Widget _buildTabItem({NavBarItem item, int index, ValueChanged<int> onPressed}) {
-    Color color = _currentIndex == index ? primaryColor : secondaryColor;
+   Widget _buildTabItem({NavBarItem item, int index, ValueChanged<int> onPressed}) {
+    Color color = widget.index == index ? primaryColor : secondaryColor;
     return Expanded(
       child: SizedBox(
         height: 56,
@@ -100,7 +57,7 @@ class _NavBarState extends State<NavBar> {
       return _buildTabItem(
         item: widget.items[index],
         index: index,
-        onPressed: _updateIndex,
+        onPressed: widget.onTabSelected,
       );
     });
 
