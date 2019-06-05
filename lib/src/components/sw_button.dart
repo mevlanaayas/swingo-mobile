@@ -31,7 +31,7 @@ class SwButton extends StatelessWidget {
       color: primaryColor,
       splashColor: primaryColor,
       disabledColor: secondaryColor,
-      elevation: 4.0,
+      elevation: 1.0,
       // TODO: add color palette and theming. arrange fillColor, splashColor etc
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),

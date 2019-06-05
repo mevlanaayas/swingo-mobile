@@ -66,34 +66,31 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
   }
 
   Widget _buildCreateOptions(Animation animation){
-    return Positioned(
-        bottom: 56.0 + 16.0, //todo: navbar 56 yazdığı için burada böyle kullanıyoruz.
-        left: 0,
-        right: 0,
-        child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Spacer(flex: 5),
-              FadeTransition(
-                  opacity: animation,
-                  child: SwButton(
-                      onPressed: () => _navigateToCreateOrders(0),
-                      text: 'Send'
-                  )
-              ),
-              Spacer(flex: 2),
-              FadeTransition(
-                  opacity: animation,
-                  child: SwButton(
-                      onPressed: () =>  _navigateToCreateOrders(1),
-                      text: 'Carry'
-                  )
-              ),
-              Spacer(flex: 5),
-            ],
+    return Container(
+      alignment: Alignment.bottomCenter,
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 7.7),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Spacer(flex: 5),
+          FadeTransition(
+              opacity: animation,
+              child: SwButton(
+                  onPressed: () => _navigateToCreateOrders(0),
+                  text: 'Send'
+              )
           ),
-        )
+          Spacer(flex: 2),
+          FadeTransition(
+              opacity: animation,
+              child: SwButton(
+                  onPressed: () =>  _navigateToCreateOrders(1),
+                  text: 'Carry'
+              )
+          ),
+          Spacer(flex: 5),
+        ],
+      ),
     );
   }
 
@@ -112,6 +109,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
 
   Widget _buildCreateButton(){
     return FloatingActionButton(
+      elevation: 1.0,
       backgroundColor: Theme.of(context).primaryColor,
       child: new AnimatedIcon(
           size: 30,
