@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/components/backdrop/backlayer.dart';
 import 'package:swingo/src/components/components.dart';
-import 'package:swingo/src/components/navbar.dart';
 import 'package:swingo/src/models/filter.dart';
 
 import 'frontlayer.dart';

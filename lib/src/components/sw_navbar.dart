@@ -3,18 +3,16 @@ import 'package:swingo/src/theme/style.dart';
 
 class NavBarItem {
   NavBarItem({this.iconData, this.text});
+
   IconData iconData;
   String text;
 }
 
-class NavBar extends StatefulWidget{
+class NavBar extends StatefulWidget {
   final List<NavBarItem> items;
   final ValueChanged<int> onTabSelected;
 
-  NavBar({
-    this.items,
-    this.onTabSelected
-  });
+  NavBar({this.items, this.onTabSelected});
 
   @override
   State<StatefulWidget> createState() {
@@ -24,30 +22,30 @@ class NavBar extends StatefulWidget{
 
 class _NavBarState extends State<NavBar> {
   int _currentIndex = 0;
-  bool isLoggedIn = false; //TODO: backende istek atılınca düzeltilmesi gerek.
+  bool isLoggedIn = true; //TODO: backende istek atılınca düzeltilmesi gerek.
 
-  void _navigateToHome(BuildContext context){
+  void _navigateToHome(BuildContext context) {
     Navigator.of(context).pushNamed('/');
   }
 
-  void _navigateToOrders(BuildContext context){
-    if(isLoggedIn){
+  void _navigateToOrders(BuildContext context) {
+    if (isLoggedIn) {
       Navigator.of(context).pushNamed('/orders');
     } else {
       Navigator.of(context).pushNamed('/route');
     }
   }
 
-  void _navigateToBids(BuildContext context){
-    if(isLoggedIn){
+  void _navigateToBids(BuildContext context) {
+    if (isLoggedIn) {
       Navigator.of(context).pushNamed('/bids');
     } else {
       Navigator.of(context).pushNamed('/route');
     }
   }
 
-  void _navigateToProfile(BuildContext context){
-    if(isLoggedIn){
+  void _navigateToProfile(BuildContext context) {
+    if (isLoggedIn) {
       Navigator.of(context).pushNamed('/profile');
     } else {
       Navigator.of(context).pushNamed('/route');
@@ -57,18 +55,34 @@ class _NavBarState extends State<NavBar> {
   _updateIndex(int index) {
     widget.onTabSelected(index);
     setState(() {
-      if(_currentIndex == index) return
-        _currentIndex = index;
-      switch (index){
-        case 0: { _navigateToHome(context); } break;
-        case 1: { _navigateToOrders(context); } break;
-        case 2: { _navigateToBids(context); } break;
-        case 3: { _navigateToProfile(context); } break;
+      if (_currentIndex == index) return _currentIndex = index;
+      switch (index) {
+        case 0:
+          {
+            _navigateToHome(context);
+          }
+          break;
+        case 1:
+          {
+            _navigateToOrders(context);
+          }
+          break;
+        case 2:
+          {
+            _navigateToBids(context);
+          }
+          break;
+        case 3:
+          {
+            _navigateToProfile(context);
+          }
+          break;
       }
     });
   }
 
-  Widget _buildTabItem({NavBarItem item, int index, ValueChanged<int> onPressed}) {
+  Widget _buildTabItem(
+      {NavBarItem item, int index, ValueChanged<int> onPressed}) {
     Color color = _currentIndex == index ? primaryColor : secondaryColor;
     return Expanded(
       child: SizedBox(
@@ -76,6 +90,7 @@ class _NavBarState extends State<NavBar> {
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(
+            splashColor: Colors.transparent,
             onTap: () => onPressed(index),
             child: Column(
               mainAxisSize: MainAxisSize.min,
