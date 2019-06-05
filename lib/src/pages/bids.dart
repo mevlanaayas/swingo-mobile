@@ -20,7 +20,7 @@ class BidsScreen extends StatelessWidget {
       slivers.add(SliverList(
         delegate: SliverChildBuilderDelegate((context, index) {
           String item = items[index];
-          return WorkListItem(
+          return ListItem(
             item: item,
             isExpanded: false,
             heading: const Icon(Icons.check_circle, color: disabledColor),
@@ -41,14 +41,13 @@ class BidsScreen extends StatelessWidget {
   }
 }
 
-/// Shared containing widget for [WorkItem] (bug/task) styling. Handles assignment of [WorkItem]
-/// to a set of [Character]s and shows progress as work is done.
-class WorkListItem extends StatelessWidget {
+
+class ListItem extends StatelessWidget {
   final bool isExpanded;
   final Widget heading;
   final String item;
 
-  const WorkListItem({
+  const ListItem({
     this.item,
     this.isExpanded = false,
     this.heading,
@@ -80,25 +79,18 @@ class WorkListItem extends StatelessWidget {
           type: MaterialType.transparency,
           borderRadius: const BorderRadius.all(Radius.circular(9)),
           clipBehavior: Clip.antiAlias,
-          // **Step 5 in emshack/efortuna live-coding: Add InkWell and onTap.
-          // Also talk about _handleTap above, but have it pre-written.
           child: InkWell(
             splashColor: Colors.transparent,
             onTap: () => _handleTap(context, item),
             child: Padding(
               padding: const EdgeInsets.all(15),
-              // **Step 3 in emshack/efortuna live-coding: Add this Column,
-              // plus the heading and SizedBox children.
               child: Column(
-                // **Step 4 in emshack/efortuna live-coding: Add
-                // crossAxisAlignment.
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   heading,
                   const SizedBox(height: 12),
                   Text(
                     item,
-                    // **Step 2 in emshack/efortuna live-coding: Add style.
                     style: isExpanded
                         ? contentStyle.apply(fontSizeFactor: 1)
                         : contentStyle.apply(
