@@ -9,7 +9,10 @@ class BidsScreen extends StatelessWidget {
     'Trabzon',
     'Mersin',
     'Dublin',
-    'Lisbon'
+    'Lisbon',
+    'Aydın',
+    'Ankara',
+    'Londra'
   ];
 
   void _buildSection(List<Widget> slivers, double scale, List<String> items) {
