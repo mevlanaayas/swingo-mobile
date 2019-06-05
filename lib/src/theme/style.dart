@@ -4,6 +4,12 @@ import 'package:swingo/src/models/enum.dart';
 final Color _primaryColor = Color(0xFF8DDBD1);
 const Color primaryColor = Color.fromRGBO(141, 219, 209, 1);
 
+final Color _primaryColor100 = Color(0xFFBAE9E3);
+const Color primaryColor100 = const Color(0xFFBAE9E3);
+
+final Color _primaryColor50 = Color(0xFFE3F6F4);
+const Color primaryColor50 = const Color(0xFFE3F6F4);
+
 final Color _secondaryColor = Color(0xFF6F6F76);
 const Color secondaryColor = Color.fromRGBO(111, 111, 118, 1);
 

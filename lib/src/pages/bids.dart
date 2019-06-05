@@ -32,7 +32,9 @@ class BidsScreen extends StatelessWidget {
     var slivers = <Widget>[];
     const scale = 1.0;
     _buildSection(slivers, scale, entries);
-    return CustomScrollView(slivers: slivers);
+    return Material(
+        color: primaryColor50,
+        child: SafeArea(child: CustomScrollView(slivers: slivers)));
   }
 }
 
@@ -78,6 +80,7 @@ class WorkListItem extends StatelessWidget {
           // **Step 5 in emshack/efortuna live-coding: Add InkWell and onTap.
           // Also talk about _handleTap above, but have it pre-written.
           child: InkWell(
+            splashColor: Colors.transparent,
             onTap: () => _handleTap(context, item),
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -113,7 +116,6 @@ class WorkListItem extends StatelessWidget {
   }
 }
 
-
 class ItemDetails extends StatelessWidget {
   const ItemDetails({
     this.item,
@@ -130,14 +132,13 @@ class ItemDetails extends StatelessWidget {
     return !isExpanded
         ? Container()
         : Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        const SizedBox(height: 11),
-        Text("detail"),
-        const SizedBox(height: 11),
-        Text("detail"),
-      ],
-    );
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              const SizedBox(height: 11),
+              Text("detail"),
+              const SizedBox(height: 11),
+              Text("detail"),
+            ],
+          );
   }
 }
-
