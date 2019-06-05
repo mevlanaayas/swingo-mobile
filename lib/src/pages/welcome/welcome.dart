@@ -62,7 +62,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   Future<void> _pressHome() async {
     _swapPartTimer?.cancel();
-    await Navigator.of(context).pushNamed('/home');
+    await Navigator.of(context).pop();
     _startTimer();
   }
 

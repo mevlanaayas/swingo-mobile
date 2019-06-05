@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/colors.dart';
+import 'package:swingo/src/theme/style.dart';
 
 class SwIconButton extends StatelessWidget {
   const SwIconButton({@required this.onPressed, @required this.icon});
@@ -27,9 +28,9 @@ class SwButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      color: swPink900,
-      splashColor: swPink600,
-      disabledColor: swLivingCoral50,
+      color: primaryColor,
+      splashColor: primaryColor,
+      disabledColor: secondaryColor,
       elevation: 4.0,
       // TODO: add color palette and theming. arrange fillColor, splashColor etc
       child: Padding(

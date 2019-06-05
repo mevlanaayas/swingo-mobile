@@ -4,3 +4,7 @@ export 'package:swingo/src/pages/welcome/signin.dart';
 export 'package:swingo/src/pages/welcome/signup.dart';
 export 'package:swingo/src/pages/list.dart';
 export 'package:swingo/src/pages/frontlayer.dart';
+export 'package:swingo/src/pages/profile.dart';
+export 'package:swingo/src/pages/orders.dart';
+export 'package:swingo/src/pages/bids.dart';
+export 'package:swingo/src/pages/create_orders.dart';

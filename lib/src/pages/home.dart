@@ -3,7 +3,6 @@ import 'package:swingo/src/components/backdrop/backlayer.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/components/navbar.dart';
 import 'package:swingo/src/models/filter.dart';
-import 'package:swingo/src/theme/themes.dart';
 
 import 'frontlayer.dart';
 import 'list.dart';
@@ -30,11 +29,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Backdrop(
+    return Scaffold(
+      body: Backdrop(
         currentFilter: _currentFilter,
-        //frontLayer: HomePage(filter: _currentFilter), // TODO: alttaki array bunun içine yazılmalı
         frontLayer: <FrontlayerPage>[
           FrontlayerPage(title: 'Send', child: ListPage()),
           FrontlayerPage(title: 'Carry', child: ListPage()),
@@ -43,11 +40,18 @@ class _HomePageState extends State<HomePage> {
           currentFilter: _currentFilter,
           onFilterChange: _onFilterChange,
         ),
-        frontTitle: Text('SHRINE'),
-        backTitle: Text('MENU'),
-        navbar: NavBar(),
+        navbar: NavBar(
+          onTabSelected: (index){
+            print('wihii ${index}');
+          },
+          items: [
+            NavBarItem(iconData: Icons.home, text: 'Home'),
+            NavBarItem(iconData: Icons.content_paste, text: 'Orders'),
+            NavBarItem(iconData: Icons.monetization_on, text: 'Bids'),
+            NavBarItem(iconData: Icons.account_circle, text: 'Profile'),
+          ],
+        ),
       ),
-      theme: swTheme,
     );
   }
 }
