@@ -22,7 +22,6 @@ class BidsScreen extends StatelessWidget {
           String item = items[index];
           return ListItem(
             item: item,
-            isExpanded: false,
             heading: const Icon(Icons.check_circle, color: disabledColor),
           );
         }, childCount: items.length),
@@ -41,17 +40,21 @@ class BidsScreen extends StatelessWidget {
   }
 }
 
-
-class ListItem extends StatelessWidget {
-  final bool isExpanded;
+class ListItem extends StatefulWidget {
   final Widget heading;
   final String item;
 
   const ListItem({
     this.item,
-    this.isExpanded = false,
     this.heading,
   });
+
+  @override
+  _ListItemState createState() => _ListItemState();
+}
+
+class _ListItemState extends State<ListItem> {
+  bool isExpanded = false;
 
   BoxDecoration get workListItemDecoration => BoxDecoration(
         boxShadow: [
@@ -66,7 +69,9 @@ class ListItem extends StatelessWidget {
       );
 
   Future<void> _handleTap(BuildContext context, String workItem) async {
-    print(workItem);
+    setState(() {
+      isExpanded = isExpanded ? false : true;
+    });
   }
 
   @override
@@ -81,23 +86,24 @@ class ListItem extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
-            onTap: () => _handleTap(context, item),
+            onTap: () => _handleTap(context, widget.item),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  heading,
+                  widget.heading,
                   const SizedBox(height: 12),
                   Text(
-                    item,
+                    widget.item,
                     style: isExpanded
-                        ? contentStyle.apply(fontSizeFactor: 1)
+                        ? contentStyle.apply(
+                            color: primaryColor, fontSizeFactor: 1)
                         : contentStyle.apply(
-                            color: disabledColor, fontSizeFactor: 1),
+                            color: primaryColor, fontSizeFactor: 1),
                   ),
                   ItemDetails(
-                    item: item,
+                    item: widget.item,
                     isExpanded: isExpanded,
                     progressColor: primaryColor,
                   )
