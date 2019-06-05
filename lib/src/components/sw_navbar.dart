@@ -3,11 +3,12 @@ import 'package:swingo/src/theme/style.dart';
 
 class NavBarItem {
   NavBarItem({this.iconData, this.text});
+
   IconData iconData;
   String text;
 }
 
-class NavBar extends StatefulWidget{
+class NavBar extends StatefulWidget {
   final List<NavBarItem> items;
   final ValueChanged<int> onTabSelected;
   final int index;
@@ -33,6 +34,7 @@ class _NavBarState extends State<NavBar> {
         child: Material(
           type: MaterialType.transparency,
           child: InkWell(
+            splashColor: Colors.transparent,
             onTap: () => onPressed(index),
             child: Column(
               mainAxisSize: MainAxisSize.min,

@@ -14,7 +14,7 @@ class FrontLayer extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          SizedBox(height: 15.0),
+          SizedBox(height: 5.0),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: onTap,
@@ -26,7 +26,7 @@ class FrontLayer extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 15.0),
+          SizedBox(height: 5.0),
           Divider(),
           Expanded(
             child: frontlayerPage.child,
@@ -37,7 +37,7 @@ class FrontLayer extends StatelessWidget {
 
     return Material(
       color: Colors.white,
-      elevation: 40.0,
+      elevation: 0.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0)),
