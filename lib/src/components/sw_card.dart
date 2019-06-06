@@ -54,7 +54,7 @@ class _ListItemState extends State<ListItem> {
             ),
             Text(
               "icon-dizayn",
-              style: contentStyle,
+              style: itemBodyTextContentStyle,
             ),
             Text(
               "toC",
