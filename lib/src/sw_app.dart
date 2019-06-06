@@ -21,7 +21,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
     super.initState();
     _fabAnimationController = AnimationController(
       duration: Duration(milliseconds: 1000),
-      value: 1.0,
+      value: 0.0,
       vsync: this,
     );
   }
