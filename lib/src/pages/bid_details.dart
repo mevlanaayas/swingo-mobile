@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
+import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class DetailScreen extends StatelessWidget {
-  final String item;
+  final Order item;
 
   DetailScreen({Key key, @required this.item}) : super(key: key);
 
@@ -22,10 +23,15 @@ class DetailScreen extends StatelessWidget {
             SizedBox(
               width: 5.0,
             ),
-            Text(
-              item,
-              style: itemUsernameContentStyle,
-            ),
+            item.created_by.length > 20
+                ? Text(
+                    item.created_by.substring(0, 20) + "...",
+                    style: itemUsernameContentStyle,
+                  )
+                : Text(
+                    item.created_by,
+                    style: itemUsernameContentStyle,
+                  ),
           ],
         ),
         Text("Price", style: itemPriceContentStyle)

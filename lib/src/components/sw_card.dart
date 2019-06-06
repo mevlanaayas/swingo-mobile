@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/theme/style.dart';
+import 'package:intl/intl.dart';
 
 class ListItem extends StatefulWidget {
-  final String item;
+  final Order item;
 
   const ListItem({this.item});
 
@@ -13,6 +15,8 @@ class ListItem extends StatefulWidget {
 }
 
 class _ListItemState extends State<ListItem> {
+  var formatter = new DateFormat('yyyy-MM-dd');
+
   Widget _buildHeading() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,13 +31,18 @@ class _ListItemState extends State<ListItem> {
             SizedBox(
               width: 5.0,
             ),
-            Text(
-              widget.item,
-              style: itemUsernameContentStyle,
-            ),
+            widget.item.created_by.length > 20
+                ? Text(
+                    widget.item.created_by.substring(0, 20) + "...",
+                    style: itemUsernameContentStyle,
+                  )
+                : Text(
+                    widget.item.created_by,
+                    style: itemUsernameContentStyle,
+                  ),
           ],
         ),
-        Text("Price", style: itemPriceContentStyle)
+        Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
       ],
     );
   }
@@ -44,35 +53,57 @@ class _ListItemState extends State<ListItem> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              "frC",
-              style: itemBodyTextContentStyle,
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    widget.item.from_city.substring(0, 3).toUpperCase(),
+                    style: itemBodyTextContentStyle,
+                  ),
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  Text(
+                    formatter.format(widget.item.from_date),
+                    style: itemBodyDateContentStyle,
+                  )
+                ],
+              ),
             ),
-            Text(
-              "frD",
-              style: itemBodyDateContentStyle,
+            Icon(
+              FontAwesomeIcons.chevronRight,
+              color: Colors.black38,
             ),
-            Text(
-              "icon-dizayn",
-              style: itemBodyTextContentStyle,
-            ),
-            Text(
-              "toC",
-              style: itemBodyTextContentStyle,
-            ),
-            Text(
-              "toD",
-              style: itemBodyDateContentStyle,
-            )
+            Container(
+                child: Row(
+              children: <Widget>[
+                Text(
+                  widget.item.to_city.substring(0, 3).toUpperCase(),
+                  style: itemBodyTextContentStyle,
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                Text(
+                  formatter.format(widget.item.to_date),
+                  style: itemBodyDateContentStyle,
+                )
+              ],
+            )),
           ],
         ),
         const SizedBox(height: 12),
         Row(
           children: <Widget>[
-            Text(
-              "Details",
-              style: itemBodyDetailContentStyle,
-            )
+            widget.item.comments.length > 30
+                ? Text(
+                    widget.item.comments.substring(0, 30) + "...",
+                    style: itemBodyDetailContentStyle,
+                  )
+                : Text(
+                    widget.item.comments,
+                    style: itemBodyDetailContentStyle,
+                  )
           ],
         ),
       ],
@@ -94,7 +125,7 @@ class _ListItemState extends State<ListItem> {
         color: Colors.white,
       );
 
-  Future<void> _handleTap(BuildContext context, String item) async {
+  Future<void> _handleTap(BuildContext context, Order item) async {
     Navigator.push(
       context,
       SlideTopRoute(page: DetailScreen(item: item)),
