@@ -68,23 +68,6 @@ class BidsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: ButtonTheme(
-                      minWidth: 0,
-                      child: FlatButton(
-                        splashColor: Colors.transparent,
-                        padding: const EdgeInsets.all(0),
-                        shape: null,
-                        onPressed: () => Navigator.pop(context, null),
-                        child: const Icon(
-                          FontAwesomeIcons.chevronLeft,
-                          color: secondaryColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
                   Expanded(child: CustomScrollView(slivers: slivers)),
                 ],
               ),
