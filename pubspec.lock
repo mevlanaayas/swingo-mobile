@@ -7,7 +7,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   auto_size_text:
     dependency: "direct main"
     description:
@@ -56,25 +56,7 @@ packages:
       name: dio
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.5"
-  flare_dart:
-    dependency: transitive
-    description:
-      path: flare_dart
-      ref: dev
-      resolved-ref: "396cd88df7638b86e55b4467364fa2c41cde1558"
-      url: "git://github.com/2d-inc/Flare-Flutter.git"
-    source: git
-    version: "1.4.1"
-  flare_flutter:
-    dependency: "direct main"
-    description:
-      path: flare_flutter
-      ref: "4aebb0ff5b98c7bcf2183c6bac8226cc7ddf5402"
-      resolved-ref: "4aebb0ff5b98c7bcf2183c6bac8226cc7ddf5402"
-      url: "git://github.com/2d-inc/Flare-Flutter.git"
-    source: git
-    version: "1.5.0"
+    version: "2.1.7"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -133,7 +115,7 @@ packages:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -180,7 +162,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4"
+    version: "0.2.5"
   typed_data:
     dependency: transitive
     description:
@@ -194,7 +176,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.2"
+    version: "5.0.3"
   vector_math:
     dependency: transitive
     description:
@@ -204,4 +186,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.2.0 <3.0.0"
-  flutter: ">=0.5.6 <2.0.0"
+  flutter: ">=1.5.0 <2.0.0"

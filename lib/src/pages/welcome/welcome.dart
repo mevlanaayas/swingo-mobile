@@ -6,7 +6,6 @@ import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/components/sw_welcome_button.dart';
 import 'package:swingo/src/theme/part_style.dart';
 import 'package:swingo/src/theme/style.dart';
-import 'package:swingo/src/utils/warmup_flare.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -19,9 +18,6 @@ const double _horizontalPadding = 33;
 class _WelcomeScreenState extends State<WelcomeScreen> {
   PageStyle pageStyle;
   Timer _swapPartTimer;
-
-  final Timer _warmupTimer =
-      Timer(const Duration(milliseconds: 1500), warmupFlare);
 
   @override
   void initState() {
@@ -45,7 +41,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void dispose() {
     super.dispose();
     _swapPartTimer?.cancel();
-    _warmupTimer.cancel();
   }
 
   Future<void> _pressSignin() async {
