@@ -84,13 +84,31 @@ const TextStyle blackContentStyle = TextStyle(
 const TextStyle itemUsernameContentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 15,
-  color: Colors.black38,
+  color: Colors.black,
 );
 
 const TextStyle itemPriceContentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 15,
-  color: Colors.greenAccent,
+  color: Colors.deepOrange,
+);
+
+const TextStyle itemBodyTextContentStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 15,
+  color: Colors.black,
+);
+
+const TextStyle itemBodyDateContentStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 15,
+  color: Colors.black26,
+);
+
+const TextStyle itemBodyDetailContentStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 15,
+  color: Colors.black26,
 );
 
 const TextStyle contentStyle = TextStyle(
