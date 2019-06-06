@@ -17,7 +17,7 @@ class DetailScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,
-            bottom: MediaQuery.of(context).padding.bottom + 33,
+            bottom: MediaQuery.of(context).padding.bottom,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,10 +39,10 @@ class DetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  Divider(),
                 ],
               ),
-              Divider(),
               Row(
                 children: <Widget>[
                   Text("Travel details"),
