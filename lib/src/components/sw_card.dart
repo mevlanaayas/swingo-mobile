@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/theme/style.dart';
-import 'package:intl/intl.dart';
+import 'package:swingo/src/utils/formatters.dart';
 
 class ListItem extends StatefulWidget {
   final Order item;
@@ -15,7 +15,6 @@ class ListItem extends StatefulWidget {
 }
 
 class _ListItemState extends State<ListItem> {
-  var formatter = new DateFormat('yyyy-MM-dd');
 
   Widget _buildHeading() {
     return Row(
@@ -64,7 +63,7 @@ class _ListItemState extends State<ListItem> {
                     width: 5.0,
                   ),
                   Text(
-                    formatter.format(widget.item.from_date),
+                    dateVerboseFormatter.format(widget.item.from_date),
                     style: itemBodyDateContentStyle,
                   )
                 ],
@@ -73,6 +72,7 @@ class _ListItemState extends State<ListItem> {
             Icon(
               FontAwesomeIcons.chevronRight,
               color: Colors.black38,
+              size: 15.0,
             ),
             Container(
                 child: Row(
@@ -85,7 +85,7 @@ class _ListItemState extends State<ListItem> {
                   width: 5.0,
                 ),
                 Text(
-                  formatter.format(widget.item.to_date),
+                  dateVerboseFormatter.format(widget.item.to_date),
                   style: itemBodyDateContentStyle,
                 )
               ],

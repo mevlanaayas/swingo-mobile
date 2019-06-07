@@ -3,43 +3,79 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
+import 'package:swingo/src/utils/formatters.dart';
 
 class DetailScreen extends StatelessWidget {
   final Order item;
 
   DetailScreen({Key key, @required this.item}) : super(key: key);
 
-  Widget _buildHeading() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildTravelDetails() {
+    return Column(
       children: <Widget>[
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Icon(
-              FontAwesomeIcons.user,
-              color: secondaryColor,
-              size: 11.0,
+            Text(
+              item.from_city,
+              style: itemDetailCityStyle,
             ),
-            SizedBox(
-              width: 5.0,
-            ),
-            item.created_by.length > 20
-                ? Text(
-                    item.created_by.substring(0, 20) + "...",
-                    style: itemUsernameContentStyle,
-                  )
-                : Text(
-                    item.created_by,
-                    style: itemUsernameContentStyle,
-                  ),
+            const Icon(FontAwesomeIcons.chevronRight),
+            Text(
+              item.to_city,
+              style: itemDetailCityStyle,
+            )
           ],
         ),
-        Text("Price", style: itemPriceContentStyle)
+        const SizedBox(height: 15),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(
+                      "Dates",
+                      style: itemBodyDateContentStyle,
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(
+                      dateVerboseFormatter.format(item.from_date),
+                      style: itemBodyDateContentStyle,
+                    ),
+                    const SizedBox(
+                      width: 5.0,
+                    ),
+                    const Text(
+                      "~",
+                      style: itemBodyDateContentStyle,
+                    ),
+                    const SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      dateVerboseFormatter.format(item.to_date),
+                      style: itemBodyDateContentStyle,
+                    )
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
       ],
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildPackageDetails() {
     return Column(
       children: <Widget>[
         Row(
@@ -67,10 +103,10 @@ class DetailScreen extends StatelessWidget {
             )
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 15),
         Row(
           children: <Widget>[
-            Text(
+            const Text(
               "Details",
               style: itemBodyDetailContentStyle,
             )
@@ -96,6 +132,7 @@ class DetailScreen extends StatelessWidget {
             children: <Widget>[
               Container(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Row(
                       children: <Widget>[
@@ -118,7 +155,34 @@ class DetailScreen extends StatelessWidget {
                       ],
                     ),
                     const Divider(),
-                    Text("TRAVEL DETAILS"),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: const Text(
+                        "TRAVEL DETAILS",
+                        style: itemDetailHeadingStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: _buildTravelDetails(),
+                ),
+              ),
+              Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Divider(),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: const Text(
+                        "PACKAGE DETAILS",
+                        style: itemDetailHeadingStyle,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -127,29 +191,7 @@ class DetailScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     children: <Widget>[
-                      _buildHeading(),
-                      const SizedBox(height: 12),
-                      const Divider(),
-                      const SizedBox(height: 12),
-                      _buildBody()
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                  child: Column(
-                children: <Widget>[const Divider(), Text("PACKAGE DETAILS")],
-              )),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    children: <Widget>[
-                      _buildHeading(),
-                      const SizedBox(height: 12),
-                      const Divider(),
-                      const SizedBox(height: 12),
-                      _buildBody()
+                      _buildPackageDetails(),
                     ],
                   ),
                 ),
@@ -164,7 +206,7 @@ class DetailScreen extends StatelessWidget {
                         SwButton(
                           text: 'MAKE A BID',
                           onPressed: () {
-                            print("hi");
+                            print(item.id);
                           },
                         ),
                       ],

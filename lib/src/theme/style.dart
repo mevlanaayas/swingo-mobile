@@ -111,6 +111,18 @@ const TextStyle itemBodyDetailContentStyle = TextStyle(
   color: Colors.black26,
 );
 
+const TextStyle itemDetailHeadingStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 22,
+  color: secondaryColor,
+);
+
+const TextStyle itemDetailCityStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 21,
+  color: secondaryColor,
+);
+
 const TextStyle contentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 16,
