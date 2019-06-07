@@ -85,54 +85,15 @@ class DetailScreen extends StatelessWidget {
               item.from_city,
               style: itemDetailCityStyle,
             ),
-            const Icon(FontAwesomeIcons.chevronRight),
-            Text(
-              item.to_city,
-              style: itemDetailCityStyle,
-            )
           ],
         ),
         const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "Dates",
-                      style: itemBodyDateContentStyle,
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      dateVerboseFormatter.format(item.from_date),
-                      style: itemBodyDateContentStyle,
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    const Text(
-                      "~",
-                      style: itemBodyDateContentStyle,
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    Text(
-                      dateVerboseFormatter.format(item.to_date),
-                      style: itemBodyDateContentStyle,
-                    )
-                  ],
-                )
-              ],
+            Text(
+              "Dates",
+              style: itemBodyDateContentStyle,
             ),
           ],
         ),
@@ -178,7 +139,7 @@ class DetailScreen extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right:8.0),
+                          padding: const EdgeInsets.only(right: 8.0),
                           child: Material(
                             elevation: 0.0,
                             type: MaterialType.transparency,
@@ -203,7 +164,9 @@ class DetailScreen extends StatelessWidget {
                                             item.created_by,
                                             style: itemUsernameContentStyle,
                                           ),
-                                    const SizedBox(width: 5.0,),
+                                    const SizedBox(
+                                      width: 5.0,
+                                    ),
                                     const Icon(FontAwesomeIcons.user, size: 15)
                                   ],
                                 ),

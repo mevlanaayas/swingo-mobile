@@ -5,7 +5,6 @@ import 'package:swingo/src/models/filter.dart';
 import 'package:swingo/src/pages/frontlayer.dart';
 import 'package:swingo/src/theme/colors.dart';
 import 'package:swingo/src/utils/constans.dart';
-import 'package:swingo/src/components/sw_button.dart';
 
 import 'frontlayer.dart';
 
@@ -95,10 +94,9 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
         PositionedTransition(
           rect: layerAnimation,
           child: FrontLayer(
-            onTap: _toggleBackdropLayerVisibility,
-            children: widget.frontLayer,
-            tabController: _tabController
-          ),
+              onTap: _toggleBackdropLayerVisibility,
+              children: widget.frontLayer,
+              tabController: _tabController),
         )
       ],
     );
@@ -106,7 +104,8 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    _tabController = TabController(initialIndex: general, length: 2, vsync: this);
+    _tabController =
+        TabController(initialIndex: general, length: 2, vsync: this);
     _tabController.index = general;
 
     @override
@@ -169,9 +168,7 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
                       size: 30,
                       icon: AnimatedIcons.close_menu,
                       progress: _controller.view),
-                  onPressed: _toggleBackdropLayerVisibility
-              )
-          ),
+                  onPressed: _toggleBackdropLayerVisibility)),
         ));
     return DefaultTabController(
         length: 2,
@@ -179,7 +176,6 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
           extendBody: true,
           appBar: appBar,
           body: LayoutBuilder(builder: _buildStack),
-        )
-    );
+        ));
   }
 }

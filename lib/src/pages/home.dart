@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:swingo/src/components/backdrop/backlayer.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/filter.dart';
-
+import 'package:swingo/src/pages/pages.dart';
 import 'frontlayer.dart';
-import 'list.dart';
 
 class HomePage extends StatefulWidget {
   final Filter filter;
@@ -32,8 +31,8 @@ class _HomePageState extends State<HomePage> {
       body: Backdrop(
         currentFilter: _currentFilter,
         frontLayer: <FrontlayerPage>[
-          FrontlayerPage(title: 'Send', child: ListPage()),
-          FrontlayerPage(title: 'Carry', child: ListPage()),
+          FrontlayerPage(title: 'Senders', child: BidsScreen()),
+          FrontlayerPage(title: 'Carriers', child: BidsScreen()),
         ],
         backLayer: FilterMenuPage(
           currentFilter: _currentFilter,

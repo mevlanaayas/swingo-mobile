@@ -123,6 +123,21 @@ const TextStyle itemDetailCityStyle = TextStyle(
   color: secondaryColor,
 );
 
+const TextStyle itemMenuTabStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 15,
+  color: Colors.deepPurple,
+  fontWeight: FontWeight.w900
+);
+
+
+const TextStyle itemFrontLayerTitleStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 14,
+  color: Colors.deepPurple,
+  fontWeight: FontWeight.bold,
+);
+
 const TextStyle contentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 16,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/pages/frontlayer.dart';
+import 'package:swingo/src/theme/style.dart';
 
 class FrontLayer extends StatelessWidget {
   const FrontLayer({Key key, this.children, this.onTap, this.tabController}) : super(key: key);
@@ -12,7 +13,6 @@ class FrontLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget _buildFrontLayer(FrontlayerPage frontlayerPage, BuildContext context){
       return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           SizedBox(height: 5.0),
           GestureDetector(
@@ -20,14 +20,11 @@ class FrontLayer extends StatelessWidget {
             onTap: onTap,
             child: Text(
               frontlayerPage.title,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0),
+              style: itemFrontLayerTitleStyle,
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(height: 5.0),
-          Divider(),
           Expanded(
             child: frontlayerPage.child,
           ),
