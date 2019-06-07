@@ -38,38 +38,36 @@ class _SignInScreenState extends State<SignInScreen> {
       body: Container(
         constraints: const BoxConstraints(minWidth: double.infinity),
         color: contentColor,
-        child: Stack(children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top,
-              bottom: MediaQuery.of(context).padding.bottom + 33,
-            ),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: ButtonTheme(
-                      minWidth: 0,
-                      child: FlatButton(
-                        padding: const EdgeInsets.all(0),
-                        shape: null,
-                        onPressed: () => Navigator.pop(context, null),
-                        child: const Icon(
-                          FontAwesomeIcons.chevronLeft,
-                          color: secondaryColor,
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top,
+                bottom: MediaQuery.of(context).padding.bottom + 33,
+              ),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: ButtonTheme(
+                        minWidth: 0,
+                        child: FlatButton(
+                          padding: const EdgeInsets.all(0),
+                          shape: null,
+                          onPressed: () => Navigator.pop(context, null),
+                          child: const Icon(
+                            FontAwesomeIcons.chevronLeft,
+                            color: secondaryColor,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: SignInScreen._horizontalPadding),
-                    child: ConstrainedBox(
-                      constraints:
-                          const BoxConstraints(maxWidth: modalMaxWidth),
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: SignInScreen._horizontalPadding),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -85,11 +83,6 @@ class _SignInScreenState extends State<SignInScreen> {
                             obscureText: false,
                           ),
                           const SizedBox(height: 12),
-                          // following container behaves like divider
-                          Container(
-                            height: 2,
-                            color: Colors.white.withOpacity(0.19),
-                          ),
                           SwInputText(
                             onFieldSubmitted: (term) {
                               _fieldFocusChange(context, _passwordFocus, null);
@@ -100,43 +93,21 @@ class _SignInScreenState extends State<SignInScreen> {
                             hintText: "Password",
                             obscureText: false,
                           ),
-                          const SizedBox(height: 60),
-                          /*
-                          ConstrainedBox(
-                            constraints:
-                                const BoxConstraints(minWidth: double.infinity),
-                            child: WelcomeButton(
-                                onPressed: _submit,
-                                background: primaryColor,
-                                icon: FontAwesomeIcons.signInAlt,
-                                label: 'Sign In'),
-                          ),
-                         
-                           */
+                          const SizedBox(height: 12),
+                          WelcomeButton(
+                              onPressed: _submit,
+                              background: primaryColor,
+                              icon: FontAwesomeIcons.signInAlt,
+                              label: 'Sign In'),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: Container(
-              padding: EdgeInsets.all(0),
-              color: primaryColor,
-              height: MediaQuery.of(context).size.height / 7,
-              width: MediaQuery.of(context).size.width,
-              child: WelcomeButton(
-                  onPressed: _submit,
-                  background: primaryColor,
-                  icon: FontAwesomeIcons.signInAlt,
-                  label: 'Sign In'),
-            ),
-          )
-        ]),
+          ],
+        ),
       ),
     );
   }

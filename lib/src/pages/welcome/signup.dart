@@ -126,19 +126,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               faIcon: FontAwesomeIcons.unlockAlt,
                               obscureText: true,
                             ),
-                            const SizedBox(height: 60),
-                            /*
-                            const SizedBox(height: 23),
-                            ConstrainedBox(
-                              constraints: const BoxConstraints(
-                                  minWidth: double.infinity),
-                              child: WelcomeButton(
-                                  onPressed: _submit,
-                                  background: primaryColor,
-                                  icon: FontAwesomeIcons.signInAlt,
-                                  label: 'Sign Up'),
-                            ),
-                            */
+                            const SizedBox(height: 12),
+                            WelcomeButton(
+                                onPressed: _submit,
+                                background: secondaryColor,
+                                icon: FontAwesomeIcons.userCheck,
+                                label: 'Sign Up'),
                           ],
                         ),
                       ),
@@ -147,21 +140,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.all(0),
-                color: primaryColor,
-                height: MediaQuery.of(context).size.height / 7,
-                width: MediaQuery.of(context).size.width,
-                child: WelcomeButton(
-                    onPressed: _submit,
-                    background: primaryColor,
-                    icon: FontAwesomeIcons.signInAlt,
-                    label: 'Sign Up'),
-              ),
-            )
           ],
         ),
       ),
