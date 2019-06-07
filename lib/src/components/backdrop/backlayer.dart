@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:swingo/src/models/filter.dart';
 import 'package:swingo/src/pages/frontlayer.dart';
 import 'package:swingo/src/theme/colors.dart';
+import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
 
 import 'frontlayer.dart';
@@ -115,67 +116,74 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
     }
 
     var appBar = PreferredSize(
-        // TODO: inanıyorsan +8.0'ı kaldır
-        preferredSize: Size.fromHeight(kToolbarHeight + 8.0),
-        child: Container(
-          color: altDarkBlue,
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: AppBar(
-              brightness: Brightness.light,
-              elevation: 0.0,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Container(
-                  padding: EdgeInsets.only(left: 70.0, right: 25.0),
-                  child: SafeArea(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        TabBar(
-                          unselectedLabelColor:
-                              Colors.deepPurple.withOpacity(0.6),
-                          /*indicator: BoxDecoration(
+      // TODO: inanıyorsan +8.0'ı kaldır
+      preferredSize: Size.fromHeight(kToolbarHeight + 8.0),
+      child: Container(
+        color: altDarkBlue,
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: AppBar(
+          brightness: Brightness.light,
+          elevation: 0.0,
+          flexibleSpace: FlexibleSpaceBar(
+            title: Container(
+              // padding: EdgeInsets.only(left: 70.0, right: 25.0),
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TabBar(
+                      unselectedLabelColor: Colors.deepPurple.withOpacity(0.6),
+                      /*indicator: BoxDecoration(
                               border:
                                   Border.all(color: altDeepPurple, width: 2.0),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(40.0))),
                           indicatorWeight: 0.0,*/
-                          indicatorColor: altDeepPurple,
-                          controller: _tabController,
-                          tabs: [
-                            Tab(
-                                child: Text('Send',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0))),
-                            Tab(
-                                child: Text('Carry',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20.0))),
-                          ],
-                        )
+                      indicatorColor: altDeepPurple,
+                      controller: _tabController,
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            'Senders',
+                            style: itemMenuTabStyle,
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            'Carriers',
+                            style: itemMenuTabStyle,
+                          ),
+                        ),
                       ],
-                    ),
-                  ),
+                    )
+                  ],
                 ),
-                centerTitle: true,
-                collapseMode: CollapseMode.parallax,
               ),
-              centerTitle: true,
-              leading: IconButton(
-                  icon: new AnimatedIcon(
-                      size: 30,
-                      icon: AnimatedIcons.close_menu,
-                      progress: _controller.view),
-                  onPressed: _toggleBackdropLayerVisibility)),
-        ));
+            ),
+            centerTitle: true,
+            collapseMode: CollapseMode.parallax,
+          ),
+          centerTitle: true,
+          /*
+          leading: IconButton(
+              icon: new AnimatedIcon(
+                  size: 30,
+                  icon: AnimatedIcons.close_menu,
+                  progress: _controller.view),
+              onPressed: _toggleBackdropLayerVisibility),
+           */
+        ),
+      ),
+    );
     return DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          extendBody: true,
-          appBar: appBar,
-          body: LayoutBuilder(builder: _buildStack),
-        ));
+      length: 2,
+      child: Scaffold(
+        extendBody: true,
+        appBar: appBar,
+        body: LayoutBuilder(builder: _buildStack),
+      ),
+    );
   }
 }
