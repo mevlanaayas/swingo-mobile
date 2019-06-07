@@ -124,18 +124,24 @@ const TextStyle itemDetailCityStyle = TextStyle(
 );
 
 const TextStyle itemMenuTabStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
-  fontSize: 15,
-  color: Colors.deepPurple,
-  fontWeight: FontWeight.w900
-);
-
+    fontFamily: 'MontserratRegular',
+    fontSize: 15,
+    color: Colors.deepPurple,
+    fontWeight: FontWeight.w900);
 
 const TextStyle itemFrontLayerTitleStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 14,
   color: Colors.deepPurple,
   fontWeight: FontWeight.bold,
+);
+
+const TextStyle profileCardTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 14,
+  color: Colors.deepPurple,
+  fontWeight: FontWeight.w600,
+  letterSpacing: 1.5
 );
 
 const TextStyle contentStyle = TextStyle(

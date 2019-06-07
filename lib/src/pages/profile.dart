@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/sw_card.dart';
 import 'package:swingo/src/theme/style.dart';
 
@@ -26,11 +27,23 @@ class ProfileScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Expanded(child: MenuItem()),
+                  Expanded(
+                    child: MenuItem(
+                      toRoute: "/chat",
+                      icon: FontAwesomeIcons.envelope,
+                      text: "Messages",
+                    ),
+                  ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 25,
                   ),
-                  Expanded(child: MenuItem()),
+                  Expanded(
+                    child: MenuItem(
+                      toRoute: "/orders",
+                      icon: Icons.content_paste,
+                      text: "Orders",
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
@@ -39,11 +52,23 @@ class ProfileScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Expanded(child: MenuItem()),
+                  Expanded(
+                    child: MenuItem(
+                      toRoute: "/bids",
+                      icon: FontAwesomeIcons.dollarSign,
+                      text: "Bids",
+                    ),
+                  ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 25,
                   ),
-                  Expanded(child: MenuItem()),
+                  Expanded(
+                    child: MenuItem(
+                      toRoute: "/settings",
+                      icon: FontAwesomeIcons.userCog,
+                      text: "Settings",
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
@@ -52,11 +77,23 @@ class ProfileScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Expanded(child: MenuItem()),
+                  Expanded(
+                    child: MenuItem(
+                      toRoute: "/matches",
+                      icon: FontAwesomeIcons.equals,
+                      text: "Matches",
+                    ),
+                  ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 25,
                   ),
-                  Expanded(child: MenuItem()),
+                  Expanded(
+                    child: MenuItem(
+                      toRoute: "/logout",
+                      icon: FontAwesomeIcons.signOutAlt,
+                      text: "Sign Out",
+                    ),
+                  ),
                 ],
               ),
               SizedBox(

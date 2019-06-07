@@ -191,13 +191,19 @@ class SlideTopRoute extends PageRouteBuilder {
 }
 
 class MenuItem extends StatefulWidget {
+  final String toRoute;
+  final IconData icon;
+  final String text;
+
+  MenuItem({this.toRoute, this.icon, this.text});
+
   @override
   _MenuItemState createState() => _MenuItemState();
 }
 
 class _MenuItemState extends State<MenuItem> {
-  Future<void> _handleTap(BuildContext context) async {
-    print("ok");
+  Future<void> _handleTap(BuildContext context, String toRoute) async {
+    print(toRoute);
   }
 
   @override
@@ -211,15 +217,17 @@ class _MenuItemState extends State<MenuItem> {
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           splashColor: Colors.transparent,
-          onTap: () => _handleTap(context),
+          onTap: () => _handleTap(context, widget.toRoute),
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(FontAwesomeIcons.user),
-                SizedBox(height: 10.0,),
-                Text("profile")
+                Icon(widget.icon),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(widget.text, style: profileCardTextStyle,)
               ],
             ),
           ),
