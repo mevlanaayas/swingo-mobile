@@ -5,6 +5,18 @@ import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';
 
+BoxDecoration get _cardItemDecoration => BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            offset: const Offset(0, 10),
+            blurRadius: 10,
+            spreadRadius: 0),
+      ],
+      borderRadius: const BorderRadius.all(Radius.circular(9)),
+      color: Colors.white,
+    );
+
 class ListItem extends StatefulWidget {
   final Order item;
 
@@ -15,7 +27,6 @@ class ListItem extends StatefulWidget {
 }
 
 class _ListItemState extends State<ListItem> {
-
   Widget _buildHeading() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,19 +123,6 @@ class _ListItemState extends State<ListItem> {
 
   bool isExpanded = false;
 
-  BoxDecoration get listItemDecoration => BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black.withOpacity(0.03),
-              offset: const Offset(0, 10),
-              blurRadius: 10,
-              spreadRadius: 0),
-        ],
-        // border: isExpanded ? Border.all(color: primaryColor) : null,
-        borderRadius: const BorderRadius.all(Radius.circular(9)),
-        color: Colors.white,
-      );
-
   Future<void> _handleTap(BuildContext context, Order item) async {
     Navigator.push(
       context,
@@ -137,7 +135,7 @@ class _ListItemState extends State<ListItem> {
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
       child: Container(
-        decoration: listItemDecoration,
+        decoration: _cardItemDecoration,
         child: Material(
           elevation: 0.0,
           type: MaterialType.transparency,
@@ -190,4 +188,43 @@ class SlideTopRoute extends PageRouteBuilder {
                 child: child,
               ),
         );
+}
+
+class MenuItem extends StatefulWidget {
+  @override
+  _MenuItemState createState() => _MenuItemState();
+}
+
+class _MenuItemState extends State<MenuItem> {
+  Future<void> _handleTap(BuildContext context) async {
+    print("ok");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: _cardItemDecoration,
+      child: Material(
+        elevation: 0.0,
+        type: MaterialType.transparency,
+        borderRadius: const BorderRadius.all(Radius.circular(9)),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          splashColor: Colors.transparent,
+          onTap: () => _handleTap(context),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(FontAwesomeIcons.user),
+                SizedBox(height: 10.0,),
+                Text("profile")
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
