@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swingo/src/theme/colors.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class SwIconButton extends StatelessWidget {
