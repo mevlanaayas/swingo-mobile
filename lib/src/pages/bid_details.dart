@@ -82,34 +82,58 @@ class DetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              "frC",
-              style: itemBodyTextContentStyle,
+              item.from_city,
+              style: itemDetailCityStyle,
             ),
+            const Icon(FontAwesomeIcons.chevronRight),
             Text(
-              "frD",
-              style: itemBodyDateContentStyle,
-            ),
-            Text(
-              "icon-dizayn",
-              style: itemBodyTextContentStyle,
-            ),
-            Text(
-              "toC",
-              style: itemBodyTextContentStyle,
-            ),
-            Text(
-              "toD",
-              style: itemBodyDateContentStyle,
+              item.to_city,
+              style: itemDetailCityStyle,
             )
           ],
         ),
         const SizedBox(height: 15),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text(
-              "Details",
-              style: itemBodyDetailContentStyle,
-            )
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(
+                      "Dates",
+                      style: itemBodyDateContentStyle,
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(
+                      dateVerboseFormatter.format(item.from_date),
+                      style: itemBodyDateContentStyle,
+                    ),
+                    const SizedBox(
+                      width: 5.0,
+                    ),
+                    const Text(
+                      "~",
+                      style: itemBodyDateContentStyle,
+                    ),
+                    const SizedBox(
+                      width: 5.0,
+                    ),
+                    Text(
+                      dateVerboseFormatter.format(item.to_date),
+                      style: itemBodyDateContentStyle,
+                    )
+                  ],
+                )
+              ],
+            ),
           ],
         ),
       ],
@@ -135,6 +159,7 @@ class DetailScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Align(
                           alignment: Alignment.topLeft,
@@ -152,6 +177,40 @@ class DetailScreen extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(right:8.0),
+                          child: Material(
+                            elevation: 0.0,
+                            type: MaterialType.transparency,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(9)),
+                            clipBehavior: Clip.antiAlias,
+                            child: InkWell(
+                              hoverColor: Colors.deepPurple,
+                              splashColor: Colors.transparent,
+                              onTap: () => print(item.created_by),
+                              child: Padding(
+                                padding: EdgeInsets.all(10.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    item.created_by.length > 20
+                                        ? Text(
+                                            item.created_by.substring(0, 20) +
+                                                "...",
+                                            style: itemUsernameContentStyle,
+                                          )
+                                        : Text(
+                                            item.created_by,
+                                            style: itemUsernameContentStyle,
+                                          ),
+                                    const SizedBox(width: 5.0,),
+                                    const Icon(FontAwesomeIcons.user, size: 15)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     const Divider(),
@@ -189,11 +248,7 @@ class DetailScreen extends StatelessWidget {
               Container(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    children: <Widget>[
-                      _buildPackageDetails(),
-                    ],
-                  ),
+                  child: _buildPackageDetails(),
                 ),
               ),
               Container(
