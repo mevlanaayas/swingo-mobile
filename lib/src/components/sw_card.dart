@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
+import 'package:swingo/src/theme/colors.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';
 
@@ -223,7 +224,7 @@ class _MenuItemState extends State<MenuItem> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(widget.icon),
+                Icon(widget.icon, color: bugColor,),
                 SizedBox(
                   height: 10.0,
                 ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/sw_app.dart';
 import 'package:swingo/src/pages/pages.dart';
-import 'package:swingo/src/theme/themes.dart';
 import 'package:swingo/src/pages/welcome/welcome.dart';
 
 void main() {
@@ -13,7 +12,6 @@ class MainApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: swTheme,
       home: SwApp(),
       routes: {
         '/route': (context) => WelcomeScreen(),

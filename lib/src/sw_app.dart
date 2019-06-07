@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/components/sw_navbar.dart';
 import 'package:swingo/src/components/sw_button.dart';
+import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
 
 class SwApp extends StatefulWidget {
@@ -110,7 +111,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
   Widget _buildCreateButton(){
     return FloatingActionButton(
       elevation: 1.0,
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: primaryColor,
       child: new AnimatedIcon(
           size: 30,
           icon: AnimatedIcons.add_event,

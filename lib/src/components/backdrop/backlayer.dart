@@ -119,9 +119,10 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
       // TODO: inanıyorsan +8.0'ı kaldır
       preferredSize: Size.fromHeight(kToolbarHeight + 8.0),
       child: Container(
-        color: altDarkBlue,
+        color: primaryColor50,
         padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: AppBar(
+          backgroundColor: Colors.transparent,
           brightness: Brightness.light,
           elevation: 0.0,
           flexibleSpace: FlexibleSpaceBar(
@@ -134,14 +135,14 @@ class _BackdropState extends State<Backdrop> with TickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     TabBar(
-                      unselectedLabelColor: Colors.deepPurple.withOpacity(0.6),
+                      unselectedLabelColor: Color(0xFFFF00FF).withOpacity(0.6),
                       /*indicator: BoxDecoration(
                               border:
                                   Border.all(color: altDeepPurple, width: 2.0),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(40.0))),
                           indicatorWeight: 0.0,*/
-                      indicatorColor: altDeepPurple,
+                      indicatorColor: bugColor,
                       controller: _tabController,
                       tabs: [
                         Tab(

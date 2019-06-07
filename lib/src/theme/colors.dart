@@ -15,4 +15,4 @@ final Color kswBackgroundWhite = Colors.white;
 
 const Color altDarkGrey = Colors.black38;
 const Color altDarkBlue = Color(0xFF8DDBD1);
-const Color altDeepPurple = Colors.deepPurple;
+const Color altDeepPurple = Color(0xFFFF00FF);

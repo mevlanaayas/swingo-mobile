@@ -126,20 +126,23 @@ const TextStyle itemDetailCityStyle = TextStyle(
 const TextStyle itemMenuTabStyle = TextStyle(
     fontFamily: 'MontserratRegular',
     fontSize: 15,
-    color: Colors.deepPurple,
+    color: bugColor,
+    // color: Color(0xFFFF00FF),
     fontWeight: FontWeight.w900);
 
 const TextStyle itemFrontLayerTitleStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 14,
-  color: Colors.deepPurple,
+  color: bugColor,
+  // color: Color(0xFFFF00FF),
   fontWeight: FontWeight.bold,
 );
 
 const TextStyle profileCardTextStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 14,
-  color: Colors.deepPurple,
+  color: skillTextColor,
+  // color: Color(0xFFFF00FF),
   fontWeight: FontWeight.w600,
   letterSpacing: 1.5
 );
