@@ -19,7 +19,12 @@ ThemeData _buildMyTheme() {
       primaryTextTheme: _buildMyTextTheme(base.primaryTextTheme),
       accentTextTheme: _buildMyTextTheme(base.accentTextTheme),
       primaryIconTheme: base.iconTheme.copyWith(color: altDeepPurple),
-      inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder()));
+      inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0))
+          )
+      )
+  );
 }
 
 TextTheme _buildMyTextTheme(TextTheme base) {
