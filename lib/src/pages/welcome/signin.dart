@@ -117,44 +117,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                   ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: SignInScreen._horizontalPadding,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'DESIGNED BY',
-                            style: TextStyle(
-                                fontFamily: 'MontserratMedium', fontSize: 12),
-                          ),
-                          const SizedBox(height: 11),
-                          Image.asset('assets/images/flare_logo.png'),
-                          const SizedBox(height: 32),
-                          const Text(
-                            'BUILT WITH',
-                            style: TextStyle(
-                                fontFamily: 'MontserratMedium', fontSize: 12),
-                          ),
-                          const SizedBox(height: 11),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset('assets/images/flutter_logo.png',
-                                  height: 45, width: 37),
-                              Container(
-                                margin: const EdgeInsets.only(left: 5),
-                                child: Text(
-                                  'Flutter',
-                                  style: TextStyle(
-                                      fontSize: 26, color: primaryColor),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ))
                 ],
               ),
             ),

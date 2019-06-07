@@ -14,7 +14,7 @@ class SwApp extends StatefulWidget {
 
 class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
   AnimationController _fabAnimationController;
-  final isLoggedIn = true; //todo: backendden alınması gerekiyor
+  final isLoggedIn = false; //todo: backendden alınması gerekiyor
   int _currentNavBarIndex = 0;
 
   @override
