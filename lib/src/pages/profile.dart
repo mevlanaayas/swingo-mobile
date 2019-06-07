@@ -16,21 +16,6 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: ButtonTheme(
-                  minWidth: 0,
-                  child: FlatButton(
-                    padding: const EdgeInsets.all(0),
-                    shape: null,
-                    onPressed: () => Navigator.pop(context, null),
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
               Text("Profile")
             ],
           ),

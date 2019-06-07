@@ -31,8 +31,8 @@ class _HomePageState extends State<HomePage> {
       body: Backdrop(
         currentFilter: _currentFilter,
         frontLayer: <FrontlayerPage>[
-          FrontlayerPage(title: 'Senders', child: BidsScreen()),
-          FrontlayerPage(title: 'Carriers', child: BidsScreen()),
+          FrontlayerPage(title: 'Senders', child: ListScreen('senders')),
+          FrontlayerPage(title: 'Carriers', child: ListScreen('carriers')),
         ],
         backLayer: FilterMenuPage(
           currentFilter: _currentFilter,
