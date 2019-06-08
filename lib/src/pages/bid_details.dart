@@ -147,7 +147,6 @@ class DetailScreen extends StatelessWidget {
                                 const BorderRadius.all(Radius.circular(9)),
                             clipBehavior: Clip.antiAlias,
                             child: InkWell(
-                              hoverColor: Colors.deepPurple,
                               splashColor: Colors.transparent,
                               onTap: () => print(item.created_by),
                               child: Padding(

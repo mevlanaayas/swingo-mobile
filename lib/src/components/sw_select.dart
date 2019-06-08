@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 
+import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/components/sw_search.dart';
 
 class SwSelect extends StatefulWidget{
+  final text;
   final List<dynamic> list;
-  final onChanged;
   final String labelText;
-  final Widget prefixIcon;
+  final IconData prefixIcon;
+  final onSelected;
+  final onSearchChanged;
 
-  SwSelect({this.list, this.onChanged, this.labelText, this.prefixIcon});
+  SwSelect({
+    this.text,
+    this.list,
+    this.onSelected,
+    this.labelText,
+    this.prefixIcon,
+    this.onSearchChanged
+  });
 
   @override
   State<StatefulWidget> createState() {
@@ -18,12 +28,17 @@ class SwSelect extends StatefulWidget{
 
 class SwSelectState extends State<SwSelect>{
   FocusNode focusNode;
+  TextEditingController textEditingController = TextEditingController();
 
-  void _navigateToSearh(){
-    Navigator.push(
+  void _navigateToSearch() async{
+    final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SwSearch()),
+      MaterialPageRoute(builder: (context) => SwSearch(onSearchChanged: widget.onSearchChanged)),
     );
+
+    if(result != null){
+      widget.onSelected(result);
+    }
   }
 
   @override
@@ -40,19 +55,27 @@ class SwSelectState extends State<SwSelect>{
 
   @override
   Widget build(BuildContext context) {
+    textEditingController.text = widget.text;
     focusNode.addListener((){
       if(focusNode.hasFocus){
         focusNode.unfocus();
-        _navigateToSearh();
+        _navigateToSearch();
       }
     });
     return TextFormField(
       focusNode: focusNode,
+      style: TextStyle(color: secondaryColor),
       decoration: new InputDecoration(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+            borderSide: BorderSide(color: primaryColor, width: 1.0)
+          ),
           labelText: widget.labelText,
-          prefixIcon: widget.prefixIcon,
-          suffixIcon: Icon(Icons.arrow_drop_down)
+          labelStyle: TextStyle(color: primaryColor),
+          prefixIcon: Icon(widget.prefixIcon, color: primaryColor),
+          suffixIcon: Icon(Icons.arrow_drop_down, color: primaryColor)
       ),
+      controller: textEditingController,
     );
   }
 }
