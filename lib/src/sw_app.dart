@@ -101,8 +101,6 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
       onTabSelected: _updateNavBarIndex,
       items: [
         NavBarItem(iconData: Icons.home, text: 'Home'),
-        NavBarItem(iconData: Icons.content_paste, text: 'Orders'),
-        NavBarItem(iconData: Icons.monetization_on, text: 'Bids'),
         NavBarItem(iconData: Icons.account_circle, text: 'Profile'),
       ],
     );
@@ -127,9 +125,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
 
     switch (_currentNavBarIndex){
       case 0: { page = HomePage(); } break;
-      case 1: { page = OrdersScreen(); } break;
-      case 2: { page = BidsScreen(); } break;
-      case 3: { page = ProfileScreen(); } break;
+      case 1: { page = ProfileScreen(); } break;
     }
     stack = _buildStackContents(page, fadeAnimation, true);
 

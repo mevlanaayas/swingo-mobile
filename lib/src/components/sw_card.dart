@@ -177,6 +177,7 @@ class MenuItem extends StatefulWidget {
 class _MenuItemState extends State<MenuItem> {
   Future<void> _handleTap(BuildContext context, String toRoute) async {
     print(toRoute);
+    Navigator.of(context).pushNamed(toRoute);
   }
 
   @override

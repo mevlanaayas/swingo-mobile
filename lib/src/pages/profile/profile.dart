@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/sw_card.dart';
+import 'package:swingo/src/pages/pages.dart';
+import 'package:swingo/src/pages/profile/base.dart';
+import 'package:swingo/src/pages/profile/chat.dart';
+import 'package:swingo/src/pages/profile/matches.dart';
+import 'package:swingo/src/pages/profile/settings.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -28,8 +33,8 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
-                    child: MenuItem(
-                      toRoute: "/chat",
+                    child: HomeItem(
+                      toPage: BaseProfile(child: ChatPage(), type: "Messages"),
                       icon: FontAwesomeIcons.envelope,
                       text: "Messages",
                     ),
@@ -38,8 +43,9 @@ class ProfileScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width / 25,
                   ),
                   Expanded(
-                    child: MenuItem(
-                      toRoute: "/orders",
+                    child: HomeItem(
+                      toPage:
+                          BaseProfile(child: OrdersScreen(), type: "Orders"),
                       icon: Icons.content_paste,
                       text: "Orders",
                     ),
@@ -53,8 +59,8 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
-                    child: MenuItem(
-                      toRoute: "/bids",
+                    child: HomeItem(
+                      toPage: BaseProfile(child: BidsScreen(), type: "Bids"),
                       icon: FontAwesomeIcons.dollarSign,
                       text: "Bids",
                     ),
@@ -63,8 +69,9 @@ class ProfileScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width / 25,
                   ),
                   Expanded(
-                    child: MenuItem(
-                      toRoute: "/settings",
+                    child: HomeItem(
+                      toPage: BaseProfile(
+                          child: SettingsScreen(), type: "Settings"),
                       icon: FontAwesomeIcons.userCog,
                       text: "Settings",
                     ),
@@ -78,8 +85,9 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
-                    child: MenuItem(
-                      toRoute: "/matches",
+                    child: HomeItem(
+                      toPage:
+                          BaseProfile(child: MatchesScreen(), type: "Matches"),
                       icon: FontAwesomeIcons.equals,
                       text: "Matches",
                     ),
@@ -89,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: MenuItem(
-                      toRoute: "/logout",
+                      toRoute: "/route",
                       icon: FontAwesomeIcons.signOutAlt,
                       text: "Sign Out",
                     ),

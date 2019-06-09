@@ -227,7 +227,6 @@ class BidsScreen extends StatelessWidget {
             color: primaryColor50,
             child: Padding(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top,
                 bottom: MediaQuery.of(context).padding.bottom,
               ),
               child: Column(
