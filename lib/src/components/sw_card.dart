@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
-import 'package:swingo/src/theme/colors.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';
+import 'package:swingo/src/utils/sliders.dart';
 
 BoxDecoration get _cardItemDecoration => BoxDecoration(
       boxShadow: [
@@ -163,34 +163,6 @@ class _ListItemState extends State<ListItem> {
   }
 }
 
-// from https://github.com/divyanshub024/Flutter-page-route-transition
-class SlideTopRoute extends PageRouteBuilder {
-  final Widget page;
-
-  SlideTopRoute({this.page})
-      : super(
-          pageBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) =>
-              page,
-          transitionsBuilder: (
-            BuildContext context,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-            Widget child,
-          ) =>
-              SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0, 1),
-                  end: Offset.zero,
-                ).animate(animation),
-                child: child,
-              ),
-        );
-}
-
 class MenuItem extends StatefulWidget {
   final String toRoute;
   final IconData icon;
@@ -219,6 +191,57 @@ class _MenuItemState extends State<MenuItem> {
         child: InkWell(
           splashColor: Colors.transparent,
           onTap: () => _handleTap(context, widget.toRoute),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(widget.icon, color: bugColor,),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Text(widget.text, style: profileCardTextStyle,)
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class HomeItem extends StatefulWidget {
+  final Widget toPage;
+  final IconData icon;
+  final String text;
+
+  HomeItem({this.toPage, this.icon, this.text});
+
+  @override
+  _HomeItemState createState() => _HomeItemState();
+}
+
+class _HomeItemState extends State<HomeItem> {
+  Future<void> _handleTap(BuildContext context) async {
+    Navigator.push(
+      context,
+      SlideRightRoute(page: widget.toPage),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: _cardItemDecoration,
+      child: Material(
+        elevation: 0.0,
+        type: MaterialType.transparency,
+        borderRadius: const BorderRadius.all(Radius.circular(9)),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          splashColor: Colors.transparent,
+          onTap: () => _handleTap(context),
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: Column(

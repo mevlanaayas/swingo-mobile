@@ -228,7 +228,7 @@ class BidsScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top,
-                bottom: MediaQuery.of(context).padding.bottom + 33,
+                bottom: MediaQuery.of(context).padding.bottom,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
@@ -286,12 +287,14 @@ class ListScreen extends StatelessWidget {
 
   void _buildSection(List<Widget> slivers, double scale, List<Order> items) {
     if (items.isNotEmpty) {
-      slivers.add(SliverList(
-        delegate: SliverChildBuilderDelegate((context, index) {
-          Order item = items[index];
-          return ListItem(item: item);
-        }, childCount: items.length),
-      ));
+      slivers.add(
+        SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+            Order item = items[index];
+            return ListItem(item: item);
+          }, childCount: items.length),
+        ),
+      );
     }
   }
 
@@ -303,20 +306,43 @@ class ListScreen extends StatelessWidget {
         ? _buildSection(slivers, scale, senders)
         : _buildSection(slivers, scale, carriers);
     return Scaffold(
-        body: Container(
-            constraints: const BoxConstraints(minWidth: double.infinity),
-            color: primaryColor50,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top,
-                bottom: MediaQuery.of(context).padding.bottom + 33,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        constraints: const BoxConstraints(minWidth: double.infinity),
+        color: primaryColor50,
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top,
+            bottom: MediaQuery.of(context).padding.bottom,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
                 children: <Widget>[
-                  Expanded(child: CustomScrollView(slivers: slivers)),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: ButtonTheme(
+                      minWidth: 0,
+                      child: FlatButton(
+                        splashColor: Colors.transparent,
+                        padding: const EdgeInsets.all(0),
+                        shape: null,
+                        onPressed: () => Navigator.pop(context, null),
+                        child: const Icon(
+                          FontAwesomeIcons.chevronLeft,
+                          color: secondaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Text(type.toUpperCase(), style: itemDetailHeadingStyle,)
                 ],
               ),
-            )));
+              Expanded(child: CustomScrollView(slivers: slivers)),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
