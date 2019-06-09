@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:swingo/src/models/city.dart';
+import 'package:swingo/src/models/packet_size.dart';
+import 'package:swingo/src/components/sw_button.dart';
 import 'package:swingo/src/components/sw_select.dart';
 import 'package:swingo/src/components/sw_datepicker.dart';
 import 'package:swingo/src/components/sw_formfield.dart';
@@ -11,6 +13,8 @@ class CreateOrderForm{ //todo: backenddeki fieldlar ile senkron olmalı.
   DateTime fromDate;
   DateTime toDate;
   int weight;
+  PacketSize size;
+  String details;
 }
 
 class CreateOrdersScreen extends StatefulWidget {
@@ -38,6 +42,10 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
 
   void _onWeightEditingCompleted(String weight) => setState(() => _form.weight = int.parse(weight));
 
+  void _onPacketSizeSelected(PacketSize size) => setState(() => _form.size = size);
+
+  void _onDetailsEditingCompleted(String details) => setState(() => _form.details = details);
+
   List<City> _onSearchChanged(String searchingText){ //todo: backendden alınan değer döndürülmeli
     if(searchingText == 'a'){
       return [
@@ -56,6 +64,16 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
     } else {
       return [];
     }
+  }
+
+  List<PacketSize> _onPacketSizeSearchChanged(String searchingText){
+    return [ //todo: backendden alınması gerekiyor
+      PacketSize(id: 0, name: 'Xsmall'),
+      PacketSize(id: 1, name: 'Small'),
+      PacketSize(id: 2, name: 'Medium'),
+      PacketSize(id: 3, name: 'Large'),
+      PacketSize(id: 4, name: 'Xlarge'),
+    ];
   }
 
   @override
@@ -102,16 +120,30 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
                         onEditingCompleted: _onWeightEditingCompleted,
                         isNumber: true,
                     ),
+                    SwSelect(
+                        prefixIcon: Icons.linear_scale,
+                        labelText: 'Size',
+                        onSelected: _onPacketSizeSelected,
+                        onSearchChanged: _onPacketSizeSearchChanged,
+                        hideSearchBar: true,
+                        text: (_form.size != null) ? _form.size.name : ''
+                    ),
+                    SwFormField(
+                      prefixIcon: Icons.event_note,
+                      labelText: 'Details',
+                      onEditingCompleted: _onDetailsEditingCompleted,
+                    ),
                     Center(
-                      child: RaisedButton(
+                      child: SwButton(
+                        text: 'Create',
+                        fillParent: true,
                         onPressed: () {
-                          if (_formKey.currentState.validate()) {
+                          if (_formKey.currentState.validate()) { //Todo: backende yollanacak
                             // If the form is valid, we want to show a Snackbar
                             print('valid data');
                           }
                         },
-                        child: Text('Submit'),
-                      ),
+                      )
                     ),
                   ],
                 ),

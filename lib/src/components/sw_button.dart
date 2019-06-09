@@ -18,48 +18,59 @@ class SwIconButton extends StatelessWidget {
 
 class SwButton extends StatelessWidget {
   const SwButton(
-      {@required this.onPressed, @required this.text, this.iconData});
+      {@required this.onPressed, @required this.text, this.iconData, this.fillParent});
 
   final GestureTapCallback onPressed;
   final String text;
   final IconData iconData;
+  final bool fillParent;
+
+  double _setWidth(BuildContext context){
+    if(this.fillParent != null && this.fillParent == true){
+      return MediaQuery.of(context).size.width;
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      color: primaryColor,
-      splashColor: primaryColor,
-      disabledColor: secondaryColor,
-      elevation: 1.0,
-      // TODO: add color palette and theming. arrange fillColor, splashColor etc
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: iconData == null
-              ? <Widget>[
-                  Text(
-                    text,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ]
-              : <Widget>[
-                  Icon(
-                    iconData,
-                  ),
-                  SizedBox(
-                    width: 8.0,
-                  ),
-                  Text(
-                    text,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
+    return SizedBox(
+      width: _setWidth(context),
+      child: RaisedButton(
+        color: primaryColor,
+        splashColor: primaryColor,
+        disabledColor: secondaryColor,
+        elevation: 1.0,
+        // TODO: add color palette and theming. arrange fillColor, splashColor etc
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: iconData == null
+                ? <Widget>[
+              Text(
+                text,
+                style: TextStyle(color: Colors.white),
+              ),
+            ]
+                : <Widget>[
+              Icon(
+                iconData,
+              ),
+              SizedBox(
+                width: 8.0,
+              ),
+              Text(
+                text,
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
         ),
+        onPressed: onPressed,
+        shape: StadiumBorder(),
       ),
-      onPressed: onPressed,
-      shape: StadiumBorder(),
     );
   }
 }

@@ -4,8 +4,9 @@ import 'package:swingo/src/theme/style.dart';
 
 class SwSearch extends StatefulWidget{
   dynamic onSearchChanged;
+  bool hideSearchBar;
 
-  SwSearch({this.onSearchChanged});
+  SwSearch({this.onSearchChanged, this.hideSearchBar});
 
   @override
   _SwSearchState createState() => _SwSearchState();
@@ -34,6 +35,9 @@ class _SwSearchState extends State<SwSearch> {
   }
 
   Widget _buildSearchField(){
+    if(widget.hideSearchBar != null && widget.hideSearchBar == true){
+      return null;
+    }
     return Container(
       margin: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
