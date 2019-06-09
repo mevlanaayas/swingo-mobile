@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:swingo/src/models/city.dart';
 import 'package:swingo/src/components/sw_select.dart';
 import 'package:swingo/src/components/sw_datepicker.dart';
+import 'package:swingo/src/components/sw_formfield.dart';
 
 class CreateOrderForm{ //todo: backenddeki fieldlar ile senkron olmalı.
   City fromCity;
   City toCity;
   DateTime fromDate;
   DateTime toDate;
+  int weight;
 }
 
 class CreateOrdersScreen extends StatefulWidget {
@@ -33,6 +35,8 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
   void _onFromDateSelected(DateTime fromDate) => setState(() => _form.fromDate = fromDate);
 
   void _onToDateSelected(DateTime toDate) => setState(() => _form.toDate = toDate);
+
+  void _onWeightEditingCompleted(String weight) => setState(() => _form.weight = int.parse(weight));
 
   List<City> _onSearchChanged(String searchingText){ //todo: backendden alınan değer döndürülmeli
     if(searchingText == 'a'){
@@ -60,7 +64,7 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
       body: SafeArea(
           child: Form(
             key: _formKey,
-            child: Container(
+            child: SingleChildScrollView(
               padding: EdgeInsets.all(MediaQuery.of(context).size.width / 10),
               child: Center(
                 child: Wrap(
@@ -91,6 +95,12 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
                         labelText: 'Date To',
                         onSelected: _onToDateSelected,
                         text: (_form.toDate != null) ? _form.toDate.toString() : ''
+                    ),
+                    SwFormField(
+                        prefixIcon: Icons.functions,
+                        labelText: 'Weight',
+                        onEditingCompleted: _onWeightEditingCompleted,
+                        isNumber: true,
                     ),
                     Center(
                       child: RaisedButton(
