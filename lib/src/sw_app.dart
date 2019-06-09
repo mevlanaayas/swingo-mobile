@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/components/sw_navbar.dart';
 import 'package:swingo/src/components/sw_button.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
+import 'package:provider/provider.dart';
 
 class SwApp extends StatefulWidget {
   @override
   State<SwApp> createState() => _SwAppState();
 }
 
-class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
+class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   AnimationController _fabAnimationController;
-  final isLoggedIn = true; //todo: backendden alınması gerekiyor
   int _currentNavBarIndex = 0;
 
   @override
@@ -28,7 +29,8 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
   }
 
   @override
-  void dispose() {// TODO: implement dispose
+  void dispose() {
+    // TODO: implement dispose
     super.dispose();
     _fabAnimationController.dispose();
   }
@@ -41,35 +43,30 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
 
   void _onFloatingActionButtonPressed() {
     _fabAnimationController.fling(
-        velocity: _isCreateOptionsActive ? -swFlingVelocity : swFlingVelocity
-    );
+        velocity: _isCreateOptionsActive ? -swFlingVelocity : swFlingVelocity);
   }
 
   void _updateNavBarIndex(int index) {
-    if(_currentNavBarIndex == index) return;
-    if(index != 0 && !isLoggedIn){
-      Navigator.of(context).pushNamed('/route');
-    } else {
-      setState(() {
-        _currentNavBarIndex = index;
-      });
-    }
+    if (_currentNavBarIndex == index) return;
+
+    setState(() {
+      _currentNavBarIndex = index;
+    });
   }
 
-  void _navigateToCreateOrders(int index){
-    if(!isLoggedIn){
-      Navigator.of(context).pushNamed('/route');
-    } else if(index == 0){
+  void _navigateToCreateOrders(int index) {
+    if (index == 0) {
       Navigator.of(context).pushNamed('/create-send-order');
-    } else if(index == 1){
+    } else if (index == 1) {
       Navigator.of(context).pushNamed('/create-carry-order');
     }
   }
 
-  Widget _buildCreateOptions(Animation animation){
+  Widget _buildCreateOptions(Animation animation) {
     return Container(
       alignment: Alignment.bottomCenter,
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 7.7),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 7.7),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -77,25 +74,19 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
           FadeTransition(
               opacity: animation,
               child: SwButton(
-                  onPressed: () => _navigateToCreateOrders(0),
-                  text: 'Send'
-              )
-          ),
+                  onPressed: () => _navigateToCreateOrders(0), text: 'Send')),
           Spacer(flex: 2),
           FadeTransition(
               opacity: animation,
               child: SwButton(
-                  onPressed: () =>  _navigateToCreateOrders(1),
-                  text: 'Carry'
-              )
-          ),
+                  onPressed: () => _navigateToCreateOrders(1), text: 'Carry')),
           Spacer(flex: 5),
         ],
       ),
     );
   }
 
-  Widget _buildNavigationBar(){
+  Widget _buildNavigationBar() {
     return NavBar(
       index: _currentNavBarIndex,
       onTabSelected: _updateNavBarIndex,
@@ -106,37 +97,45 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
     );
   }
 
-  Widget _buildCreateButton(){
+  Widget _buildCreateButton() {
     return FloatingActionButton(
       elevation: 1.0,
       backgroundColor: primaryColor,
       child: new AnimatedIcon(
           size: 30,
           icon: AnimatedIcons.add_event,
-          progress: _fabAnimationController.view
-      ),
+          progress: _fabAnimationController.view),
       onPressed: _onFloatingActionButtonPressed,
     );
   }
 
-  Widget _buildStack(Animation fadeAnimation){
+  Widget _buildStack(Animation fadeAnimation) {
     Widget page;
     Widget stack;
 
-    switch (_currentNavBarIndex){
-      case 0: { page = HomePage(); } break;
-      case 1: { page = ProfileScreen(); } break;
+    switch (_currentNavBarIndex) {
+      case 0:
+        {
+          page = HomePage();
+        }
+        break;
+      case 1:
+        {
+          page = ProfileScreen();
+        }
+        break;
     }
     stack = _buildStackContents(page, fadeAnimation, true);
 
     return stack;
   }
 
-  Widget _buildStackContents(Widget page, Animation fadeAnimation, bool isNavBarActive){
+  Widget _buildStackContents(
+      Widget page, Animation fadeAnimation, bool isNavBarActive) {
     Widget stack;
 
-    if(isNavBarActive){
-      stack =  Stack(
+    if (isNavBarActive) {
+      stack = Stack(
         children: <Widget>[
           page,
           _buildCreateOptions(fadeAnimation),
@@ -144,9 +143,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin{
       );
     } else {
       Stack(
-        children: <Widget>[
-          page
-        ],
+        children: <Widget>[page],
       );
     }
 
