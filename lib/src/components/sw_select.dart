@@ -9,20 +9,27 @@ class SwSelect extends StatelessWidget{
   final IconData prefixIcon;
   final onSelected;
   final onSearchChanged;
+  final hideSearchBar;
 
   SwSelect({
     this.text,
     this.onSelected,
     this.labelText,
     this.prefixIcon,
-    this.onSearchChanged
+    this.onSearchChanged,
+    this.hideSearchBar
   });
 
   _onFocused(BuildContext context, FocusNode focusNode) async {
     focusNode.unfocus();
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SwSearch(onSearchChanged: this.onSearchChanged)),
+      MaterialPageRoute(
+          builder: (context) => SwSearch(
+            onSearchChanged: this.onSearchChanged,
+            hideSearchBar: this.hideSearchBar,
+          )
+      ),
     );
 
     if(result != null){
