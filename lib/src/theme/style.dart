@@ -123,6 +123,12 @@ const TextStyle itemDetailCityStyle = TextStyle(
   color: secondaryColor,
 );
 
+const TextStyle packageDetailStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 18,
+  color: secondaryColor,
+);
+
 const TextStyle itemMenuTabStyle = TextStyle(
     fontFamily: 'MontserratRegular',
     fontSize: 15,

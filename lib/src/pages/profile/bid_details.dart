@@ -75,25 +75,65 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPackageDetails() {
+  Widget _buildPackageDetails(BuildContext context) {
     return Column(
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              item.from_city,
-              style: itemDetailCityStyle,
+              "Weight",
+              style: packageDetailStyle,
+            ),
+            const SizedBox(
+              width: 12.0,
+            ),
+            Text(
+              item.weight.toString(),
+              style: packageDetailStyle,
             ),
           ],
         ),
         const SizedBox(height: 15),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              "Dates",
+              "Size",
+              style: packageDetailStyle,
+            ),
+            const SizedBox(
+              width: 12.0,
+            ),
+            Text(
+              item.size,
               style: itemBodyDateContentStyle,
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        Row(
+          children: <Widget>[
+            Text(
+              "Price",
+              style: packageDetailStyle,
+            ),
+            const SizedBox(
+              width: 12.0,
+            ),
+            Text(
+              item.price.toString(),
+              style: itemBodyDateContentStyle,
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        Row(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: Text(
+                item.comments,
+                style: itemBodyDateContentStyle,
+              ),
             ),
           ],
         ),
@@ -210,7 +250,7 @@ class DetailScreen extends StatelessWidget {
               Container(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: _buildPackageDetails(),
+                  child: _buildPackageDetails(context),
                 ),
               ),
               Container(

@@ -15,14 +15,18 @@ class ListScreen extends StatelessWidget {
         120.0,
         "SMALL",
         20.0,
-        "There is a package to be delivered to Berlin. It is so small but heavy.",
+        "There is a package to be delivered to Berlin. It is so small but "
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+            "Sed ac consequat turpis. Sed ullamcorper sem nec lectus mattis "
+            "tempor. Praesent pulvinar sed. qweqeqweqweqeqweqweqwe"
+            "qweqeqweqweqeqweqweqw.",
         "status",
         DateTime.now(),
-        "mevlana",
+        "beni",
         DateTime.now(),
-        "mevlana",
+        "beni",
         DateTime.now(),
-        "mevlana",
+        "beni",
         false),
     Order(
         1,
@@ -335,7 +339,10 @@ class ListScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(type.toUpperCase(), style: itemDetailHeadingStyle,)
+                  Text(
+                    type.toUpperCase(),
+                    style: itemDetailHeadingStyle,
+                  )
                 ],
               ),
               Expanded(child: CustomScrollView(slivers: slivers)),
