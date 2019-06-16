@@ -4,14 +4,14 @@ import 'package:swingo/src/theme/style.dart';
 import 'package:flutter/material.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 
-class SignInScreen extends StatefulWidget{
+class SignInScreen extends StatefulWidget {
   static const double _horizontalPadding = 33;
 
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> with SwScreen{
+class _SignInScreenState extends State<SignInScreen> with SwScreen {
   String username;
   String password;
   final FocusNode _usernameFocus = FocusNode();
@@ -33,15 +33,15 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen{
     ;
   }
 
-  void _onUsernameEditingCompleted(String username){
+  void _onUsernameEditingCompleted(String username) {
     _fieldFocusChange(context, _usernameFocus, _passwordFocus);
     setState(() => this.username = username);
   }
 
-  void _onPasswordEditingCompleted(String password) => setState(() => this.password = password);
+  void _onPasswordEditingCompleted(String password) =>
+      setState(() => this.password = password);
 
-
-  Widget _buildAppBar(){
+  Widget _buildAppBar() {
     return Align(
       alignment: Alignment.topLeft,
       child: ButtonTheme(
@@ -59,15 +59,15 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen{
     );
   }
 
-  Widget _buildBody(BuildContext scaffoldContext){
+  Widget _buildBody(BuildContext scaffoldContext) {
     return Align(
       alignment: Alignment.topCenter,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: SignInScreen._horizontalPadding
-        ),
+            horizontal: SignInScreen._horizontalPadding),
         child: Wrap(
-          runSpacing: 20, //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
+          runSpacing: 20,
+          //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
           children: [
             SwFormField(
               prefixIcon: FontAwesomeIcons.user,
@@ -99,7 +99,10 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen{
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: this.buildAppbar(context),
-        body: new Builder(builder: (BuildContext scaffoldContext) => _buildBody(scaffoldContext)),
+        body: new Builder(
+            builder: (BuildContext scaffoldContext) => _buildBody(
+                  scaffoldContext,
+                )),
       ),
     );
   }

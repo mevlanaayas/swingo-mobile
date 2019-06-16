@@ -1,15 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:swingo/src/components/components.dart';
-import 'package:swingo/src/components/sw_welcome_button.dart';
-import 'package:swingo/src/theme/part_style.dart';
 import 'package:swingo/src/theme/style.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const double _horizontalPadding = 33;
+
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
@@ -21,20 +16,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   _onPressedHome() => Navigator.of(context).pop();
 
-  _buildBody(){
+  _buildBody() {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Align(
       alignment: Alignment.topCenter,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: WelcomeScreen._horizontalPadding
-        ),
+            horizontal: WelcomeScreen._horizontalPadding),
         child: Column(
           children: <Widget>[
-            SizedBox(
-                height: height / 20
-            ),
+            SizedBox(height: height / 20),
             Image.asset(
               'assets/images/swingo-logo.png',
               width: width / 4,
@@ -48,19 +40,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               onPressed: _onPressedSignIn,
               fillParent: true,
             ),
+            SizedBox(
+              height: 10,
+            ),
             SwButton(
               text: 'NEW USER',
               onPressed: _onPressedSignUp,
               fillParent: true,
             ),
             Padding(
-              padding: EdgeInsets.only(top: width / 20),
-              child: SwHyperlink(
-                onTap: _onPressedHome,
-                color: secondaryColor.withOpacity(0.8),
-                fontSize: 15,
-                label: 'Continue without logged in')
-            ),
+                padding: EdgeInsets.only(top: width / 20),
+                child: SwHyperlink(
+                  onTap: _onPressedHome,
+                  color: secondaryColor.withOpacity(0.8),
+                  fontSize: 15,
+                  label: 'Continue without logged in',
+                )),
           ],
         ),
       ),
@@ -73,9 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       backgroundImage: new AssetImage('assets/images/swingo-cloud.png'),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SafeArea(
-            child: _buildBody()
-        ),
+        body: SafeArea(child: _buildBody()),
       ),
     );
   }

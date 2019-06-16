@@ -19,9 +19,12 @@ class SwHyperlink extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Align(
-        alignment: Alignment.center,
-        child:  Text(label, style: TextStyle(color: color, fontSize: fontSize))
-    ),
+          alignment: Alignment.center,
+          child: Text(label,
+              style: TextStyle(
+                color: color,
+                fontSize: fontSize,
+              ))),
     );
   }
 }

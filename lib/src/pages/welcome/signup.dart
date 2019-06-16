@@ -12,7 +12,7 @@ class SignUpScreen extends StatefulWidget {
   _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> with SwScreen{
+class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
   String username;
   String email;
   String password;
@@ -26,12 +26,12 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen{
   void _submit(BuildContext context) {
     print("submitted start");
     print(AuthenticationService.signup(
-        this.showSnackBar(context),
-        username: username,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword)
-    );
+      this.showSnackBar(context),
+      username: username,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    ));
     print("submitted end");
   }
 
@@ -47,35 +47,35 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen{
     ;
   }
 
-  void _onUsernameEditingCompleted(String username){
+  void _onUsernameEditingCompleted(String username) {
     _fieldFocusChange(context, _usernameFocus, _emailFocus);
     setState(() => this.username = username);
   }
 
-  void _onEmailEditingCompleted(String email){
+  void _onEmailEditingCompleted(String email) {
     _fieldFocusChange(context, _emailFocus, _passwordFocus);
     setState(() => this.email = email);
   }
 
-  void _onPasswordEditingCompleted(String password){
+  void _onPasswordEditingCompleted(String password) {
     _fieldFocusChange(context, _passwordFocus, _passwordConfirmFocus);
     setState(() => this.password = password);
   }
 
-  void _onConfirmPasswordEditingCompleted(String confirmPassword){
+  void _onConfirmPasswordEditingCompleted(String confirmPassword) {
     _fieldFocusChange(context, _passwordConfirmFocus, null);
     setState(() => this.confirmPassword = confirmPassword);
   }
 
-  Widget _buildBody(BuildContext context){
+  Widget _buildBody(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: SignUpScreen._horizontalPadding
-        ),
+            horizontal: SignUpScreen._horizontalPadding),
         child: Wrap(
-          runSpacing: 20, //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
+          runSpacing: 20,
+          //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
           children: [
             SwFormField(
               prefixIcon: FontAwesomeIcons.user,
@@ -120,7 +120,10 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen{
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: this.buildAppbar(context),
-        body: new Builder(builder: (BuildContext scaffoldContext) => _buildBody(scaffoldContext)),
+        body: new Builder(
+            builder: (BuildContext scaffoldContext) => _buildBody(
+                  scaffoldContext,
+                )),
       ),
     );
   }
