@@ -9,6 +9,7 @@ export 'package:swingo/src/components/sw_formfield.dart';
 export 'package:swingo/src/components/sw_hyperlink.dart';
 export 'package:swingo/src/components/sw_input_text.dart';
 export 'package:swingo/src/components/sw_navbar.dart';
+export 'package:swingo/src/components/sw_page.dart';
 export 'package:swingo/src/components/sw_search.dart';
 export 'package:swingo/src/components/sw_select.dart';
 export 'package:swingo/src/components/sw_textfield.dart';

@@ -67,20 +67,20 @@ class _SignInScreenState extends State<SignInScreen> {
         runSpacing: 20, //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
         children: [
           SwFormField(
-            prefixIcon: Icons.account_circle,
+            prefixIcon: FontAwesomeIcons.user,
             labelText: 'Username',
             onEditingCompleted: _onUsernameEditingCompleted,
             focusNode: _usernameFocus,
           ),
           SwFormField(
-              prefixIcon: Icons.lock,
+              prefixIcon: FontAwesomeIcons.unlock,
               labelText: 'Password',
               onEditingCompleted: _onPasswordEditingCompleted,
               obscureText: true,
               focusNode: _passwordFocus,
           ),
           SwButton(
-            text: 'Sign In',
+            text: 'SIGN IN',
             onPressed: _submit,
             fillParent: true,
           )
@@ -91,29 +91,25 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        constraints: const BoxConstraints(minWidth: double.infinity),
-        color: contentColor,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              padding: EdgeInsets.only(
+    return SwPage(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top
-              ),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildAppBar(),
-                    SizedBox(height: 10),
-                    _buildBody()
-                  ],
-                ),
+            ),
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildAppBar(),
+                  SizedBox(height: 10),
+                  _buildBody()
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
