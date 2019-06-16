@@ -1,6 +1,6 @@
 import 'package:swingo/src/models/models.dart';
 
-class Match {
+class SwMatch {
   final int id;
   final User carrier;
   final User purchaser;
@@ -15,7 +15,7 @@ class Match {
   final DateTime updated_at;
   final String updated_by;
 
-  Match(
+  SwMatch(
       {this.id,
       this.carrier,
       this.purchaser,
