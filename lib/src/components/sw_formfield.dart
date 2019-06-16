@@ -11,6 +11,8 @@ class SwFormField extends StatefulWidget{
   final onFocused;
   final onEditingCompleted;
   final bool isNumber;
+  final bool obscureText;
+  final FocusNode focusNode;
 
   SwFormField({
     this.text,
@@ -19,7 +21,9 @@ class SwFormField extends StatefulWidget{
     this.suffixIcon,
     this.onFocused,
     this.onEditingCompleted,
-    this.isNumber
+    this.isNumber,
+    this.obscureText,
+    this.focusNode,
   });
 
   @override
@@ -54,6 +58,10 @@ class SwFormFieldState extends State<SwFormField>{
     return null;
   }
 
+  bool _setObscureText(){
+    return (widget.obscureText != null && widget.obscureText == true);
+  }
+
   String _validator(String value){
     if(widget.isNumber != null && widget.isNumber == true){
       return _numberValidator(value);
@@ -75,7 +83,7 @@ class SwFormFieldState extends State<SwFormField>{
   @override
   void initState() {
     super.initState();
-    focusNode = FocusNode();
+    focusNode = (widget.focusNode != null) ? widget.focusNode: FocusNode();
   }
 
   @override
@@ -100,6 +108,7 @@ class SwFormFieldState extends State<SwFormField>{
       validator: _validator,
       keyboardType: _setKeyboardType(),
       inputFormatters: _setInputFormatters(),
+      obscureText: _setObscureText(),
       focusNode: focusNode,
       controller: textEditingController,
       onEditingComplete: widget.onEditingCompleted != null ? _onEditingCompleted : null,

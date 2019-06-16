@@ -32,6 +32,63 @@ class _SignInScreenState extends State<SignInScreen> {
     ;
   }
 
+  void _onUsernameEditingCompleted(String username){
+    _fieldFocusChange(context, _usernameFocus, _passwordFocus);
+    setState(() => this.username = username);
+  }
+
+  void _onPasswordEditingCompleted(String password) => setState(() => this.password = password);
+
+
+  Widget _buildAppBar(){
+    return Align(
+      alignment: Alignment.topLeft,
+      child: ButtonTheme(
+        minWidth: 0,
+        child: FlatButton(
+          padding: const EdgeInsets.all(0),
+          shape: null,
+          onPressed: () => Navigator.pop(context, null),
+          child: const Icon(
+            FontAwesomeIcons.chevronLeft,
+            color: secondaryColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          horizontal: SignInScreen._horizontalPadding
+      ),
+      child: Wrap(
+        runSpacing: 20, //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
+        children: [
+          SwFormField(
+            prefixIcon: Icons.account_circle,
+            labelText: 'Username',
+            onEditingCompleted: _onUsernameEditingCompleted,
+            focusNode: _usernameFocus,
+          ),
+          SwFormField(
+              prefixIcon: Icons.lock,
+              labelText: 'Password',
+              onEditingCompleted: _onPasswordEditingCompleted,
+              obscureText: true,
+              focusNode: _passwordFocus,
+          ),
+          SwButton(
+            text: 'Sign In',
+            onPressed: _submit,
+            fillParent: true,
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,66 +99,15 @@ class _SignInScreenState extends State<SignInScreen> {
           children: [
             SingleChildScrollView(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top,
-                bottom: MediaQuery.of(context).padding.bottom + 33,
+                top: MediaQuery.of(context).padding.top
               ),
               child: Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: ButtonTheme(
-                        minWidth: 0,
-                        child: FlatButton(
-                          padding: const EdgeInsets.all(0),
-                          shape: null,
-                          onPressed: () => Navigator.pop(context, null),
-                          child: const Icon(
-                            FontAwesomeIcons.chevronLeft,
-                            color: secondaryColor,
-                          ),
-                        ),
-                      ),
-                    ),
+                    _buildAppBar(),
                     SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: SignInScreen._horizontalPadding),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SwInputText(
-                            onFieldSubmitted: (term) {
-                              _fieldFocusChange(
-                                  context, _usernameFocus, _passwordFocus);
-                            },
-                            focusNode: _usernameFocus,
-                            textInputAction: TextInputAction.next,
-                            autoFocus: true,
-                            hintText: "Username",
-                            obscureText: false,
-                          ),
-                          const SizedBox(height: 12),
-                          SwInputText(
-                            onFieldSubmitted: (term) {
-                              _fieldFocusChange(context, _passwordFocus, null);
-                            },
-                            focusNode: _passwordFocus,
-                            textInputAction: TextInputAction.next,
-                            autoFocus: true,
-                            hintText: "Password",
-                            obscureText: false,
-                          ),
-                          const SizedBox(height: 12),
-                          WelcomeButton(
-                              onPressed: _submit,
-                              background: primaryColor,
-                              icon: FontAwesomeIcons.signInAlt,
-                              label: 'Sign In'),
-                        ],
-                      ),
-                    ),
+                    _buildBody()
                   ],
                 ),
               ),
