@@ -45,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
                   Expanded(
                     child: HomeItem(
                       toPage:
-                          BaseProfile(child: OrdersScreen(), type: "Orders"),
+                          BaseProfile(child: OrdersScreen(), type: "MY ORDERS"),
                       icon: Icons.content_paste,
                       text: "Orders",
                     ),

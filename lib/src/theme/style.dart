@@ -101,7 +101,7 @@ const TextStyle itemBodyTextContentStyle = TextStyle(
 
 const TextStyle itemBodyDateContentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 15,
+  fontSize: 14,
   color: Colors.black26,
 );
 

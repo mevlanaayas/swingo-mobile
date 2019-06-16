@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
+import 'package:swingo/src/pages/profile/bid_details.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';
 import 'package:swingo/src/utils/sliders.dart';
@@ -196,11 +197,17 @@ class _MenuItemState extends State<MenuItem> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(widget.icon, color: bugColor,),
+                Icon(
+                  widget.icon,
+                  color: bugColor,
+                ),
                 SizedBox(
                   height: 10.0,
                 ),
-                Text(widget.text, style: profileCardTextStyle,)
+                Text(
+                  widget.text,
+                  style: profileCardTextStyle,
+                )
               ],
             ),
           ),
@@ -209,7 +216,6 @@ class _MenuItemState extends State<MenuItem> {
     );
   }
 }
-
 
 class HomeItem extends StatefulWidget {
   final Widget toPage;
@@ -247,12 +253,203 @@ class _HomeItemState extends State<HomeItem> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(widget.icon, color: bugColor,),
+                Icon(
+                  widget.icon,
+                  color: bugColor,
+                ),
                 SizedBox(
                   height: 10.0,
                 ),
-                Text(widget.text, style: profileCardTextStyle,)
+                Text(
+                  widget.text,
+                  style: profileCardTextStyle,
+                )
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class BidItem extends StatefulWidget {
+  final Bid item;
+
+  const BidItem({this.item});
+
+  @override
+  _BidItemState createState() => _BidItemState();
+}
+
+class _BidItemState extends State<BidItem> {
+  Widget _buildHeading() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            const Icon(
+              FontAwesomeIcons.user,
+              color: secondaryColor,
+              size: 11.0,
+            ),
+            SizedBox(
+              width: 5.0,
+            ),
+            widget.item.created_by.length > 20
+                ? Text(
+                    widget.item.created_by.substring(0, 20) + "...",
+                    style: itemUsernameContentStyle,
+                  )
+                : Text(
+                    widget.item.created_by,
+                    style: itemUsernameContentStyle,
+                  ),
+          ],
+        ),
+        Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
+      ],
+    );
+  }
+
+  Widget _buildBody() {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              child: Row(
+                children: <Widget>[
+                  widget.item.transporter != null
+                      ? Text(
+                          widget.item.transporter.from_city
+                              .substring(0, 3)
+                              .toUpperCase(),
+                          style: itemBodyTextContentStyle,
+                        )
+                      : Text(
+                          widget.item.transceiver.from_city
+                              .substring(0, 3)
+                              .toUpperCase(),
+                          style: itemBodyTextContentStyle,
+                        ),
+                  /*
+                  Text(
+                    widget.item.from_city.substring(0, 3).toUpperCase(),
+                    style: itemBodyTextContentStyle,
+                  ),
+                   */
+                  SizedBox(
+                    width: 5.0,
+                  ),
+                  widget.item.transporter != null
+                      ? Text(
+                          dateVerboseFormatter
+                              .format(widget.item.transporter.from_date),
+                          style: itemBodyDateContentStyle,
+                        )
+                      : Text(
+                          dateVerboseFormatter
+                              .format(widget.item.transceiver.from_date),
+                          style: itemBodyDateContentStyle,
+                        ),
+                  /*
+                  Text(
+                    dateVerboseFormatter.format(widget.item.from_date),
+                    style: itemBodyDateContentStyle,
+                  )
+
+                   */
+                ],
+              ),
+            ),
+            Icon(
+              FontAwesomeIcons.chevronRight,
+              color: Colors.black38,
+              size: 15.0,
+            ),
+            Container(
+                child: Row(
+              children: <Widget>[
+                widget.item.transporter != null
+                    ? Text(
+                        widget.item.transporter.to_city
+                            .substring(0, 3)
+                            .toUpperCase(),
+                        style: itemBodyTextContentStyle,
+                      )
+                    : Text(
+                        widget.item.transceiver.to_city
+                            .substring(0, 3)
+                            .toUpperCase(),
+                        style: itemBodyTextContentStyle,
+                      ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                widget.item.transporter != null
+                    ? Text(
+                        dateVerboseFormatter
+                            .format(widget.item.transporter.to_date),
+                        style: itemBodyDateContentStyle,
+                      )
+                    : Text(
+                        dateVerboseFormatter
+                            .format(widget.item.transceiver.to_date),
+                        style: itemBodyDateContentStyle,
+                      ),
+              ],
+            )),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: <Widget>[
+            Text(
+              widget.item.price.toString(),
+              style: itemPriceContentStyle,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  bool isExpanded = false;
+
+  Future<void> _handleTap(BuildContext context, Bid item) async {
+    Navigator.push(
+      context,
+      SlideTopRoute(page: BidDetailScreen(item: item)),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
+      child: Container(
+        decoration: _cardItemDecoration,
+        child: Material(
+          elevation: 0.0,
+          type: MaterialType.transparency,
+          borderRadius: const BorderRadius.all(Radius.circular(9)),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            splashColor: Colors.transparent,
+            onTap: () => _handleTap(context, widget.item),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeading(),
+                  const SizedBox(height: 12),
+                  _buildBody()
+                ],
+              ),
             ),
           ),
         ),
