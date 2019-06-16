@@ -134,13 +134,13 @@ class BidDetailScreen extends StatelessWidget {
             ),
             item.transporter != null
                 ? Text(
-              item.transporter.size.toString(),
-              style: packageDetailStyle,
-            )
+                    item.transporter.size.toString(),
+                    style: packageDetailStyle,
+                  )
                 : Text(
-              item.transceiver.size.toString(),
-              style: packageDetailStyle,
-            ),
+                    item.transceiver.size.toString(),
+                    style: packageDetailStyle,
+                  ),
           ],
         ),
         const SizedBox(height: 15),
@@ -211,25 +211,20 @@ class BidDetailScreen extends StatelessWidget {
                             clipBehavior: Clip.antiAlias,
                             child: InkWell(
                               splashColor: Colors.transparent,
-                              onTap: () => print(item.created_by),
+                              onTap: () => print("chatroom " + item.created_by),
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
                                 child: Row(
                                   children: <Widget>[
-                                    item.created_by.length > 20
-                                        ? Text(
-                                            item.created_by.substring(0, 20) +
-                                                "...",
-                                            style: itemUsernameContentStyle,
-                                          )
-                                        : Text(
-                                            item.created_by,
-                                            style: itemUsernameContentStyle,
-                                          ),
+                                    Text(
+                                        "LIVE",
+                                      style: itemUsernameContentStyle,
+                                    ),
                                     const SizedBox(
                                       width: 5.0,
                                     ),
-                                    const Icon(FontAwesomeIcons.user, size: 15)
+                                    const Icon(FontAwesomeIcons.comments,
+                                        size: 20)
                                   ],
                                 ),
                               ),
@@ -284,9 +279,18 @@ class BidDetailScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         SwButton(
-                          text: 'MAKE A BID',
+                          text: 'ACCEPT',
                           onPressed: () {
-                            print(item.id);
+                            print("accepted " + item.id.toString());
+                          },
+                        ),
+                        const SizedBox(
+                          width: 10.0,
+                        ),
+                        SwButton(
+                          text: 'REJECT',
+                          onPressed: () {
+                            print("accepted " + item.id.toString());
                           },
                         ),
                       ],
