@@ -43,7 +43,7 @@ class SwButton extends StatelessWidget {
         elevation: 1.0,
         // TODO: add color palette and theming. arrange fillColor, splashColor etc
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,

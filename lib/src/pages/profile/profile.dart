@@ -45,9 +45,9 @@ class ProfileScreen extends StatelessWidget {
                   Expanded(
                     child: HomeItem(
                       toPage:
-                          BaseProfile(child: OrdersScreen(), type: "MY ORDERS"),
-                      icon: Icons.content_paste,
-                      text: "Orders",
+                          BaseProfile(child: MatchesScreen(), type: "Matches"),
+                      icon: FontAwesomeIcons.equals,
+                      text: "Matches",
                     ),
                   ),
                 ],
@@ -70,10 +70,10 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: HomeItem(
-                      toPage: BaseProfile(
-                          child: SettingsScreen(), type: "Settings"),
-                      icon: FontAwesomeIcons.userCog,
-                      text: "Settings",
+                      toPage:
+                          BaseProfile(child: OrdersScreen(), type: "MY ORDERS"),
+                      icon: Icons.content_paste,
+                      text: "Orders",
                     ),
                   ),
                 ],
@@ -86,10 +86,10 @@ class ProfileScreen extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: HomeItem(
-                      toPage:
-                          BaseProfile(child: MatchesScreen(), type: "Matches"),
-                      icon: FontAwesomeIcons.equals,
-                      text: "Matches",
+                      toPage: BaseProfile(
+                          child: SettingsScreen(), type: "Settings"),
+                      icon: FontAwesomeIcons.userCog,
+                      text: "Settings",
                     ),
                   ),
                   SizedBox(
