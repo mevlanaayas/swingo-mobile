@@ -153,7 +153,7 @@ class DetailScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,
-            bottom: MediaQuery.of(context).padding.bottom,
+            bottom: MediaQuery.of(context).padding.bottom + 5,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

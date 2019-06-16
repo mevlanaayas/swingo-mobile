@@ -177,6 +177,12 @@ const TextStyle inputFieldStyle = TextStyle(
   color: secondaryColor,
 );
 
+const TextStyle labelStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 15,
+  color: primaryColor,
+);
+
 Map<Part, Color> skillColor = {
   Part.send: const Color.fromRGBO(0, 179, 184, 1),
   Part.carry: const Color.fromRGBO(84, 114, 239, 1),
