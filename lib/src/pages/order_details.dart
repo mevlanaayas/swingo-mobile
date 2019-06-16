@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
@@ -143,6 +145,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserStatus>(context);
     return Scaffold(
       body: Container(
         constraints: const BoxConstraints(minWidth: double.infinity),
@@ -191,24 +194,31 @@ class DetailScreen extends StatelessWidget {
                               onTap: () => print(item.created_by),
                               child: Padding(
                                 padding: EdgeInsets.all(10.0),
-                                child: Row(
-                                  children: <Widget>[
-                                    item.created_by.length > 20
-                                        ? Text(
-                                            item.created_by.substring(0, 20) +
-                                                "...",
-                                            style: itemUsernameContentStyle,
-                                          )
-                                        : Text(
-                                            item.created_by,
-                                            style: itemUsernameContentStyle,
+                                child: userProvider.currentUser.username !=
+                                        item.created_by
+                                    ? Row(
+                                        children: <Widget>[
+                                          item.created_by.length > 20
+                                              ? Text(
+                                                  item.created_by
+                                                          .substring(0, 20) +
+                                                      "...",
+                                                  style:
+                                                      itemUsernameContentStyle,
+                                                )
+                                              : Text(
+                                                  item.created_by,
+                                                  style:
+                                                      itemUsernameContentStyle,
+                                                ),
+                                          const SizedBox(
+                                            width: 5.0,
                                           ),
-                                    const SizedBox(
-                                      width: 5.0,
-                                    ),
-                                    const Icon(FontAwesomeIcons.user, size: 15)
-                                  ],
-                                ),
+                                          const Icon(FontAwesomeIcons.user,
+                                              size: 15)
+                                        ],
+                                      )
+                                    : null,
                               ),
                             ),
                           ),
@@ -253,24 +263,26 @@ class DetailScreen extends StatelessWidget {
                   child: _buildPackageDetails(context),
                 ),
               ),
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    const Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SwButton(
-                          text: 'MAKE A BID',
-                          onPressed: () {
-                            print(item.id);
-                          },
-                        ),
-                      ],
+              userProvider.currentUser.username != item.created_by
+                  ? Container(
+                      child: Column(
+                        children: <Widget>[
+                          const Divider(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SwButton(
+                                text: 'MAKE A BID',
+                                onPressed: () {
+                                  print(item.id);
+                                },
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     )
-                  ],
-                ),
-              ),
+                  : Row(),
             ],
           ),
         ),
