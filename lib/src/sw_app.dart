@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/components/sw_navbar.dart';
 import 'package:swingo/src/components/sw_button.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
-import 'package:provider/provider.dart';
 
 class SwApp extends StatefulWidget {
   @override
@@ -66,7 +64,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
     return Container(
       alignment: Alignment.bottomCenter,
       padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 7.7),
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 6.9),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
