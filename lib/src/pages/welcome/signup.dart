@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/theme/style.dart';
-import 'package:flutter/material.dart';
+import 'package:swingo/src/services/authentication.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const double _horizontalPadding = 25;
@@ -15,7 +16,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String username;
   String email;
   String password;
-  String confirmPassWord;
+  String confirmPassword;
 
   final FocusNode _usernameFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
@@ -23,7 +24,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final FocusNode _passwordConfirmFocus = FocusNode();
 
   void _submit() {
-    print("submitted");
+    print("submitted start");
+    print(AuthenticationService.signup(username: username, email: email, password: password, confirmPassword: confirmPassword));
+    print("submitted end");
   }
 
   void _fieldFocusChange(
@@ -53,9 +56,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() => this.password = password);
   }
 
-  void _onConfirmPasswordEditingCompleted(String confirmPassWord){
+  void _onConfirmPasswordEditingCompleted(String confirmPassword){
     _fieldFocusChange(context, _passwordConfirmFocus, null);
-    setState(() => this.confirmPassWord = confirmPassWord);
+    setState(() => this.confirmPassword = confirmPassword);
   }
 
   Widget _buildAppBar(){
