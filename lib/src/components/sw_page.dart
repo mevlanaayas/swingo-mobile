@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SwPage extends StatelessWidget{
-  final Widget appbar;
-  final Widget body;
+  final Widget child;
 
-  SwPage({this.appbar, this.body});
+  SwPage({this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +15,7 @@ class SwPage extends StatelessWidget{
           fit: BoxFit.cover
           )
         ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: appbar,
-          body: body,
-        ),
+        child: child
     );
   }
 }

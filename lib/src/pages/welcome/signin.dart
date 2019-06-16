@@ -2,28 +2,29 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:flutter/material.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends StatefulWidget{
   static const double _horizontalPadding = 33;
 
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends State<SignInScreen> with SwScreen{
   String username;
   String password;
   final FocusNode _usernameFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
 
-  void _submit() {
+  void _submit(BuildContext scaffoldContext) {
     print("submitted");
   }
 
   void _fieldFocusChange(
       BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     if (nextFocus == null) {
-      _submit();
+      //_submit(); //fixme: sonradan değişiklik yapmak isteyebilir diye commente alındı.silinsin mi kalsın mı?
       FocusScope.of(context).requestFocus(currentFocus);
     } else {
       currentFocus.unfocus();
@@ -58,33 +59,36 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  Widget _buildBody(){
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-          horizontal: SignInScreen._horizontalPadding
-      ),
-      child: Wrap(
-        runSpacing: 20, //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
-        children: [
-          SwFormField(
-            prefixIcon: FontAwesomeIcons.user,
-            labelText: 'Username',
-            onEditingCompleted: _onUsernameEditingCompleted,
-            focusNode: _usernameFocus,
-          ),
-          SwFormField(
+  Widget _buildBody(BuildContext scaffoldContext){
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            horizontal: SignInScreen._horizontalPadding
+        ),
+        child: Wrap(
+          runSpacing: 20, //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
+          children: [
+            SwFormField(
+              prefixIcon: FontAwesomeIcons.user,
+              labelText: 'Username',
+              onEditingCompleted: _onUsernameEditingCompleted,
+              focusNode: _usernameFocus,
+            ),
+            SwFormField(
               prefixIcon: FontAwesomeIcons.unlock,
               labelText: 'Password',
               onEditingCompleted: _onPasswordEditingCompleted,
               obscureText: true,
               focusNode: _passwordFocus,
-          ),
-          SwButton(
-            text: 'SIGN IN',
-            onPressed: _submit,
-            fillParent: true,
-          )
-        ],
+            ),
+            SwButton(
+              text: 'SIGN IN',
+              onPressed: () => _submit(scaffoldContext),
+              fillParent: true,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -92,24 +96,10 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return SwPage(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top
-            ),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _buildAppBar(),
-                  SizedBox(height: 10),
-                  _buildBody()
-                ],
-              ),
-            ),
-          ),
-        ],
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: this.buildAppbar(context),
+        body: new Builder(builder: (BuildContext scaffoldContext) => _buildBody(scaffoldContext)),
       ),
     );
   }
