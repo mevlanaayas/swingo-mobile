@@ -37,6 +37,11 @@ dependencies:
   intl: any
   font_awesome_flutter: any
   provider: ^3.0.0
+  flare_flutter:
+    git:
+      url: git://github.com/2d-inc/Flare-Flutter.git
+      ref: dev
+      path: flare_flutter
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +62,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/flare/
     - assets/2.0x/wallet.png
     - assets/slanted_menu.png
     - assets/wallet.png
