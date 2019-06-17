@@ -503,54 +503,40 @@ class _MatchItemState extends State<MatchItem> {
     return Column(
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    widget.item.carrier.username,
-                    style: itemBodyTextContentStyle,
-                  ),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Text(
-                    widget.item.fromAddress,
-                    style: itemDetailCityStyle,
-                  ),
-                ],
-              ),
+            Text(
+              widget.item.fromAddress,
+              style: itemBodyDetailContentStyle,
             ),
-            Icon(
-              FontAwesomeIcons.chevronRight,
-              color: Colors.black38,
-              size: 15.0,
-            ),
-            Container(
-                child: Row(
-              children: <Widget>[
-                Text(
-                  widget.item.purchaser.username,
-                  style: itemBodyTextContentStyle,
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Text(
-                  widget.item.toAddress,
-                  style: itemDetailCityStyle,
-                ),
-              ],
-            )),
           ],
         ),
         const SizedBox(height: 12),
         Row(
           children: <Widget>[
             Text(
-              widget.item.value.toString(),
-              style: itemPriceContentStyle,
+              widget.item.toAddress,
+              style: itemBodyDetailContentStyle,
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: <Widget>[
+            const Text("Payment"),
+            const SizedBox(width: 5.0,),
+            Text(
+              widget.item.paymentType.toString(),
+              style: itemBodyTextContentStyle,
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            const Text("Status"),
+            const SizedBox(width: 5.0,),
+            Text(
+              widget.item.status,
+              style: itemBodyTextContentStyle,
             ),
           ],
         ),
