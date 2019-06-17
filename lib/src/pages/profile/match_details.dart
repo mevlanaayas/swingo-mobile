@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/pages/pages.dart';
+import 'package:swingo/src/pages/profile/base.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';
+import 'package:swingo/src/utils/sliders.dart';
 
 class MatchDetailScreen extends StatelessWidget {
   final SwMatch item;
@@ -151,7 +154,7 @@ class MatchDetailScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,
-            bottom: MediaQuery.of(context).padding.bottom,
+            bottom: MediaQuery.of(context).padding.bottom + 5,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -262,9 +265,12 @@ class MatchDetailScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         SwButton(
-                          text: 'MAKE A BID',
+                          text: 'CHECKPOINT',
                           onPressed: () {
-                            print(item.id);
+                            Navigator.push(
+                              context,
+                              SlideLeftRoute(page: BaseProfile(child: CheckpointScreen(), type: "Complete tasks",)),
+                            );
                           },
                         ),
                       ],
