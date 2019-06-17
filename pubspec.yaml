@@ -37,6 +37,7 @@ dependencies:
   intl: any
   font_awesome_flutter: any
   provider: ^3.0.0
+  http: ^0.12.0+2
   flare_flutter:
     git:
       url: git://github.com/2d-inc/Flare-Flutter.git
