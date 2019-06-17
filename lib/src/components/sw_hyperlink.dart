@@ -18,18 +18,13 @@ class SwHyperlink extends StatelessWidget {
     // we need to make it only gesture detector, instead of SizedBox and Column.
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
-        height: 40.0,
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Row(
-            children: [
-              Text(label.toUpperCase(),
-                  style: TextStyle(color: color, fontSize: fontSize))
-            ],
-          ),
-        ),
-      ),
+      child: Align(
+          alignment: Alignment.center,
+          child: Text(label,
+              style: TextStyle(
+                color: color,
+                fontSize: fontSize,
+              ))),
     );
   }
 }

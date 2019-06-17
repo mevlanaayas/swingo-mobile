@@ -53,9 +53,11 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   void _navigateToCreateOrders(int index) {
-    if (index == 0) {
+    if(true){
+      Navigator.of(context).pushNamed('/route');
+    } else if(index == 0){
       Navigator.of(context).pushNamed('/create-send-order');
-    } else if (index == 1) {
+    } else if(index == 1){
       Navigator.of(context).pushNamed('/create-carry-order');
     }
   }
