@@ -26,7 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
   void _submit(BuildContext context) {
     print("submitted start");
     print(AuthenticationService.signup(
-      this.showSnackBar(context),
+      context,
       username: username,
       email: email,
       password: password,
