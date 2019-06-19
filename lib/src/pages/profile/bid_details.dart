@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
@@ -10,7 +12,7 @@ class BidDetailScreen extends StatelessWidget {
 
   BidDetailScreen({Key key, @required this.item}) : super(key: key);
 
-  Widget _buildTravelDetails() {
+  Widget _buildTravelDetails(String username) {
     return Column(
       children: <Widget>[
         Row(
@@ -95,6 +97,41 @@ class BidDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(
+          height: 15.0,
+        ),
+        Row(
+          children: <Widget>[
+            const Icon(
+              FontAwesomeIcons.user,
+              size: 12.0,
+            ),
+            const SizedBox(
+              width: 5.0,
+            ),
+            const Text(
+              "User",
+              style: itemUsernameContentStyle,
+            ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            item.bidder.username == username
+                ? item.transporter != null
+                    ? Text(
+                        item.transporter.created_by,
+                        style: itemUsernameContentStyle,
+                      )
+                    : Text(
+                        item.transceiver.created_by,
+                        style: itemUsernameContentStyle,
+                      )
+                : Text(
+                    item.bidder.username,
+                    style: itemUsernameContentStyle,
+                  ),
+          ],
+        ),
       ],
     );
   }
@@ -166,6 +203,7 @@ class BidDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserStatus>(context);
     return Scaffold(
       body: Container(
         constraints: const BoxConstraints(minWidth: double.infinity),
@@ -250,7 +288,8 @@ class BidDetailScreen extends StatelessWidget {
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: _buildTravelDetails(),
+                    child:
+                        _buildTravelDetails(userProvider.currentUser.username),
                   ),
                 ),
                 Container(
