@@ -242,7 +242,6 @@ class _HomeItemState extends State<HomeItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _cardItemDecoration,
       child: Material(
         elevation: 0.0,
         type: MaterialType.transparency,
@@ -258,14 +257,15 @@ class _HomeItemState extends State<HomeItem> {
               children: [
                 Icon(
                   widget.icon,
-                  color: secondaryColor,
+                  color: whiteColor,
+                  size: 50.0,
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
                 Text(
                   widget.text,
-                  style: profileCardTextStyle,
+                  style: homeItemTextStyle,
                 )
               ],
             ),

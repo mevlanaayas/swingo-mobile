@@ -18,49 +18,45 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    double size = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         constraints: const BoxConstraints(minWidth: double.infinity),
-        color: primaryColor50,
+        color: primaryColor,
         child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 10,
-            bottom: MediaQuery.of(context).padding.bottom + 33,
-            left: MediaQuery.of(context).padding.left +
-                MediaQuery.of(context).size.width / 25,
-            right: MediaQuery.of(context).padding.right +
-                MediaQuery.of(context).size.width / 25,
-          ),
+          padding: EdgeInsets.only(top: size / 3, bottom: size / 3 + 33),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Explore", style: itemDetailHeadingStyle,),
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 25,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
                     child: HomeItem(
                       toPage: Senders(),
-                      icon: FontAwesomeIcons.envelope,
+                      icon: FontAwesomeIcons.arrowsAlt,
                       text: "Senders",
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 25,
-                  ),
-                  Expanded(
-                    child: HomeItem(
-                      toPage: Carriers(),
-                      icon: Icons.content_paste,
-                      text: "Carriers",
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 25,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("yollar"),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: HomeItem(
+                      toPage: Carriers(),
+                      icon: Icons.send,
+                      text: "Carriers",
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -20,8 +20,12 @@ const Color textColor = Color.fromRGBO(111, 111, 118, 1);
 final Color _color1 = Color(0xFF26262F);
 const Color contentColorDark = Color.fromRGBO(38, 38, 47, 1);
 
-final Color _color2 = Color(0xFFFFFFFF);
-const Color contentColor = Color.fromRGBO(255, 255, 255, 1);
+final Color _whiteColor = Color(0xFFFFFFFF);
+const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
+
+
+final Color _blackColor = Color(0xFF000000);
+const Color blackColor = Color(0xFF000000);
 
 final Color _color3 = Color(0xFFF1F1F1);
 const Color modalBackgroundColor = Color.fromRGBO(241, 241, 241, 1);
@@ -157,19 +161,19 @@ const TextStyle profileCardTextStyle = TextStyle(
 const TextStyle contentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 16,
-  color: contentColor,
+  color: whiteColor,
 );
 
 const TextStyle contentLargeStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 24,
-  color: contentColor,
+  color: whiteColor,
 );
 
 const TextStyle buttonTextStyle = TextStyle(
   fontFamily: 'MontserratMedium',
   fontSize: 16,
-  color: contentColor,
+  color: whiteColor,
   fontWeight: FontWeight.w100
 );
 
@@ -183,6 +187,12 @@ const TextStyle labelStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 15,
   color: primaryColor,
+);
+
+const TextStyle homeItemTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 12,
+  color: blackColor,
 );
 
 Map<Part, Color> skillColor = {
