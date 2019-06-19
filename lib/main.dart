@@ -4,6 +4,7 @@ import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/sw_app.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/welcome/welcome.dart';
+import 'package:swingo/src/theme/style.dart';
 
 void main() {
   runApp(MainApp());
@@ -15,6 +16,7 @@ class MainApp extends StatelessWidget {
     return ChangeNotifierProvider(
       builder: (context) => UserStatus(),
       child: MaterialApp(
+        theme: ThemeData.light().copyWith(splashColor: primaryColor50),
         debugShowCheckedModeBanner: false,
         home: SwApp(),
         routes: {

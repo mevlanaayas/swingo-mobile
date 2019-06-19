@@ -54,7 +54,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   onTap: _onPressedHome,
                   color: secondaryColor.withOpacity(0.8),
                   fontSize: 15,
-                  label: 'Continue without logged in',
+                  label: 'Continue as a guest',
                 )),
           ],
         ),
