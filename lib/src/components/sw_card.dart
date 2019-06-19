@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/profile/bid_details.dart';
@@ -284,37 +286,43 @@ class BidItem extends StatefulWidget {
 }
 
 class _BidItemState extends State<BidItem> {
-  Widget _buildHeading() {
+  Widget _buildHeading(String username) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Row(
           children: <Widget>[
-            const Icon(
-              FontAwesomeIcons.user,
-              color: secondaryColor,
-              size: 11.0,
-            ),
+            widget.item.created_by == username
+                ? const Icon(
+                    FontAwesomeIcons.reply,
+                    color: secondaryColor,
+                    size: 11.0,
+                  )
+                : const Icon(
+                    FontAwesomeIcons.share,
+                    color: secondaryColor,
+                    size: 11.0,
+                  ),
             SizedBox(
               width: 5.0,
             ),
-            widget.item.created_by.length > 20
+            widget.item.created_by == username
                 ? Text(
-                    widget.item.created_by.substring(0, 20) + "...",
-                    style: itemUsernameContentStyle,
+                    "OUTGOING",
+                    style: itemBodyDetailContentStyle,
                   )
                 : Text(
-                    widget.item.created_by,
-                    style: itemUsernameContentStyle,
+                    "INCOMMING",
+                    style: itemBodyDetailContentStyle,
                   ),
           ],
         ),
-        Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
+        // Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
       ],
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(String username) {
     return Column(
       children: <Widget>[
         Row(
@@ -408,10 +416,43 @@ class _BidItemState extends State<BidItem> {
         const SizedBox(height: 12),
         Row(
           children: <Widget>[
-            Text(
-              widget.item.price.toString(),
+            const Text(
+              "Price",
               style: itemPriceContentStyle,
             ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            Text(
+              "₺" + widget.item.price.toString(),
+              style: itemPriceContentStyle,
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: <Widget>[
+            const Icon(
+              FontAwesomeIcons.user,
+              size: 10.0,
+            ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            widget.item.bidder.username == username
+                ? widget.item.transporter != null
+                    ? Text(
+                        widget.item.transporter.created_by,
+                        style: itemBodyDetailContentStyle,
+                      )
+                    : Text(
+                        widget.item.transceiver.created_by,
+                        style: itemBodyDetailContentStyle,
+                      )
+                : Text(
+                    widget.item.bidder.username,
+                    style: itemBodyDetailContentStyle,
+                  ),
           ],
         ),
       ],
@@ -429,6 +470,7 @@ class _BidItemState extends State<BidItem> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserStatus>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
       child: Container(
@@ -446,9 +488,9 @@ class _BidItemState extends State<BidItem> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildHeading(),
+                  _buildHeading(userProvider.currentUser.username),
                   const SizedBox(height: 12),
-                  _buildBody()
+                  _buildBody(userProvider.currentUser.username)
                 ],
               ),
             ),
@@ -523,7 +565,9 @@ class _MatchItemState extends State<MatchItem> {
         Row(
           children: <Widget>[
             const Text("Payment"),
-            const SizedBox(width: 5.0,),
+            const SizedBox(
+              width: 5.0,
+            ),
             Text(
               widget.item.paymentType.toString(),
               style: itemBodyTextContentStyle,
@@ -533,7 +577,9 @@ class _MatchItemState extends State<MatchItem> {
         Row(
           children: <Widget>[
             const Text("Status"),
-            const SizedBox(width: 5.0,),
+            const SizedBox(
+              width: 5.0,
+            ),
             Text(
               widget.item.status,
               style: itemBodyTextContentStyle,
