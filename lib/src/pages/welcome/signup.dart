@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/services/authentication.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
+import 'package:swingo/src/theme/style.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const double _horizontalPadding = 25;
@@ -104,6 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
               focusNode: _passwordConfirmFocus,
             ),
             SwButton(
+              color: primaryColor,
               text: 'SIGN UP',
               onPressed: () => _submit(context),
               fillParent: true,

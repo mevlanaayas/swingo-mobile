@@ -53,11 +53,11 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   void _navigateToCreateOrders(int index) {
-    if(true){
+    if (true) {
       Navigator.of(context).pushNamed('/route');
-    } else if(index == 0){
+    } else if (index == 0) {
       Navigator.of(context).pushNamed('/create-send-order');
-    } else if(index == 1){
+    } else if (index == 1) {
       Navigator.of(context).pushNamed('/create-carry-order');
     }
   }
@@ -72,14 +72,20 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
         children: <Widget>[
           Spacer(flex: 5),
           FadeTransition(
-              opacity: animation,
-              child: SwButton(
-                  onPressed: () => _navigateToCreateOrders(0), text: 'Send')),
+            opacity: animation,
+            child: SwButton(
+                color: secondaryColor,
+                onPressed: () => _navigateToCreateOrders(0),
+                text: 'Send'),
+          ),
           Spacer(flex: 2),
           FadeTransition(
-              opacity: animation,
-              child: SwButton(
-                  onPressed: () => _navigateToCreateOrders(1), text: 'Carry')),
+            opacity: animation,
+            child: SwButton(
+                color: secondaryColor,
+                onPressed: () => _navigateToCreateOrders(1),
+                text: 'Carry'),
+          ),
           Spacer(flex: 5),
         ],
       ),
@@ -91,7 +97,10 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
       index: _currentNavBarIndex,
       onTabSelected: _updateNavBarIndex,
       items: [
-        NavBarItem(iconData: Icons.home, text: 'Home'),
+        NavBarItem(
+          iconData: Icons.home,
+          text: 'Home',
+        ),
         NavBarItem(iconData: Icons.account_circle, text: 'Profile'),
       ],
     );
@@ -100,7 +109,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   Widget _buildCreateButton() {
     return FloatingActionButton(
       elevation: 1.0,
-      backgroundColor: primaryColor,
+      backgroundColor: secondaryColor,
       child: new AnimatedIcon(
           size: 30,
           icon: AnimatedIcons.add_event,

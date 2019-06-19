@@ -14,7 +14,7 @@ abstract class SwScreen{
           child: const Icon(
             FontAwesomeIcons.angleLeft,
             size: 30,
-            color: secondaryColor,
+            color: primaryColor,
           ),
         )
     );

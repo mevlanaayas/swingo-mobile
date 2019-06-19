@@ -66,6 +66,7 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
               focusNode: _passwordFocus,
             ),
             SwButton(
+              color: primaryColor,
               text: 'SIGN IN',
               onPressed: () => _submit(scaffoldContext),
               fillParent: true,

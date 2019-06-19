@@ -14,6 +14,14 @@ const Color primaryColor50 = const Color(0xFFE3F6F4);
 final Color _secondaryColor = Color(0xFFFADA5E);
 const Color secondaryColor = Color(0xFFFADA5E);
 
+
+final Color _secondaryColor50 = Color(0xFFFEF9E3);
+const Color secondaryColor50 = Color(0xFFFEF9E3);
+
+
+final Color _secondaryColor100 = Color(0xFFFCEEB8);
+const Color secondaryColor100 = Color(0xFFFCEEB8);
+
 final Color _textColor = Color(0xFF6F6F76);
 const Color textColor = Color.fromRGBO(111, 111, 118, 1);
 
@@ -26,6 +34,14 @@ const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
 
 final Color _blackColor = Color(0xFF000000);
 const Color blackColor = Color(0xFF000000);
+
+
+final Color _blackColor600 = Color(0xFF555555);
+const Color blackColor600 = Color(0xFF555555);
+
+
+final Color _blackColor400 = Color(0xFF9D9D9D);
+const Color blackColor400 = Color(0xFF9D9D9D);
 
 final Color _color3 = Color(0xFFF1F1F1);
 const Color modalBackgroundColor = Color.fromRGBO(241, 241, 241, 1);

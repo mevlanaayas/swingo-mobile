@@ -18,15 +18,20 @@ class SwIconButton extends StatelessWidget {
 
 class SwButton extends StatelessWidget {
   const SwButton(
-      {@required this.onPressed, @required this.text, this.iconData, this.fillParent});
+      {@required this.onPressed,
+      @required this.text,
+      this.iconData,
+      this.fillParent,
+      this.color});
 
   final GestureTapCallback onPressed;
   final String text;
   final IconData iconData;
   final bool fillParent;
+  final Color color;
 
-  double _setWidth(BuildContext context){
-    if(this.fillParent != null && this.fillParent == true){
+  double _setWidth(BuildContext context) {
+    if (this.fillParent != null && this.fillParent == true) {
       return MediaQuery.of(context).size.width;
     }
     return null;
@@ -37,7 +42,7 @@ class SwButton extends StatelessWidget {
     return SizedBox(
       width: _setWidth(context),
       child: RaisedButton(
-        color: primaryColor,
+        color: color,
         splashColor: primaryColor,
         disabledColor: secondaryColor,
         elevation: 1.0,
@@ -49,23 +54,23 @@ class SwButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: iconData == null
                 ? <Widget>[
-              Text(
-                text,
-                style: buttonTextStyle,
-              ),
-            ]
+                    Text(
+                      text,
+                      style: buttonTextStyle,
+                    ),
+                  ]
                 : <Widget>[
-              Icon(
-                iconData,
-              ),
-              SizedBox(
-                width: 8.0,
-              ),
-              Text(
-                text,
-                style: buttonTextStyle,
-              ),
-            ],
+                    Icon(
+                      iconData,
+                    ),
+                    SizedBox(
+                      width: 8.0,
+                    ),
+                    Text(
+                      text,
+                      style: buttonTextStyle,
+                    ),
+                  ],
           ),
         ),
         onPressed: onPressed,
