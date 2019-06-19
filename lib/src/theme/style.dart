@@ -10,8 +10,12 @@ const Color primaryColor100 = const Color(0xFFBAE9E3);
 final Color _primaryColor50 = Color(0xFFE3F6F4);
 const Color primaryColor50 = const Color(0xFFE3F6F4);
 
-final Color _secondaryColor = Color(0xFF6F6F76);
-const Color secondaryColor = Color.fromRGBO(111, 111, 118, 1);
+
+final Color _secondaryColor = Color(0xFFFADA5E);
+const Color secondaryColor = Color(0xFFFADA5E);
+
+final Color _textColor = Color(0xFF6F6F76);
+const Color textColor = Color.fromRGBO(111, 111, 118, 1);
 
 final Color _color1 = Color(0xFF26262F);
 const Color contentColorDark = Color.fromRGBO(38, 38, 47, 1);
@@ -39,9 +43,6 @@ const Color disabledTaskColor = Color.fromRGBO(38, 38, 47, 0.25);
 
 final Color _color9 = Color(0xFFD7D7D7);
 const Color treeLineColor = Color.fromRGBO(215, 215, 215, 1);
-
-final Color _color10 = Color(0xFFEC2975);
-const Color bugColor = Color.fromRGBO(236, 41, 117, 1);
 
 final Color _color11 = Color(0xFF393947);
 const Color statsSeparatorColor = Color.fromRGBO(57, 57, 71, 1);
@@ -132,14 +133,14 @@ const TextStyle packageDetailStyle = TextStyle(
 const TextStyle itemMenuTabStyle = TextStyle(
     fontFamily: 'MontserratRegular',
     fontSize: 15,
-    color: bugColor,
+    color: secondaryColor,
     // color: Color(0xFFFF00FF),
     fontWeight: FontWeight.w900);
 
 const TextStyle itemFrontLayerTitleStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 14,
-  color: bugColor,
+  color: secondaryColor,
   // color: Color(0xFFFF00FF),
   fontWeight: FontWeight.bold,
 );
@@ -169,6 +170,7 @@ const TextStyle buttonTextStyle = TextStyle(
   fontFamily: 'MontserratMedium',
   fontSize: 16,
   color: contentColor,
+  fontWeight: FontWeight.w100
 );
 
 const TextStyle inputFieldStyle = TextStyle(

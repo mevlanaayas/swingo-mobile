@@ -13,11 +13,7 @@ class NavBar extends StatefulWidget {
   final ValueChanged<int> onTabSelected;
   final int index;
 
-  NavBar({
-    this.items,
-    this.onTabSelected,
-    this.index
-  });
+  NavBar({this.items, this.onTabSelected, this.index});
 
   @override
   State<StatefulWidget> createState() {
@@ -26,7 +22,8 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-   Widget _buildTabItem({NavBarItem item, int index, ValueChanged<int> onPressed}) {
+  Widget _buildTabItem(
+      {NavBarItem item, int index, ValueChanged<int> onPressed}) {
     Color color = widget.index == index ? primaryColor : secondaryColor;
     return Expanded(
       child: SizedBox(

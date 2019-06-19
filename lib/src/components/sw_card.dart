@@ -202,7 +202,7 @@ class _MenuItemState extends State<MenuItem> {
               children: [
                 Icon(
                   widget.icon,
-                  color: bugColor,
+                  color: secondaryColor,
                 ),
                 SizedBox(
                   height: 10.0,
@@ -258,7 +258,7 @@ class _HomeItemState extends State<HomeItem> {
               children: [
                 Icon(
                   widget.icon,
-                  color: bugColor,
+                  color: secondaryColor,
                 ),
                 SizedBox(
                   height: 10.0,

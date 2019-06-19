@@ -26,7 +26,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             horizontal: WelcomeScreen._horizontalPadding),
         child: Column(
           children: <Widget>[
-            SizedBox(height: height / 20),
+            SizedBox(height: height / 50),
             Image.asset(
               'assets/images/swingo-logo.png',
               width: width / 4,
@@ -49,10 +49,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               fillParent: true,
             ),
             Padding(
-                padding: EdgeInsets.only(top: width / 20),
+                padding: EdgeInsets.only(top: width / 7),
                 child: SwHyperlink(
                   onTap: _onPressedHome,
-                  color: secondaryColor.withOpacity(0.8),
+                  color: textColor,
                   fontSize: 15,
                   label: 'Continue as a guest',
                 )),
