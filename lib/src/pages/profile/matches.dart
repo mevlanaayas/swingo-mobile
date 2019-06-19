@@ -5,12 +5,14 @@ import 'package:swingo/src/theme/style.dart';
 
 class MatchesScreen extends StatelessWidget {
   static final User carrier = User(id: 1, username: 'carrier');
+  static final User currentCarrier = User(id: 3, username: 'currentuser');
   static final User purchaser = User(id: 2, username: 'purchaser');
+  static final User currentPurchaser = User(id: 4, username: 'currentuser');
 
   final List<SwMatch> entries = [
     SwMatch(
         id: 1,
-        carrier: carrier,
+        carrier: currentCarrier,
         purchaser: purchaser,
         fromAddress: "From address 1",
         toAddress: "To address 1",
@@ -25,7 +27,7 @@ class MatchesScreen extends StatelessWidget {
     SwMatch(
         id: 1,
         carrier: carrier,
-        purchaser: purchaser,
+        purchaser: currentPurchaser,
         fromAddress: "From address 2",
         toAddress: "To address 2",
         value: 240.0,

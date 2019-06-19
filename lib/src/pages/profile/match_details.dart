@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
@@ -17,15 +19,11 @@ class MatchDetailScreen extends StatelessWidget {
     return Column(
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
+            const Icon(FontAwesomeIcons.share, size: 15.0,),
+            const SizedBox(width: 7.0,),
             Text(
-              item.carrier.username,
-              style: itemBodyTextContentStyle,
-            ),
-            const Icon(FontAwesomeIcons.chevronRight),
-            Text(
-              item.purchaser.username,
+              "Carrying from",
               style: itemBodyTextContentStyle,
             ),
           ],
@@ -34,43 +32,30 @@ class MatchDetailScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "Locations",
-                      style: itemDetailCityStyle,
-                    ),
-                  ],
-                )
-              ],
+            Text(
+              item.fromAddress,
+              style: itemDetailCityStyle,
             ),
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      item.fromAddress,
-                      style: itemBodyDateContentStyle,
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    const Text(
-                      "~",
-                      style: itemBodyDateContentStyle,
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    Text(
-                      item.toAddress,
-                      style: itemBodyDateContentStyle,
-                    ),
-                  ],
-                )
-              ],
+          ],
+        ),
+        const Divider(),
+        Row(
+          children: <Widget>[
+            const Icon(FontAwesomeIcons.reply, size: 15.0,),
+            const SizedBox(width: 7.0,),
+            Text(
+              "Carrying to",
+              style: itemBodyTextContentStyle,
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text(
+              item.toAddress,
+              style: itemDetailCityStyle,
             ),
           ],
         ),
@@ -78,7 +63,7 @@ class MatchDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPackageDetails(BuildContext context) {
+  Widget _buildContactDetails(BuildContext context) {
     return Column(
       children: <Widget>[
         /*
@@ -128,7 +113,7 @@ class MatchDetailScreen extends StatelessWidget {
         Row(
           children: <Widget>[
             Text(
-              "Price",
+              "Value",
               style: packageDetailStyle,
             ),
             const SizedBox(
@@ -141,12 +126,44 @@ class MatchDetailScreen extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 15),
+        Row(
+          children: <Widget>[
+            Text(
+              "Payment Type",
+              style: packageDetailStyle,
+            ),
+            const SizedBox(
+              width: 12.0,
+            ),
+            Text(
+              item.paymentType,
+              style: itemBodyDateContentStyle,
+            ),
+          ],
+        ),
+        const SizedBox(height: 15),
+        Row(
+          children: <Widget>[
+            Text(
+              "Status",
+              style: packageDetailStyle,
+            ),
+            const SizedBox(
+              width: 12.0,
+            ),
+            Text(
+              item.status,
+              style: itemBodyDateContentStyle,
+            ),
+          ],
+        ),
       ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserStatus>(context);
     return Scaffold(
       body: Container(
         constraints: const BoxConstraints(minWidth: double.infinity),
@@ -197,20 +214,21 @@ class MatchDetailScreen extends StatelessWidget {
                                 padding: EdgeInsets.all(10.0),
                                 child: Row(
                                   children: <Widget>[
-                                    item.created_by.length > 20
-                                        ? Text(
-                                            item.created_by.substring(0, 20) +
-                                                "...",
-                                            style: itemUsernameContentStyle,
-                                          )
-                                        : Text(
-                                            item.created_by,
-                                            style: itemUsernameContentStyle,
-                                          ),
+                                    const Icon(FontAwesomeIcons.exchangeAlt,
+                                        size: 15),
                                     const SizedBox(
                                       width: 5.0,
                                     ),
-                                    const Icon(FontAwesomeIcons.user, size: 15)
+                                    item.purchaser.username ==
+                                            userProvider.currentUser.username
+                                        ? Text(
+                                            item.carrier.username,
+                                            style: itemUsernameContentStyle,
+                                          )
+                                        : Text(
+                                            item.purchaser.username,
+                                            style: itemUsernameContentStyle,
+                                          ),
                                   ],
                                 ),
                               ),
@@ -244,7 +262,7 @@ class MatchDetailScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: const Text(
-                        "PACKAGE DETAILS",
+                        "CONTRACT DETAILS",
                         style: itemDetailHeadingStyle,
                       ),
                     ),
@@ -254,7 +272,7 @@ class MatchDetailScreen extends StatelessWidget {
               Container(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: _buildPackageDetails(context),
+                  child: _buildContactDetails(context),
                 ),
               ),
               Container(
@@ -269,7 +287,11 @@ class MatchDetailScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              SlideLeftRoute(page: BaseProfile(child: CheckpointScreen(), type: "Complete tasks",)),
+                              SlideLeftRoute(
+                                  page: BaseProfile(
+                                child: CheckpointScreen(),
+                                type: "Complete tasks",
+                              )),
                             );
                           },
                         ),

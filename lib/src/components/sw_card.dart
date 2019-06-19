@@ -511,29 +511,40 @@ class MatchItem extends StatefulWidget {
 }
 
 class _MatchItemState extends State<MatchItem> {
-  Widget _buildHeading() {
+  Widget _buildHeading(String username) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Row(
           children: <Widget>[
-            const Icon(
-              FontAwesomeIcons.user,
-              color: secondaryColor,
-              size: 11.0,
+            Row(
+              children: <Widget>[
+                widget.item.purchaser.username == username
+                    ? const Icon(
+                        FontAwesomeIcons.moneyBillWave,
+                        color: secondaryColor,
+                        size: 11.0,
+                      )
+                    : const Icon(
+                        FontAwesomeIcons.babyCarriage,
+                        color: secondaryColor,
+                        size: 11.0,
+                      ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                widget.item.purchaser.username == username
+                    ? Text(
+                        "PURCHASING",
+                        style: itemBodyDetailContentStyle,
+                      )
+                    : Text(
+                        "CARRYING",
+                        style: itemBodyDetailContentStyle,
+                      ),
+              ],
             ),
-            SizedBox(
-              width: 5.0,
-            ),
-            widget.item.created_by.length > 20
-                ? Text(
-                    widget.item.created_by.substring(0, 20) + "...",
-                    style: itemUsernameContentStyle,
-                  )
-                : Text(
-                    widget.item.created_by,
-                    style: itemUsernameContentStyle,
-                  ),
+            // Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
           ],
         ),
         Text("₺" + widget.item.value.toString(), style: itemPriceContentStyle)
@@ -564,7 +575,10 @@ class _MatchItemState extends State<MatchItem> {
         const SizedBox(height: 12),
         Row(
           children: <Widget>[
-            const Text("Payment"),
+            const Text(
+              "Payment",
+              style: itemBodyTextContentStyle,
+            ),
             const SizedBox(
               width: 5.0,
             ),
@@ -576,7 +590,10 @@ class _MatchItemState extends State<MatchItem> {
         ),
         Row(
           children: <Widget>[
-            const Text("Status"),
+            const Text(
+              "Status",
+              style: itemBodyTextContentStyle,
+            ),
             const SizedBox(
               width: 5.0,
             ),
@@ -601,6 +618,7 @@ class _MatchItemState extends State<MatchItem> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserStatus>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
       child: Container(
@@ -618,7 +636,7 @@ class _MatchItemState extends State<MatchItem> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildHeading(),
+                  _buildHeading(userProvider.currentUser.username),
                   const SizedBox(height: 12),
                   _buildBody()
                 ],
