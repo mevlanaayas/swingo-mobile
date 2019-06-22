@@ -229,6 +229,12 @@ const TextStyle secondaryColorTextStyle = TextStyle(
   color: secondaryColor,
 );
 
+const TextStyle primaryColorTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 12,
+  color: primaryColor,
+);
+
 Map<Part, Color> skillColor = {
   Part.send: const Color.fromRGBO(0, 179, 184, 1),
   Part.carry: const Color.fromRGBO(84, 114, 239, 1),

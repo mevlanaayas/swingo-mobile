@@ -35,3 +35,18 @@ BoxDecoration ProfileItemBoxDecoration() {
     borderRadius: BorderRadius.all(Radius.circular(30.0)),
   );
 }
+
+
+BoxDecoration HomeItemBoxDecoration() {
+  return BoxDecoration(
+    color: whiteColor,
+    shape: BoxShape.circle
+  );
+}
+
+BoxDecoration HomeItemBoxDecorationWithOpacity(double opacity) {
+  return BoxDecoration(
+    color: whiteColor.withOpacity(opacity),
+    shape: BoxShape.circle
+  );
+}

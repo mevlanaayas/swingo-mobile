@@ -31,12 +31,10 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Expanded(
-                    child: HomeItem(
-                      toPage: Senders(),
-                      icon: FontAwesomeIcons.arrowsAlt,
-                      text: "Senders",
-                    ),
+                  HomeItem(
+                    toPage: Senders(),
+                    icon: FontAwesomeIcons.arrowsAlt,
+                    text: "Senders",
                   ),
                 ],
               ),
@@ -49,12 +47,10 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Expanded(
-                    child: HomeItem(
-                      toPage: Carriers(),
-                      icon: Icons.send,
-                      text: "Carriers",
-                    ),
+                  HomeItem(
+                    toPage: Carriers(),
+                    icon: Icons.send,
+                    text: "Carriers",
                   ),
                 ],
               ),
