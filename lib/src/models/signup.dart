@@ -6,7 +6,7 @@ class Signup {
 
   Signup({this.username, this.email, this.password, this.confirmPassword});
 
-  factory Signup.fromJson(Map<String, dynamic> json) {
+  factory Signup.fromJson(Map<String, dynamic> json) { //TODO: buna gerek yok silinecek
     return Signup(
       username: json['username'],
       email: json['email'],

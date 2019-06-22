@@ -30,12 +30,12 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
         email: email,
         password: password,
         confirmPassword: confirmPassword,
-        onSuccess: () => _onRequestSuccess(context)
+        onSuccess: _onRequestSuccess(context)
     );
   }
 
    _onRequestSuccess(BuildContext context){
-    return (result) => Navigator.of(context).pushNamed('/signin');
+    return (response) => Navigator.of(context).pushNamed('/signin');
   }
 
   void _fieldFocusChange(
@@ -47,7 +47,6 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
       currentFocus.unfocus();
       FocusScope.of(context).requestFocus(nextFocus);
     }
-    ;
   }
 
   void _onUsernameEditingCompleted(String username) {
