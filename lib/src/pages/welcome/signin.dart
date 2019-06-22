@@ -12,16 +12,17 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> with SwScreen {
-  String username;
-  String password;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   final FocusNode _usernameFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
 
   void _submit(BuildContext context) {
     AuthenticationService.signin(
       context,
-      username: username,
-      password: password,
+      username: _usernameController.text,
+      password: _passwordController.text,
       onSuccess: _onRequestSuccess(context),
     );
   }
@@ -38,13 +39,6 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
         });
   }
 
-  void _onUsernameEditingCompleted(String username) {
-    this.changeFocus(context, _usernameFocus, _passwordFocus);
-    setState(() => this.username = username);
-  }
-
-  void _onPasswordEditingCompleted(String password) =>
-      setState(() => this.password = password);
 
   Widget _buildBody(BuildContext scaffoldContext) {
     return Align(
@@ -59,15 +53,16 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
             SwFormField(
               prefixIcon: FontAwesomeIcons.user,
               labelText: 'Username',
-              onEditingCompleted: _onUsernameEditingCompleted,
+              onEditingCompleted: () => this.changeFocus(context, _usernameFocus, _passwordFocus),
               focusNode: _usernameFocus,
+              controller: _usernameController,
             ),
             SwFormField(
               prefixIcon: FontAwesomeIcons.unlock,
               labelText: 'Password',
-              onEditingCompleted: _onPasswordEditingCompleted,
               obscureText: true,
               focusNode: _passwordFocus,
+              controller: _passwordController,
             ),
             SwButton(
               text: 'SIGN IN',

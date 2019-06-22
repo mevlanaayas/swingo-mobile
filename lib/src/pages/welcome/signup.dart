@@ -13,10 +13,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
-  String username;
-  String email;
-  String password;
-  String confirmPassword;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   final FocusNode _usernameFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
@@ -26,36 +26,16 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
   void _submit(BuildContext context) {
     AuthenticationService.signup(
         context,
-        username: username,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
+        username: _usernameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+        confirmPassword: _confirmPasswordController.text,
         onSuccess: _onRequestSuccess(context)
     );
   }
 
    _onRequestSuccess(BuildContext context){
     return (response) => Navigator.of(context).pushNamed('/signin');
-  }
-
-  void _onUsernameEditingCompleted(String username) {
-    this.changeFocus(context, _usernameFocus, _emailFocus);
-    setState(() => this.username = username);
-  }
-
-  void _onEmailEditingCompleted(String email) {
-    this.changeFocus(context, _emailFocus, _passwordFocus);
-    setState(() => this.email = email);
-  }
-
-  void _onPasswordEditingCompleted(String password) {
-    this.changeFocus(context, _passwordFocus, _passwordConfirmFocus);
-    setState(() => this.password = password);
-  }
-
-  void _onConfirmPasswordEditingCompleted(String confirmPassword) {
-    this.changeFocus(context, _passwordConfirmFocus, null);
-    setState(() => this.confirmPassword = confirmPassword);
   }
 
   Widget _buildBody(BuildContext context) {
@@ -71,28 +51,32 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
             SwFormField(
               prefixIcon: FontAwesomeIcons.user,
               labelText: 'Username',
-              onEditingCompleted: _onUsernameEditingCompleted,
+              onEditingCompleted: () => this.changeFocus(context, _usernameFocus, _emailFocus),
               focusNode: _usernameFocus,
+              controller: _usernameController,
             ),
             SwFormField(
               prefixIcon: FontAwesomeIcons.envelopeOpen,
               labelText: 'Email',
-              onEditingCompleted: _onEmailEditingCompleted,
+              onEditingCompleted: () => this.changeFocus(context, _emailFocus, _passwordFocus),
               focusNode: _emailFocus,
+              controller: _emailController,
             ),
             SwFormField(
               prefixIcon: FontAwesomeIcons.unlock,
               labelText: 'Password',
-              onEditingCompleted: _onPasswordEditingCompleted,
+              onEditingCompleted: () => this.changeFocus(context, _passwordFocus, _passwordConfirmFocus),
               obscureText: true,
               focusNode: _passwordFocus,
+              controller: _passwordController,
             ),
             SwFormField(
               prefixIcon: FontAwesomeIcons.unlockAlt,
               labelText: 'Confirm Password',
-              onEditingCompleted: _onConfirmPasswordEditingCompleted,
+              onEditingCompleted: () => this.changeFocus(context, _passwordConfirmFocus, null),
               obscureText: true,
               focusNode: _passwordConfirmFocus,
+              controller: _confirmPasswordController,
             ),
             SwButton(
               text: 'SIGN UP',
