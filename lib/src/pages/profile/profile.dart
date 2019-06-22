@@ -5,6 +5,7 @@ import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/profile/base.dart';
 import 'package:swingo/src/pages/profile/chat.dart';
 import 'package:swingo/src/pages/profile/matches.dart';
+import 'package:swingo/src/pages/profile/messages.dart';
 import 'package:swingo/src/pages/profile/settings.dart';
 import 'package:swingo/src/theme/style.dart';
 
@@ -32,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: ProfileItem(
-                      toPage: BaseProfile(child: ChatPage(), type: "Inbox"),
+                      toPage: BaseProfile(child: InboxScreen(), type: "Inbox"),
                       icon: FontAwesomeIcons.envelope,
                       text: "Inbox",
                       right: false,
