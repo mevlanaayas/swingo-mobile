@@ -211,6 +211,12 @@ const TextStyle homeItemTextStyle = TextStyle(
   color: blackColor,
 );
 
+const TextStyle whiteTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 12,
+  color: whiteColor,
+);
+
 Map<Part, Color> skillColor = {
   Part.send: const Color.fromRGBO(0, 179, 184, 1),
   Part.carry: const Color.fromRGBO(84, 114, 239, 1),
