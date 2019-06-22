@@ -6,11 +6,23 @@ import 'package:swingo/src/theme/style.dart';
 class InboxScreen extends StatelessWidget {
   final List<ChatRoom> inbox = [
     ChatRoom(
-        id: 1, firstUser: "firstuser", secondUser: "currentuser", bidId: 1),
+        id: 1,
+        firstUser: "firstuser",
+        secondUser: "currentuser",
+        bidId: 1,
+        lastMessage: "selam"),
     ChatRoom(
-        id: 2, firstUser: "currentuser", secondUser: "seconduser", bidId: 2),
+        id: 2,
+        firstUser: "currentuser",
+        secondUser: "seconduser",
+        bidId: 2,
+        lastMessage: "selam"),
     ChatRoom(
-        id: 3, firstUser: "currentuser", secondUser: "seconduser", bidId: 3),
+        id: 3,
+        firstUser: "currentuser",
+        secondUser: "seconduser",
+        bidId: 3,
+        lastMessage: "selam"),
   ];
 
   void _buildSection(List<Widget> slivers, double scale, List<ChatRoom> items) {

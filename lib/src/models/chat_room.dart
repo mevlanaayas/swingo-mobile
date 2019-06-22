@@ -3,6 +3,8 @@ class ChatRoom {
   final String firstUser;
   final String secondUser;
   final int bidId;
+  final String lastMessage;
 
-  ChatRoom({this.id, this.firstUser, this.secondUser, this.bidId});
+  ChatRoom(
+      {this.id, this.firstUser, this.secondUser, this.bidId, this.lastMessage});
 }
