@@ -19,14 +19,13 @@ abstract class SwScreen{
     );
   }
 
-  showSnackBar(BuildContext context){
-    return (String message){
-      Scaffold.of(context).showSnackBar(
-        new SnackBar(
-          backgroundColor: secondaryColor,
-          content: new Text(message, style: TextStyle(color: primaryColor)),
-        ),
-      );
-    };
+  static showSnackBar(BuildContext context, String message) {
+    Scaffold.of(context).hideCurrentSnackBar();
+    Scaffold.of(context).showSnackBar(
+      new SnackBar(
+        backgroundColor: secondaryColor,
+        content: new Text(message, style: TextStyle(color: primaryColor)),
+      ),
+    );
   }
 }

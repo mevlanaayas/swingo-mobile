@@ -41,24 +41,6 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
   void _onPasswordEditingCompleted(String password) =>
       setState(() => this.password = password);
 
-  Widget _buildAppBar() {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: ButtonTheme(
-        minWidth: 0,
-        child: FlatButton(
-          padding: const EdgeInsets.all(0),
-          shape: null,
-          onPressed: () => Navigator.pop(context, null),
-          child: const Icon(
-            FontAwesomeIcons.chevronLeft,
-            color: secondaryColor,
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildBody(BuildContext scaffoldContext) {
     return Align(
       alignment: Alignment.topCenter,

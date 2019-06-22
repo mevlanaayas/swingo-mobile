@@ -1,40 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/pages/loading.dart';
 import 'package:swingo/src/utils/routes.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
 
 abstract class SwNetwork {
-  static void showSnackBar(BuildContext context, String message) {
-    Scaffold.of(context).showSnackBar(
-      new SnackBar(
-        backgroundColor: secondaryColor,
-        content: new Text(message, style: TextStyle(color: primaryColor)),
-      ),
-    );
-  }
-
-  static void sendRequest(BuildContext context, requestFn, {onError, onSuccess}) async {
-    final result = await Navigator.of(context).push(TransparentRoute(
+  static sendRequest(BuildContext context, requestFn) async {
+    final response = await Navigator.of(context).push(TransparentRoute(
       builder: (BuildContext context) => LoadingScreen(
-        parentContext: context,
-        requestFn: requestFn,
-      ),
+            parentContext: context,
+            requestFn: requestFn,
+          ),
     ));
 
-    print(result);
+    return response;
+  }
 
-    if (result.statusCode != 200) {
-      if(onError != null){
-        onError();
+  static handleResponse(BuildContext context, response, {onError, onSuccess}){
+    if (response.statusCode != 200) {
+      if (onError != null) {
+        onError(response);
       } else {
-        SwNetwork.showSnackBar(context, 'Failed!');
+        SwScreen.showSnackBar(context, 'Failed!');
       }
     } else {
-      if(onSuccess != null){
-        onSuccess();
-      } else{
-        SwNetwork.showSnackBar(context, 'Sucessful!');
+      if (onSuccess != null) {
+        onSuccess(response);
+      } else {
+        SwScreen.showSnackBar(context, 'Sucessful!');
       }
     }
   }

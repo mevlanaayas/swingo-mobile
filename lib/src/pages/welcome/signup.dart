@@ -24,15 +24,18 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
   final FocusNode _passwordConfirmFocus = FocusNode();
 
   void _submit(BuildContext context) {
-    print("submitted start");
-    print(AuthenticationService.signup(
-      context,
-      username: username,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-    ));
-    print("submitted end");
+    AuthenticationService.signup(
+        context,
+        username: username,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        onSuccess: () => _onRequestSuccess(context)
+    );
+  }
+
+   _onRequestSuccess(BuildContext context){
+    return (result) => Navigator.of(context).pushNamed('/signin');
   }
 
   void _fieldFocusChange(

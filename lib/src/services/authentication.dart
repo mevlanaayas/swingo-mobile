@@ -10,25 +10,16 @@ abstract class AuthenticationService extends SwNetwork {
       {String username,
       String email,
       String password,
-      String confirmPassword}) async {
-      /*final response = await http.post('${swBaseUrl}/auth/register/',
-        headers: {"Content-type": "application/json"},
-        body: Signup.toJson(username, email, password, confirmPassword));
-      */
-    SwNetwork.sendRequest(context, () {
+      String confirmPassword,
+      onError,
+      onSuccess}) async {
+
+    final response = await SwNetwork.sendRequest(context, () {
       return http.post('${swBaseUrl}/auth/register/',
           headers: {"Content-type": "application/json"},
           body: Signup.toJson(username, email, password, confirmPassword));
     });
 
-    //print(response.statusCode);
-    //print(response.body);
-    /*if (response.statusCode != 200) {
-      String errorMessage =
-          "Please check something."; //TODO: backend 1 tane mesaj göndericek onu basıcaz.
-      SwNetwork.showSnackBar(context, errorMessage);
-      return null;
-    }
-    return response;*/
+    SwNetwork.handleResponse(context, response, onError: onError, onSuccess: onSuccess);
   }
 }
