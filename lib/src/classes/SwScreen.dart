@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/theme/style.dart';
 
-abstract class SwScreen{
-  Widget buildAppbar(BuildContext context){
+abstract class SwScreen {
+  Widget buildAppbar(BuildContext context) {
     return AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -15,8 +15,13 @@ abstract class SwScreen{
             FontAwesomeIcons.chevronLeft,
             color: secondaryColor,
           ),
-        )
-    );
+        ));
+  }
+
+  void changeFocus(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
   }
 
   static showSnackBar(BuildContext context, String message) {

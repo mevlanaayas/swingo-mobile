@@ -38,34 +38,23 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
     return (response) => Navigator.of(context).pushNamed('/signin');
   }
 
-  void _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    if (nextFocus == null) {
-      //_submit(); //fixme: sonradan değişiklik yapmak isteyebilir diye commente alındı.silinsin mi kalsın mı?
-      FocusScope.of(context).requestFocus(currentFocus);
-    } else {
-      currentFocus.unfocus();
-      FocusScope.of(context).requestFocus(nextFocus);
-    }
-  }
-
   void _onUsernameEditingCompleted(String username) {
-    _fieldFocusChange(context, _usernameFocus, _emailFocus);
+    this.changeFocus(context, _usernameFocus, _emailFocus);
     setState(() => this.username = username);
   }
 
   void _onEmailEditingCompleted(String email) {
-    _fieldFocusChange(context, _emailFocus, _passwordFocus);
+    this.changeFocus(context, _emailFocus, _passwordFocus);
     setState(() => this.email = email);
   }
 
   void _onPasswordEditingCompleted(String password) {
-    _fieldFocusChange(context, _passwordFocus, _passwordConfirmFocus);
+    this.changeFocus(context, _passwordFocus, _passwordConfirmFocus);
     setState(() => this.password = password);
   }
 
   void _onConfirmPasswordEditingCompleted(String confirmPassword) {
-    _fieldFocusChange(context, _passwordConfirmFocus, null);
+    this.changeFocus(context, _passwordConfirmFocus, null);
     setState(() => this.confirmPassword = confirmPassword);
   }
 

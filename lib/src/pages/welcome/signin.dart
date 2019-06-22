@@ -38,20 +38,8 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
         });
   }
 
-  void _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    if (nextFocus == null) {
-      //_submit(); //fixme: sonradan değişiklik yapmak isteyebilir diye commente alındı.silinsin mi kalsın mı?
-      FocusScope.of(context).requestFocus(currentFocus);
-    } else {
-      currentFocus.unfocus();
-      FocusScope.of(context).requestFocus(nextFocus);
-    }
-    ;
-  }
-
   void _onUsernameEditingCompleted(String username) {
-    _fieldFocusChange(context, _usernameFocus, _passwordFocus);
+    this.changeFocus(context, _usernameFocus, _passwordFocus);
     setState(() => this.username = username);
   }
 
