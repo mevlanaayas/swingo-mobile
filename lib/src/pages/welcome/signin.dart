@@ -5,6 +5,7 @@ import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/services/authentication.dart';
 import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/theme/style.dart';
 
 class SignInScreen extends StatefulWidget {
   static const double _horizontalPadding = 33;
@@ -71,6 +72,7 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
               controller: _passwordController,
             ),
             SwButton(
+              color: primaryColor,
               text: 'SIGN IN',
               onPressed: () => _submit(scaffoldContext),
               fillParent: true,

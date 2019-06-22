@@ -18,15 +18,20 @@ class SwIconButton extends StatelessWidget {
 
 class SwButton extends StatelessWidget {
   const SwButton(
-      {@required this.onPressed, @required this.text, this.iconData, this.fillParent});
+      {@required this.onPressed,
+      @required this.text,
+      this.iconData,
+      this.fillParent,
+      this.color});
 
   final GestureTapCallback onPressed;
   final String text;
   final IconData iconData;
   final bool fillParent;
+  final Color color;
 
-  double _setWidth(BuildContext context){
-    if(this.fillParent != null && this.fillParent == true){
+  double _setWidth(BuildContext context) {
+    if (this.fillParent != null && this.fillParent == true) {
       return MediaQuery.of(context).size.width;
     }
     return null;
@@ -37,35 +42,35 @@ class SwButton extends StatelessWidget {
     return SizedBox(
       width: _setWidth(context),
       child: RaisedButton(
-        color: primaryColor,
+        color: color,
         splashColor: primaryColor,
         disabledColor: secondaryColor,
         elevation: 1.0,
         // TODO: add color palette and theming. arrange fillColor, splashColor etc
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+          padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
             children: iconData == null
                 ? <Widget>[
-              Text(
-                text,
-                style: TextStyle(color: Colors.white),
-              ),
-            ]
+                    Text(
+                      text,
+                      style: buttonTextStyle,
+                    ),
+                  ]
                 : <Widget>[
-              Icon(
-                iconData,
-              ),
-              SizedBox(
-                width: 8.0,
-              ),
-              Text(
-                text,
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
+                    Icon(
+                      iconData,
+                    ),
+                    SizedBox(
+                      width: 8.0,
+                    ),
+                    Text(
+                      text,
+                      style: buttonTextStyle,
+                    ),
+                  ],
           ),
         ),
         onPressed: onPressed,

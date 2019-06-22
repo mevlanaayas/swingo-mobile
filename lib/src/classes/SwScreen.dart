@@ -12,8 +12,9 @@ abstract class SwScreen {
           shape: null,
           onPressed: () => Navigator.pop(context, null),
           child: const Icon(
-            FontAwesomeIcons.chevronLeft,
-            color: secondaryColor,
+            FontAwesomeIcons.angleLeft,
+            size: 30,
+            color: primaryColor,
           ),
         ));
   }

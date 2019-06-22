@@ -2,6 +2,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
 class CheckpointScreen extends StatelessWidget {
+  bool loading = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +14,7 @@ class CheckpointScreen extends StatelessWidget {
               'assets/flare/SuccessCheck.flr',
               alignment: Alignment.center,
               fit: BoxFit.contain,
-              animation: 'Untitled',
+              animation: loading ? 'loading' : 'success',
             ),
           ),
         )

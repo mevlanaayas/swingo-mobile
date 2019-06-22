@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/profile/bid_details.dart';
 import 'package:swingo/src/pages/profile/match_details.dart';
+import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';
 import 'package:swingo/src/utils/sliders.dart';
-
-BoxDecoration get _cardItemDecoration => BoxDecoration(
-      boxShadow: [
-        BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            offset: const Offset(0, 10),
-            blurRadius: 10,
-            spreadRadius: 0),
-      ],
-      borderRadius: const BorderRadius.all(Radius.circular(9)),
-      color: Colors.white,
-    );
 
 class ListItem extends StatefulWidget {
   final Order item;
@@ -138,7 +129,7 @@ class _ListItemState extends State<ListItem> {
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
       child: Container(
-        decoration: _cardItemDecoration,
+        decoration: CardItemDecoration(),
         child: Material(
           elevation: 0.0,
           type: MaterialType.transparency,
@@ -184,7 +175,7 @@ class _MenuItemState extends State<MenuItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: _cardItemDecoration,
+      decoration: CardItemDecoration(),
       child: Material(
         elevation: 0.0,
         type: MaterialType.transparency,
@@ -200,7 +191,7 @@ class _MenuItemState extends State<MenuItem> {
               children: [
                 Icon(
                   widget.icon,
-                  color: bugColor,
+                  color: secondaryColor,
                 ),
                 SizedBox(
                   height: 10.0,
@@ -218,61 +209,6 @@ class _MenuItemState extends State<MenuItem> {
   }
 }
 
-class HomeItem extends StatefulWidget {
-  final Widget toPage;
-  final IconData icon;
-  final String text;
-
-  HomeItem({this.toPage, this.icon, this.text});
-
-  @override
-  _HomeItemState createState() => _HomeItemState();
-}
-
-class _HomeItemState extends State<HomeItem> {
-  Future<void> _handleTap(BuildContext context) async {
-    Navigator.push(
-      context,
-      SlideRightRoute(page: widget.toPage),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: _cardItemDecoration,
-      child: Material(
-        elevation: 0.0,
-        type: MaterialType.transparency,
-        borderRadius: const BorderRadius.all(Radius.circular(9)),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          splashColor: Colors.transparent,
-          onTap: () => _handleTap(context),
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  widget.icon,
-                  color: bugColor,
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  widget.text,
-                  style: profileCardTextStyle,
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class BidItem extends StatefulWidget {
   final Bid item;
@@ -284,37 +220,43 @@ class BidItem extends StatefulWidget {
 }
 
 class _BidItemState extends State<BidItem> {
-  Widget _buildHeading() {
+  Widget _buildHeading(String username) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Row(
           children: <Widget>[
-            const Icon(
-              FontAwesomeIcons.user,
-              color: secondaryColor,
-              size: 11.0,
-            ),
+            widget.item.created_by == username
+                ? const Icon(
+                    FontAwesomeIcons.reply,
+                    color: secondaryColor,
+                    size: 11.0,
+                  )
+                : const Icon(
+                    FontAwesomeIcons.share,
+                    color: secondaryColor,
+                    size: 11.0,
+                  ),
             SizedBox(
               width: 5.0,
             ),
-            widget.item.created_by.length > 20
+            widget.item.created_by == username
                 ? Text(
-                    widget.item.created_by.substring(0, 20) + "...",
-                    style: itemUsernameContentStyle,
+                    "OUTGOING",
+                    style: itemBodyDetailContentStyle,
                   )
                 : Text(
-                    widget.item.created_by,
-                    style: itemUsernameContentStyle,
+                    "INCOMMING",
+                    style: itemBodyDetailContentStyle,
                   ),
           ],
         ),
-        Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
+        // Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
       ],
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(String username) {
     return Column(
       children: <Widget>[
         Row(
@@ -408,10 +350,43 @@ class _BidItemState extends State<BidItem> {
         const SizedBox(height: 12),
         Row(
           children: <Widget>[
-            Text(
-              widget.item.price.toString(),
+            const Text(
+              "Price",
               style: itemPriceContentStyle,
             ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            Text(
+              "₺" + widget.item.price.toString(),
+              style: itemPriceContentStyle,
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        Row(
+          children: <Widget>[
+            const Icon(
+              FontAwesomeIcons.user,
+              size: 10.0,
+            ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            widget.item.bidder.username == username
+                ? widget.item.transporter != null
+                    ? Text(
+                        widget.item.transporter.created_by,
+                        style: itemBodyDetailContentStyle,
+                      )
+                    : Text(
+                        widget.item.transceiver.created_by,
+                        style: itemBodyDetailContentStyle,
+                      )
+                : Text(
+                    widget.item.bidder.username,
+                    style: itemBodyDetailContentStyle,
+                  ),
           ],
         ),
       ],
@@ -429,10 +404,11 @@ class _BidItemState extends State<BidItem> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserStatus>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
       child: Container(
-        decoration: _cardItemDecoration,
+        decoration: CardItemDecoration(),
         child: Material(
           elevation: 0.0,
           type: MaterialType.transparency,
@@ -446,9 +422,9 @@ class _BidItemState extends State<BidItem> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildHeading(),
+                  _buildHeading(userProvider.currentUser.username),
                   const SizedBox(height: 12),
-                  _buildBody()
+                  _buildBody(userProvider.currentUser.username)
                 ],
               ),
             ),
@@ -469,29 +445,40 @@ class MatchItem extends StatefulWidget {
 }
 
 class _MatchItemState extends State<MatchItem> {
-  Widget _buildHeading() {
+  Widget _buildHeading(String username) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Row(
           children: <Widget>[
-            const Icon(
-              FontAwesomeIcons.user,
-              color: secondaryColor,
-              size: 11.0,
+            Row(
+              children: <Widget>[
+                widget.item.purchaser.username == username
+                    ? const Icon(
+                        FontAwesomeIcons.moneyBillWave,
+                        color: secondaryColor,
+                        size: 11.0,
+                      )
+                    : const Icon(
+                        FontAwesomeIcons.babyCarriage,
+                        color: secondaryColor,
+                        size: 11.0,
+                      ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                widget.item.purchaser.username == username
+                    ? Text(
+                        "PURCHASING",
+                        style: itemBodyDetailContentStyle,
+                      )
+                    : Text(
+                        "CARRYING",
+                        style: itemBodyDetailContentStyle,
+                      ),
+              ],
             ),
-            SizedBox(
-              width: 5.0,
-            ),
-            widget.item.created_by.length > 20
-                ? Text(
-                    widget.item.created_by.substring(0, 20) + "...",
-                    style: itemUsernameContentStyle,
-                  )
-                : Text(
-                    widget.item.created_by,
-                    style: itemUsernameContentStyle,
-                  ),
+            // Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
           ],
         ),
         Text("₺" + widget.item.value.toString(), style: itemPriceContentStyle)
@@ -522,8 +509,13 @@ class _MatchItemState extends State<MatchItem> {
         const SizedBox(height: 12),
         Row(
           children: <Widget>[
-            const Text("Payment"),
-            const SizedBox(width: 5.0,),
+            const Text(
+              "Payment",
+              style: itemBodyTextContentStyle,
+            ),
+            const SizedBox(
+              width: 5.0,
+            ),
             Text(
               widget.item.paymentType.toString(),
               style: itemBodyTextContentStyle,
@@ -532,8 +524,13 @@ class _MatchItemState extends State<MatchItem> {
         ),
         Row(
           children: <Widget>[
-            const Text("Status"),
-            const SizedBox(width: 5.0,),
+            const Text(
+              "Status",
+              style: itemBodyTextContentStyle,
+            ),
+            const SizedBox(
+              width: 5.0,
+            ),
             Text(
               widget.item.status,
               style: itemBodyTextContentStyle,
@@ -555,10 +552,11 @@ class _MatchItemState extends State<MatchItem> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserStatus>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
       child: Container(
-        decoration: _cardItemDecoration,
+        decoration: CardItemDecoration(),
         child: Material(
           elevation: 0.0,
           type: MaterialType.transparency,
@@ -572,7 +570,7 @@ class _MatchItemState extends State<MatchItem> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildHeading(),
+                  _buildHeading(userProvider.currentUser.username),
                   const SizedBox(height: 12),
                   _buildBody()
                 ],

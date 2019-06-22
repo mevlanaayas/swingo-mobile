@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:swingo/src/components/sw_card.dart';
+import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/profile/base.dart';
-import 'package:swingo/src/pages/profile/chat.dart';
 import 'package:swingo/src/pages/profile/matches.dart';
+import 'package:swingo/src/pages/profile/messages.dart';
 import 'package:swingo/src/pages/profile/settings.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final double spaceWidth = MediaQuery.of(context).size.width / 2;
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.only(top: 25.0),
+        height: MediaQuery.of(context).size.height,
         constraints: const BoxConstraints(minWidth: double.infinity),
-        color: primaryColor50,
-        child: Padding(
+        color: primaryColor,
+        child: SingleChildScrollView(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
-            bottom: MediaQuery.of(context).padding.bottom + 33,
-            left: MediaQuery.of(context).padding.left +
-                MediaQuery.of(context).size.width / 25,
-            right: MediaQuery.of(context).padding.right +
-                MediaQuery.of(context).size.width / 25,
-          ),
+              top: MediaQuery.of(context).padding.top,
+              bottom: MediaQuery.of(context).padding.bottom + 33),
           child: Column(
             children: [
               SizedBox(
@@ -33,68 +31,118 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
-                    child: HomeItem(
-                      toPage: BaseProfile(child: ChatPage(), type: "Messages"),
+                    child: ProfileItem(
+                      toPage: BaseProfile(child: InboxScreen(), type: "Inbox"),
                       icon: FontAwesomeIcons.envelope,
-                      text: "Messages",
+                      text: "Inbox",
+                      right: false,
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width / 25,
+                    width: spaceWidth,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width / 40,
+              ),
+              Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: spaceWidth,
                   ),
                   Expanded(
-                    child: HomeItem(
+                    child: ProfileItem(
                       toPage:
                           BaseProfile(child: MatchesScreen(), type: "Matches"),
                       icon: FontAwesomeIcons.equals,
                       text: "Matches",
+                      right: true,
                     ),
                   ),
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.width / 25,
+                height: MediaQuery.of(context).size.width / 40,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
-                    child: HomeItem(
+                    child: ProfileItem(
                       toPage: BaseProfile(child: BidsScreen(), type: "Bids"),
                       icon: FontAwesomeIcons.dollarSign,
                       text: "Bids",
+                      right: false,
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width / 25,
+                    width: spaceWidth,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width / 40,
+              ),
+              Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: spaceWidth,
                   ),
                   Expanded(
-                    child: HomeItem(
+                    child: ProfileItem(
                       toPage:
                           BaseProfile(child: OrdersScreen(), type: "MY ORDERS"),
                       icon: Icons.content_paste,
                       text: "Orders",
+                      right: true,
                     ),
                   ),
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.width / 25,
+                height: MediaQuery.of(context).size.width / 40,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Expanded(
-                    child: HomeItem(
+                    child: ProfileItem(
                       toPage: BaseProfile(
                           child: SettingsScreen(), type: "Settings"),
                       icon: FontAwesomeIcons.userCog,
                       text: "Settings",
+                      right: false,
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width / 25,
+                    width: spaceWidth,
                   ),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.width / 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  SizedBox(
+                    width: spaceWidth,
+                  ),
+                  Expanded(
+                    child: ProfileItem(
+                      toPage: BaseProfile(
+                          child: SettingsScreen(), type: "Settings"),
+                      icon: FontAwesomeIcons.signOutAlt,
+                      text: "Sign Out",
+                      right: true,
+                    ),
+                  ),
+                ],
+              ),
+              /*
+              Row(
+                children: <Widget>[
                   Expanded(
                     child: MenuItem(
                       toRoute: "/route",
@@ -107,6 +155,7 @@ class ProfileScreen extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.width / 25,
               ),
+               */
             ],
           ),
         ),

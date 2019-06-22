@@ -1,22 +1,23 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:swingo/src/pages/profile/painter.dart';
+import 'package:swingo/src/theme/style.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: AspectRatio(
-          aspectRatio: 1,
-          child: Padding(
-            padding: EdgeInsets.only(top:20),
-            child: FlareActor(
-              'assets/flare/SuccessCheck.flr',
-              alignment: Alignment.center,
-              fit: BoxFit.contain,
-              animation: 'Untitled',
+      body: Padding(
+        padding: EdgeInsets.only(top: 20),
+        child: CustomPaint(
+          painter: CurvePainter(),
+          child: Center(
+            child: Text(
+              "Blade Runner",
+              style: whiteTextStyle,
             ),
           ),
-        )
+        ),
+      ),
     );
   }
 }
