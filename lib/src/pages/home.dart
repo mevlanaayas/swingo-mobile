@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("yollar"),
+                  Text(""),
                 ],
               ),
               Row(
