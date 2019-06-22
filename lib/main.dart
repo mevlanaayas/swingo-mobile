@@ -18,7 +18,7 @@ class MainApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: SwApp(),
         routes: {
-          '/splash': (context) => SplashScreen(),
+          '/loading': (context) => LoadingScreen(),
           '/route': (context) => WelcomeScreen(),
           '/signin': (context) => SignInScreen(),
           '/signup': (context) => SignUpScreen(),

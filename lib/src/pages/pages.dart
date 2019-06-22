@@ -11,4 +11,4 @@ export 'package:swingo/src/pages/order_details.dart';
 export 'package:swingo/src/pages/create_orders.dart';
 export 'package:swingo/src/pages/order_list.dart';
 export 'package:swingo/src/pages/checkpoint/checkpoint.dart';
-export 'package:swingo/src/pages/splash.dart';
+export 'package:swingo/src/pages/loading.dart';
