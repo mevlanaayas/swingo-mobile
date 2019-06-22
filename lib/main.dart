@@ -13,7 +13,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (context) => UserStatus(),
+      builder: (context) {
+        UserStatus userStatus = UserStatus();
+        userStatus.init();
+        return userStatus;
+      },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SwApp(),

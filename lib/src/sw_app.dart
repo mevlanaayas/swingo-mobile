@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/components/sw_navbar.dart';
 import 'package:swingo/src/components/sw_button.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
+import 'package:swingo/src/ankara/general.dart';
 
 class SwApp extends StatefulWidget {
   @override
@@ -53,7 +55,9 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   void _navigateToCreateOrders(int index) {
-    if(true){
+    final userProvider = Provider.of<UserStatus>(context);
+    print(!userProvider.isLoggedIn);
+    if(!userProvider.isLoggedIn){
       Navigator.of(context).pushNamed('/route');
     } else if(index == 0){
       Navigator.of(context).pushNamed('/create-send-order');

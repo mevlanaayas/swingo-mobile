@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/services/authentication.dart';
+import 'package:swingo/src/ankara/general.dart';
 
 class SignInScreen extends StatefulWidget {
   static const double _horizontalPadding = 33;
@@ -28,17 +30,20 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
   }
 
   _onRequestSuccess(BuildContext context) {
-    return (response) => Navigator.popUntil(context, (Route<dynamic> route) {
-          bool shouldPop = false;
-          if (route.settings.name != '/signin' &&
-              route.settings.name != '/signup' &&
-              route.settings.name != '/route') {
-            shouldPop = true;
-          }
-          return shouldPop;
-        });
+    return (responseData) {
+      final userProvider = Provider.of<UserStatus>(context);
+      userProvider.signin(responseData['key']);
+      Navigator.popUntil(context, (Route<dynamic> route) {
+        bool shouldPop = false;
+        if (route.settings.name != '/signin' &&
+            route.settings.name != '/signup' &&
+            route.settings.name != '/route') {
+          shouldPop = true;
+        }
+        return shouldPop;
+      });
+    };
   }
-
 
   Widget _buildBody(BuildContext scaffoldContext) {
     return Align(
@@ -53,7 +58,8 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
             SwFormField(
               prefixIcon: FontAwesomeIcons.user,
               labelText: 'Username',
-              onEditingCompleted: () => this.changeFocus(context, _usernameFocus, _passwordFocus),
+              onEditingCompleted: () =>
+                  this.changeFocus(context, _usernameFocus, _passwordFocus),
               focusNode: _usernameFocus,
               controller: _usernameController,
             ),

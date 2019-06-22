@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:swingo/src/pages/loading.dart';
@@ -25,7 +26,7 @@ abstract class SwNetwork {
       }
     } else {
       if (onSuccess != null) {
-        onSuccess(response);
+        onSuccess(json.decode(response.body));
       } else {
         SwScreen.showSnackBar(context, 'Sucessful!');
       }
