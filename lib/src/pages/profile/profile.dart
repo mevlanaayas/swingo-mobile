@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:swingo/src/components/sw_card.dart';
+import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/profile/base.dart';
-import 'package:swingo/src/pages/profile/chat.dart';
 import 'package:swingo/src/pages/profile/matches.dart';
 import 'package:swingo/src/pages/profile/messages.dart';
 import 'package:swingo/src/pages/profile/settings.dart';

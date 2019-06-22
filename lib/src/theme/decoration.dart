@@ -28,3 +28,10 @@ BoxDecoration LeftProfileItemBoxDecoration() {
     borderRadius: BorderRadius.horizontal(right: Radius.circular(30.0)),
   );
 }
+
+BoxDecoration ProfileItemBoxDecoration() {
+  return BoxDecoration(
+    color: whiteColor,
+    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+  );
+}
