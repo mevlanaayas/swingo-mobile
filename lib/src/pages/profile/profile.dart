@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
     final double spaceWidth = MediaQuery.of(context).size.width / 2;
     return Scaffold(
       body: Container(
-        alignment: Alignment(0.0, 0.0),
+        padding: EdgeInsets.only(top: 25.0),
         height: MediaQuery.of(context).size.height,
         constraints: const BoxConstraints(minWidth: double.infinity),
         color: primaryColor,

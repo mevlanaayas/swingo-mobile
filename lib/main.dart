@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/pages/profile/base.dart';
 import 'package:swingo/src/sw_app.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/welcome/welcome.dart';
@@ -23,8 +24,14 @@ class MainApp extends StatelessWidget {
           '/route': (context) => WelcomeScreen(),
           '/signin': (context) => SignInScreen(),
           '/signup': (context) => SignUpScreen(),
-          '/create-send-order': (context) => CreateOrdersScreen(),
-          '/create-carry-order': (context) => CreateOrdersScreen(),
+          '/create-send-order': (context) => BaseProfile(
+                child: CreateOrdersScreen(),
+                type: "SEND",
+              ),
+          '/create-carry-order': (context) => BaseProfile(
+                child: CreateOrdersScreen(),
+                type: "CARRY",
+              ),
         },
       ),
     );
