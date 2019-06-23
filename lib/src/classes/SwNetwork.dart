@@ -20,12 +20,14 @@ abstract class SwNetwork {
   static handleResponse(BuildContext context, response, {onError, onSuccess}){
     if (response.statusCode != 200) {
       if (onError != null) {
-        onError(response);
+        print(response.body);
+        onError(json.decode(response.body));
       } else {
         SwScreen.showSnackBar(context, 'Failed!');
       }
     } else {
       if (onSuccess != null) {
+        print(response.body);
         onSuccess(json.decode(response.body));
       } else {
         SwScreen.showSnackBar(context, 'Sucessful!');

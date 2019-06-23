@@ -28,7 +28,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Navigator.of(widget.parentContext).pop(response);
   }
 
-  Widget _buildAnimatedSplash() {
+  Widget _buildAnimatedLoading() {
     return FlareActor(
       'assets/flare/SuccessCheck.flr',
       alignment: Alignment.center,
@@ -42,7 +42,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
       body: SafeArea(
-        child: _buildAnimatedSplash(),
+        child: _buildAnimatedLoading(),
       ),
     );
   }
