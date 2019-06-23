@@ -4,6 +4,8 @@ import 'package:swingo/src/pages/pages.dart';
 class Senders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListScreen('senders');
+    return Scaffold(
+        body: ListScreen('senders')
+    );
   }
 }

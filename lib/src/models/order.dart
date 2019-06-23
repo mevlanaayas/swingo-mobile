@@ -35,4 +35,46 @@ class Order {
       this.deleted_at,
       this.deleted_by,
       this.is_deleted);
+
+  factory Order.fromJson(Map<String, dynamic> json) {
+    return Order(
+      json['id'],
+      json['from_city'],
+      DateTime.parse(json['from_date']),
+      json['to_city'],
+      DateTime.parse(json['to_date']),
+      json['price'],
+      json['size'],
+      json['weight'],
+      json['comments'],
+      json['status'],
+      DateTime.parse(json['created_at']),
+      json['created_by'],
+      json['deleted_at'] != null ? DateTime.parse(json['updated_at']) : null,
+      json['updated_by'],
+      json['deleted_at'] != null ? DateTime.parse(json['deleted_at']) : null,
+      json['deleted_by'],
+      json['is_deleted'],
+    );
+    /*
+    return Order(
+      id: json['id'],
+      from_city: json['from_city'],
+      from_date: json['from_date'],
+      to_city: json['to_city'],
+      to_date: json['to_date'],
+      price: json['price'],
+      size: json['size'],
+      weight: json['weight'],
+      comments: json['comments'],
+      status: json['status'],
+      created_at: json['created_at'],
+      created_by: json['created_by'],
+      updated_at: json['updated_at'],
+      updated_at: json['updated_by'],
+      deleted_at: json['deleted_at'],
+      deleted_by: json['deleted_by'],
+      is_deleted: json['is_deleted'],
+    );*/
+  }
 }
