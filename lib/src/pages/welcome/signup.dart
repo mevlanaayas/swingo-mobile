@@ -14,10 +14,10 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
-  String username;
-  String email;
-  String password;
-  String confirmPassword;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   final FocusNode _usernameFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
@@ -25,47 +25,18 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
   final FocusNode _passwordConfirmFocus = FocusNode();
 
   void _submit(BuildContext context) {
-    print("submitted start");
-    print(AuthenticationService.signup(
-      this.showSnackBar(context),
-      username: username,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-    ));
-    print("submitted end");
+    AuthenticationService.signup(
+        context,
+        username: _usernameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+        confirmPassword: _confirmPasswordController.text,
+        onSuccess: _onRequestSuccess(context)
+    );
   }
 
-  void _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    if (nextFocus == null) {
-      //_submit(); //fixme: sonradan değişiklik yapmak isteyebilir diye commente alındı.silinsin mi kalsın mı?
-      FocusScope.of(context).requestFocus(currentFocus);
-    } else {
-      currentFocus.unfocus();
-      FocusScope.of(context).requestFocus(nextFocus);
-    }
-    ;
-  }
-
-  void _onUsernameEditingCompleted(String username) {
-    _fieldFocusChange(context, _usernameFocus, _emailFocus);
-    setState(() => this.username = username);
-  }
-
-  void _onEmailEditingCompleted(String email) {
-    _fieldFocusChange(context, _emailFocus, _passwordFocus);
-    setState(() => this.email = email);
-  }
-
-  void _onPasswordEditingCompleted(String password) {
-    _fieldFocusChange(context, _passwordFocus, _passwordConfirmFocus);
-    setState(() => this.password = password);
-  }
-
-  void _onConfirmPasswordEditingCompleted(String confirmPassword) {
-    _fieldFocusChange(context, _passwordConfirmFocus, null);
-    setState(() => this.confirmPassword = confirmPassword);
+   _onRequestSuccess(BuildContext context){
+    return (response) => Navigator.of(context).pushNamed('/signin');
   }
 
   Widget _buildBody(BuildContext context) {
@@ -81,28 +52,32 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
             SwFormField(
               prefixIcon: FontAwesomeIcons.user,
               labelText: 'Username',
-              onEditingCompleted: _onUsernameEditingCompleted,
+              onEditingCompleted: () => this.changeFocus(context, _usernameFocus, _emailFocus),
               focusNode: _usernameFocus,
+              controller: _usernameController,
             ),
             SwFormField(
               prefixIcon: FontAwesomeIcons.envelopeOpen,
               labelText: 'Email',
-              onEditingCompleted: _onEmailEditingCompleted,
+              onEditingCompleted: () => this.changeFocus(context, _emailFocus, _passwordFocus),
               focusNode: _emailFocus,
+              controller: _emailController,
             ),
             SwFormField(
               prefixIcon: FontAwesomeIcons.unlock,
               labelText: 'Password',
-              onEditingCompleted: _onPasswordEditingCompleted,
+              onEditingCompleted: () => this.changeFocus(context, _passwordFocus, _passwordConfirmFocus),
               obscureText: true,
               focusNode: _passwordFocus,
+              controller: _passwordController,
             ),
             SwFormField(
               prefixIcon: FontAwesomeIcons.unlockAlt,
               labelText: 'Confirm Password',
-              onEditingCompleted: _onConfirmPasswordEditingCompleted,
+              onEditingCompleted: () => this.changeFocus(context, _passwordConfirmFocus, null),
               obscureText: true,
               focusNode: _passwordConfirmFocus,
+              controller: _confirmPasswordController,
             ),
             SwButton(
               color: primaryColor,

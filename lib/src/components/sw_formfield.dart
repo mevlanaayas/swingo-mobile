@@ -13,6 +13,7 @@ class SwFormField extends StatefulWidget {
   final bool isNumber;
   final bool obscureText;
   final FocusNode focusNode;
+  final TextEditingController controller;
 
   SwFormField({
     this.text,
@@ -24,6 +25,7 @@ class SwFormField extends StatefulWidget {
     this.isNumber,
     this.obscureText,
     this.focusNode,
+    this.controller,
   });
 
   @override
@@ -34,10 +36,12 @@ class SwFormField extends StatefulWidget {
 
 class SwFormFieldState extends State<SwFormField> {
   FocusNode focusNode;
-  TextEditingController textEditingController = TextEditingController();
+  TextEditingController textEditingController;
 
   void _onEditingCompleted() {
-    widget.onEditingCompleted(textEditingController.text);
+    if(widget.onEditingCompleted != null){
+      widget.onEditingCompleted();
+    }
     focusNode.unfocus();
   }
 
@@ -83,6 +87,9 @@ class SwFormFieldState extends State<SwFormField> {
   void initState() {
     super.initState();
     focusNode = (widget.focusNode != null) ? widget.focusNode : FocusNode();
+    textEditingController = (widget.controller != null)
+        ? widget.controller
+        : TextEditingController();
   }
 
   @override

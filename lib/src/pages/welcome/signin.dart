@@ -1,8 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
-import 'package:swingo/src/theme/style.dart';
-import 'package:flutter/material.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
+import 'package:swingo/src/services/authentication.dart';
+import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/theme/style.dart';
 
 class SignInScreen extends StatefulWidget {
   static const double _horizontalPadding = 33;
@@ -12,35 +15,36 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> with SwScreen {
-  String username;
-  String password;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   final FocusNode _usernameFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
 
-  void _submit(BuildContext scaffoldContext) {
-    print("submitted");
+  void _submit(BuildContext context) {
+    AuthenticationService.signin(
+      context,
+      username: _usernameController.text,
+      password: _passwordController.text,
+      onSuccess: _onRequestSuccess(context),
+    );
   }
 
-  void _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    if (nextFocus == null) {
-      //_submit(); //fixme: sonradan değişiklik yapmak isteyebilir diye commente alındı.silinsin mi kalsın mı?
-      FocusScope.of(context).requestFocus(currentFocus);
-    } else {
-      currentFocus.unfocus();
-      FocusScope.of(context).requestFocus(nextFocus);
-    }
-    ;
+  _onRequestSuccess(BuildContext context) {
+    return (responseData) {
+      final userProvider = Provider.of<UserStatus>(context);
+      userProvider.signin(responseData['key']);
+      Navigator.popUntil(context, (Route<dynamic> route) {
+        bool shouldPop = false;
+        if (route.settings.name != '/signin' &&
+            route.settings.name != '/signup' &&
+            route.settings.name != '/route') {
+          shouldPop = true;
+        }
+        return shouldPop;
+      });
+    };
   }
-
-  void _onUsernameEditingCompleted(String username) {
-    _fieldFocusChange(context, _usernameFocus, _passwordFocus);
-    setState(() => this.username = username);
-  }
-
-  void _onPasswordEditingCompleted(String password) =>
-      setState(() => this.password = password);
-
 
   Widget _buildBody(BuildContext scaffoldContext) {
     return Align(
@@ -55,15 +59,17 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
             SwFormField(
               prefixIcon: FontAwesomeIcons.user,
               labelText: 'Username',
-              onEditingCompleted: _onUsernameEditingCompleted,
+              onEditingCompleted: () =>
+                  this.changeFocus(context, _usernameFocus, _passwordFocus),
               focusNode: _usernameFocus,
+              controller: _usernameController,
             ),
             SwFormField(
               prefixIcon: FontAwesomeIcons.unlock,
               labelText: 'Password',
-              onEditingCompleted: _onPasswordEditingCompleted,
               obscureText: true,
               focusNode: _passwordFocus,
+              controller: _passwordController,
             ),
             SwButton(
               color: primaryColor,

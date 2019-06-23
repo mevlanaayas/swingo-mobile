@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/theme/style.dart';
 
-abstract class SwScreen{
-  Widget buildAppbar(BuildContext context){
+abstract class SwScreen {
+  Widget buildAppbar(BuildContext context) {
     return AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -16,18 +16,22 @@ abstract class SwScreen{
             size: 30,
             color: primaryColor,
           ),
-        )
-    );
+        ));
   }
 
-  showSnackBar(BuildContext context){
-    return (String message){
-      Scaffold.of(context).showSnackBar(
-        new SnackBar(
-          backgroundColor: secondaryColor,
-          content: new Text(message, style: TextStyle(color: primaryColor)),
-        ),
-      );
-    };
+  void changeFocus(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
+  }
+
+  static showSnackBar(BuildContext context, String message) {
+    Scaffold.of(context).hideCurrentSnackBar();
+    Scaffold.of(context).showSnackBar(
+      new SnackBar(
+        backgroundColor: secondaryColor,
+        content: new Text(message, style: TextStyle(color: primaryColor)),
+      ),
+    );
   }
 }

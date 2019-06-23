@@ -15,12 +15,17 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (context) => UserStatus(),
+      builder: (context) {
+        UserStatus userStatus = UserStatus();
+        userStatus.init();
+        return userStatus;
+      },
       child: MaterialApp(
         theme: ThemeData.light().copyWith(splashColor: primaryColor50),
         debugShowCheckedModeBanner: false,
         home: SwApp(),
         routes: {
+          '/loading': (context) => LoadingScreen(),
           '/route': (context) => WelcomeScreen(),
           '/signin': (context) => SignInScreen(),
           '/signup': (context) => SignUpScreen(),
