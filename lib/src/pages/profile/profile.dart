@@ -11,11 +11,8 @@ import 'package:swingo/src/utils/routes.dart';
 
 class ProfileScreen extends StatelessWidget {
   Future<void> _handleSignOutTap(BuildContext context) async {
-    print('wihii');
-    print('wuuuu');
     await Navigator.of(context).push(
         TransparentRoute(builder: (BuildContext context) => SignOutScreen()));
-    print('şaaak');
   }
 
   @override
