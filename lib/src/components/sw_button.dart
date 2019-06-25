@@ -22,13 +22,16 @@ class SwButton extends StatelessWidget {
       @required this.text,
       this.iconData,
       this.fillParent,
-      this.color});
+      this.color,
+      this.size});
 
   final GestureTapCallback onPressed;
   final String text;
   final IconData iconData;
   final bool fillParent;
   final Color color;
+  // TODO: create new component as small button
+  final double size;
 
   double _setWidth(BuildContext context) {
     if (this.fillParent != null && this.fillParent == true) {
@@ -48,7 +51,11 @@ class SwButton extends StatelessWidget {
         elevation: 1.0,
         // TODO: add color palette and theming. arrange fillColor, splashColor etc
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+          padding: size == null
+              ? EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0)
+              : size <= 320
+                  ? EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0)
+                  : EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,

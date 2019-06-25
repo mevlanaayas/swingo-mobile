@@ -71,6 +71,7 @@ class SignOutScreen extends StatelessWidget with SwScreen {
                   color: primaryColor,
                   text: 'Signout',
                   onPressed: () => _onSignOutTap(context),
+                  size: width,
                 ),
                 SizedBox(
                   width: 10,
@@ -79,6 +80,7 @@ class SignOutScreen extends StatelessWidget with SwScreen {
                   color: primaryColor,
                   text: 'Cancel',
                   onPressed: () => _onCancelTap(context),
+                  size: width,
                 )
               ],
             )
