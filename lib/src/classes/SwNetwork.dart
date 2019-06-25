@@ -6,7 +6,11 @@ import 'package:swingo/src/utils/routes.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 
 abstract class SwNetwork {
-  static sendRequest(BuildContext context, requestFn) async {
+  static sendRequest(BuildContext context, requestFn, {bool hideLoadingScreen}) async {
+    if(hideLoadingScreen?? false){
+      final response = await requestFn();
+      return response;
+    }
     final response = await Navigator.of(context).push(TransparentRoute(
       builder: (BuildContext context) => LoadingScreen(
             parentContext: context,
@@ -18,16 +22,15 @@ abstract class SwNetwork {
   }
 
   static handleResponse(BuildContext context, response, {onError, onSuccess}){
+    print(response.body);
     if (response.statusCode != 200) {
       if (onError != null) {
-        print(response.body);
         onError(json.decode(response.body));
       } else {
         SwScreen.showSnackBar(context, 'Failed!');
       }
     } else {
       if (onSuccess != null) {
-        print(response.body);
         onSuccess(json.decode(response.body));
       } else {
         SwScreen.showSnackBar(context, 'Sucessful!');
