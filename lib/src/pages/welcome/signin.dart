@@ -47,37 +47,39 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
   }
 
   Widget _buildBody(BuildContext scaffoldContext) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: SignInScreen._horizontalPadding),
-        child: Wrap(
-          runSpacing: 20,
-          //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
-          children: [
-            SwFormField(
-              prefixIcon: FontAwesomeIcons.user,
-              labelText: 'Username',
-              onEditingCompleted: () =>
-                  this.changeFocus(context, _usernameFocus, _passwordFocus),
-              focusNode: _usernameFocus,
-              controller: _usernameController,
-            ),
-            SwFormField(
-              prefixIcon: FontAwesomeIcons.unlock,
-              labelText: 'Password',
-              obscureText: true,
-              focusNode: _passwordFocus,
-              controller: _passwordController,
-            ),
-            SwButton(
-              color: primaryColor,
-              text: 'SIGN IN',
-              onPressed: () => _submit(scaffoldContext),
-              fillParent: true,
-            )
-          ],
+    return SingleChildScrollView(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: SignInScreen._horizontalPadding),
+          child: Wrap(
+            runSpacing: 20,
+            //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
+            children: [
+              SwFormField(
+                prefixIcon: FontAwesomeIcons.user,
+                labelText: 'Username',
+                onEditingCompleted: () =>
+                    this.changeFocus(context, _usernameFocus, _passwordFocus),
+                focusNode: _usernameFocus,
+                controller: _usernameController,
+              ),
+              SwFormField(
+                prefixIcon: FontAwesomeIcons.unlock,
+                labelText: 'Password',
+                obscureText: true,
+                focusNode: _passwordFocus,
+                controller: _passwordController,
+              ),
+              SwButton(
+                color: primaryColor,
+                text: 'SIGN IN',
+                onPressed: () => _submit(scaffoldContext),
+                fillParent: true,
+              )
+            ],
+          ),
         ),
       ),
     );

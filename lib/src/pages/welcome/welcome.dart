@@ -19,46 +19,48 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   _buildBody() {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: WelcomeScreen._horizontalPadding),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: height / 50),
-            Image.asset(
-              'assets/images/swingo-logo.png',
-              width: width / 4,
-            ),
-            Image.asset(
-              'assets/images/swingo-earth.png',
-              width: width / 4 * 3,
-            ),
-            SwButton(
-              color: primaryColor,
-              text: 'SIGN IN',
-              onPressed: _onPressedSignIn,
-              fillParent: true,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            SwButton(
-              color: primaryColor,
-              text: 'NEW USER',
-              onPressed: _onPressedSignUp,
-              fillParent: true,
-            ),
-            Padding(
-                padding: EdgeInsets.only(top: width / 7),
-                child: SwHyperlink(
-                  onTap: _onPressedHome,
-                  color: textColor,
-                  fontSize: 15,
-                  label: 'Continue as a guest',
-                )),
-          ],
+    return SingleChildScrollView(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: WelcomeScreen._horizontalPadding),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: height / 50),
+              Image.asset(
+                'assets/images/swingo-logo.png',
+                width: width / 4,
+              ),
+              Image.asset(
+                'assets/images/swingo-earth.png',
+                width: width / 4 * 3,
+              ),
+              SwButton(
+                color: primaryColor,
+                text: 'SIGN IN',
+                onPressed: _onPressedSignIn,
+                fillParent: true,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              SwButton(
+                color: primaryColor,
+                text: 'NEW USER',
+                onPressed: _onPressedSignUp,
+                fillParent: true,
+              ),
+              Padding(
+                  padding: EdgeInsets.only(top: width / 7),
+                  child: SwHyperlink(
+                    onTap: _onPressedHome,
+                    color: textColor,
+                    fontSize: 15,
+                    label: 'Continue as a guest',
+                  )),
+            ],
+          ),
         ),
       ),
     );
