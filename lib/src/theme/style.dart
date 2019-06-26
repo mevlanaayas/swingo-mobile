@@ -258,3 +258,50 @@ Map<Part, String> skillFlareIcon = {
   Part.carry: 'assets/flare/EngineeringIcon.flr',
   Part.profile: 'assets/flare/UxIcon.flr'
 };
+
+
+/*
+* Date Picker Styles
+* prefix is dp
+* */
+const TextStyle dpDayStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 20,
+  color: primaryColor,
+);
+
+const TextStyle dpYearStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 24,
+  color: primaryColor,
+);
+
+const TextStyle dpDayHeadersStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 24,
+  color: primaryColor,
+);
+
+const TextStyle dpItemStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 12,
+  color: blackColor,
+);
+
+const TextStyle dpSelectedItemStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 12,
+  color: whiteColor,
+);
+
+const TextStyle dpTodayItemStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 12,
+  color: primaryColor,
+);
+
+const TextStyle dpDisabledItemStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 12,
+  color: blackColor400,
+);

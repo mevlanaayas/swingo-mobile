@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/components/sw_formfield.dart';
+import 'package:swingo/src/theme/themes.dart';
 
 class SwDatePicker extends StatelessWidget{
   final String text;
@@ -20,7 +21,7 @@ class SwDatePicker extends StatelessWidget{
     DateTime selectedTime = await showDatePicker(
         context: context,
         initialDate: new DateTime.now(),
-        firstDate: new DateTime(2019),
+        firstDate: new DateTime.now().subtract(Duration(days: 1)),
         lastDate: new DateTime(2021),
     );
     if(selectedTime != null){
@@ -36,11 +37,7 @@ class SwDatePicker extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return new Theme(
-      data: Theme.of(context).copyWith(
-        primaryColor: primaryColor,
-        accentColor: secondaryColor,
-        splashColor: primaryColor,
-      ),
+      data: datePickerTheme,
       child: new Builder(
         builder: (context) => SwFormField(
           text: this.text,

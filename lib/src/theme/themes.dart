@@ -1,74 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:swingo/src/theme/colors.dart';
+import 'package:swingo/src/theme/style.dart';
 
-final ThemeData swTheme = _buildMyTheme();
+final ThemeData datePickerTheme = _buildDatePickerTheme();
 
-ThemeData _buildMyTheme() {
+ThemeData _buildDatePickerTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-      splashColor: altDarkBlue,
-      accentColor: swPink900,
-      primaryColor: altDarkBlue,
-      buttonTheme: base.buttonTheme.copyWith(
-          buttonColor: swLivingCoral100, textTheme: ButtonTextTheme.normal),
-      scaffoldBackgroundColor: kswBackgroundWhite,
-      cardColor: kswBackgroundWhite,
-      textSelectionColor: swLivingCoral100,
-      errorColor: swErrorRed,
-      textTheme: _buildMyTextTheme(base.textTheme),
-      primaryTextTheme: _buildMyTextTheme(base.primaryTextTheme),
-      accentTextTheme: _buildMyTextTheme(base.accentTextTheme),
-      primaryIconTheme: base.iconTheme.copyWith(color: altDeepPurple),
-      inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0))
-          )
-      )
+    iconTheme: const IconThemeData(color: secondaryColor),
+    brightness: Brightness.light,
+    dialogBackgroundColor: secondaryColor,
+    primaryColorBrightness: Brightness.dark,
+    accentColorBrightness: Brightness.light,
+    splashColor: secondaryColor,
+    accentColor: secondaryColor,
+    primaryColor: primaryColor,
+    disabledColor: blackColor400,
+    backgroundColor: secondaryColor,
+    buttonTheme: base.buttonTheme.copyWith(
+      buttonColor: primaryColor,
+      textTheme: ButtonTextTheme.normal,
+    ),
+    scaffoldBackgroundColor: secondaryColor50,
+    cardColor: blackColor400,
+    textSelectionColor: primaryColor100,
+    errorColor: secondaryColor50,
+    textTheme: _buildTextTheme(
+      base.textTheme,
+    ),
+    primaryTextTheme: _buildTextTheme(
+      base.primaryTextTheme,
+    ),
+    accentTextTheme: _buildTextTheme(
+      base.accentTextTheme,
+    ),
+    primaryIconTheme: base.iconTheme.copyWith(
+      color: primaryColor,
+    ),
   );
 }
 
-TextTheme _buildMyTextTheme(TextTheme base) {
-  return base
-      .copyWith(
-          headline: base.headline.copyWith(fontWeight: FontWeight.w500),
-          title: base.title.copyWith(fontSize: 18.0),
-          caption: base.caption
-              .copyWith(fontWeight: FontWeight.w400, fontSize: 14.0))
-      .apply(
-          fontFamily: 'Titillium Web',
-          displayColor: altDeepPurple,
-          bodyColor: altDeepPurple);
-}
-
-// not to use, just proof
-final ThemeData _myDarkTheme = _buildMyDarkTheme();
-
-ThemeData _buildMyDarkTheme() {
-  final ThemeData base = ThemeData.dark();
+TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
-      accentColor: altDarkGrey,
-      primaryColor: altDarkGrey,
-      buttonColor: altDarkBlue,
-      scaffoldBackgroundColor: altDarkGrey,
-      cardColor: altDarkGrey,
-      textSelectionColor: swLivingCoral100,
-      errorColor: swErrorRed,
-      textTheme: _buildMyTextTheme(base.textTheme),
-      primaryTextTheme: _buildMyTextTheme(base.primaryTextTheme),
-      accentTextTheme: _buildMyTextTheme(base.accentTextTheme),
-      primaryIconTheme: base.iconTheme.copyWith(color: altDarkBlue),
-      inputDecorationTheme: InputDecorationTheme(border: OutlineInputBorder()));
-}
-
-TextTheme _buildMyDarkTextTheme(TextTheme base) {
-  return base
-      .copyWith(
-          headline: base.headline.copyWith(fontWeight: FontWeight.w500),
-          title: base.title.copyWith(fontSize: 18.0),
-          caption: base.caption
-              .copyWith(fontWeight: FontWeight.w400, fontSize: 14.0))
-      .apply(
-          fontFamily: 'Titillium Web',
-          displayColor: altDarkBlue,
-          bodyColor: altDarkBlue);
+    display1: dpDayStyle,
+    // FIXME: this is crashing date picker form field height
+    // subhead: dpYearStyle,
+    caption: dpDayHeadersStyle,
+    body1: dpItemStyle,
+    body2: dpSelectedItemStyle,
+  );
 }
