@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:swingo/src/theme/decoration.dart';
 
 import 'package:swingo/src/theme/style.dart';
 
@@ -14,19 +15,20 @@ class SwFormField extends StatefulWidget {
   final bool obscureText;
   final FocusNode focusNode;
   final TextEditingController controller;
+  final int maxLines;
 
-  SwFormField({
-    this.text,
-    this.labelText,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.onFocused,
-    this.onEditingCompleted,
-    this.isNumber,
-    this.obscureText,
-    this.focusNode,
-    this.controller,
-  });
+  SwFormField(
+      {this.text,
+      this.labelText,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.onFocused,
+      this.onEditingCompleted,
+      this.isNumber,
+      this.obscureText,
+      this.focusNode,
+      this.controller,
+      this.maxLines});
 
   @override
   State<StatefulWidget> createState() {
@@ -39,7 +41,7 @@ class SwFormFieldState extends State<SwFormField> {
   TextEditingController textEditingController;
 
   void _onEditingCompleted() {
-    if(widget.onEditingCompleted != null){
+    if (widget.onEditingCompleted != null) {
       widget.onEditingCompleted();
     }
     focusNode.unfocus();
@@ -48,6 +50,8 @@ class SwFormFieldState extends State<SwFormField> {
   TextInputType _setKeyboardType() {
     if (widget.isNumber != null && widget.isNumber == true) {
       return TextInputType.number;
+    } else if (widget.maxLines != null) {
+      return TextInputType.multiline;
     }
     return null;
   }
@@ -115,6 +119,7 @@ class SwFormFieldState extends State<SwFormField> {
       cursorColor: primaryColor,
       validator: _validator,
       keyboardType: _setKeyboardType(),
+      maxLines: widget.maxLines,
       inputFormatters: _setInputFormatters(),
       obscureText: _setObscureText(),
       focusNode: focusNode,
@@ -122,22 +127,12 @@ class SwFormFieldState extends State<SwFormField> {
       onEditingComplete:
           widget.onEditingCompleted != null ? _onEditingCompleted : null,
       style: TextStyle(color: secondaryColor),
-      decoration: new InputDecoration(
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              borderSide: BorderSide(color: primaryColor, width: 3.0)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              borderSide: BorderSide(color: primaryColor, width: 2.0)),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              borderSide: BorderSide(color: primaryColor, width: 2.0)),
-          labelText: widget.labelText,
-          labelStyle: labelStyle,
-          prefixIcon: Icon(widget.prefixIcon, color: primaryColor),
-          suffixIcon: widget.suffixIcon != null
-              ? Icon(widget.suffixIcon, color: primaryColor)
-              : null),
+      decoration: FormFieldDecoration(
+        widget.labelText,
+        null,
+        widget.prefixIcon,
+        widget.suffixIcon,
+      ),
     );
   }
 }

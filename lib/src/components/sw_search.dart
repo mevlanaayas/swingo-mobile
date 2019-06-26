@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:swingo/src/theme/decoration.dart';
 
 import 'package:swingo/src/theme/style.dart';
 
-class SwSearch extends StatefulWidget{
+class SwSearch extends StatefulWidget {
   dynamic onSearchChanged;
   bool hideSearchBar;
 
@@ -17,88 +19,119 @@ class _SwSearchState extends State<SwSearch> {
   bool isCancelButtonActive = false;
   TextEditingController _textEditingController = TextEditingController();
 
-  void _onBackPressed(context){
+  void _onBackPressed(context) {
     Navigator.pop(context, null);
   }
 
-  void _cleanTextEditing(){
+  void _cleanTextEditing() {
     _textEditingController.clear();
   }
 
-  Widget _buildBackButton(){
-    return RaisedButton(
-        color: primaryColor,
-        child: Icon(Icons.arrow_back, color: secondaryColor),
+  Widget _buildBackButton() {
+    return ButtonTheme(
+      minWidth: 0,
+      child: FlatButton(
+        splashColor: Colors.transparent,
+        padding: const EdgeInsets.all(0),
+        shape: null,
         onPressed: () => _onBackPressed(context),
-        elevation: 0.0,
+        child: const Icon(
+          FontAwesomeIcons.chevronLeft,
+          color: secondaryColor,
+        ),
+      ),
     );
   }
 
-  Widget _buildSearchField(){
-    if(widget.hideSearchBar != null && widget.hideSearchBar == true){
+  Widget _buildSearchField() {
+    if (widget.hideSearchBar != null && widget.hideSearchBar == true) {
       return null;
     }
     return Container(
-      margin: EdgeInsets.all(5.0),
-      decoration: BoxDecoration(
-          border: Border.all(width: 1, color: secondaryColor)
-      ),
       child: Center(
         child: TextField(
-          decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              prefixIcon: Icon(Icons.search, color: secondaryColor),
-              suffixIcon: isCancelButtonActive ?
-              IconButton(
-                  icon: Icon(Icons.cancel, color: secondaryColor),
-                  onPressed: _cleanTextEditing
-              ) : null,
-              border: InputBorder.none,
-              hintText: 'Enter something to search. :)'
-          ),
+          cursorColor: primaryColor,
+          decoration: SmallFormFieldDecoration(
+              null,
+              null,
+              FontAwesomeIcons.search,
+              isCancelButtonActive
+                  ? IconButton(
+                      color: secondaryColor,
+                      splashColor: Colors.transparent,
+                      icon: Icon(
+                        FontAwesomeIcons.timesCircle,
+                        color: secondaryColor,
+                      ),
+                      onPressed: _cleanTextEditing)
+                  : null),
           controller: _textEditingController,
         ),
       ),
     );
   }
 
-  void _onListItemTap(dynamic element){
+  void _onListItemTap(dynamic element) {
     Navigator.pop(context, element);
   }
 
-  Widget _buildListItem(BuildContext context, int index, dynamic list){ // en üstten alınabilir
+  Widget _buildListItem(BuildContext context, int index, dynamic list) {
+    // en üstten alınabilir
     dynamic element = list[index];
-    return
-      InkWell(
-        splashColor: primaryColor,
-        onTap: () => _onListItemTap(element),
-        child: Container(
-          padding: EdgeInsets.all(12.0),
-          child: Row(
-            children: <Widget>[
-              Icon(Icons.location_city, color: primaryColor,),
-              SizedBox(width: 12.0,),
-              Text(element.name, style: TextStyle(color: secondaryColor))
-            ],
+    return Padding(
+      padding: const EdgeInsets.all(2.0),
+      child: Container(
+        decoration: CardItemDecoration(),
+        child: Material(
+          elevation: 0.0,
+          type: MaterialType.transparency,
+          borderRadius: const BorderRadius.all(Radius.circular(9)),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            splashColor: Colors.transparent,
+            onTap: () => _onListItemTap(element),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        FontAwesomeIcons.city,
+                        color: primaryColor,
+                        size: 20.0
+                      ),
+                      SizedBox(
+                        width: 12.0,
+                      ),
+                      Text(element.name,
+                          style: secondaryColorTextStyle16)
+                    ],
+                  )
+                ],
+              ),
+            ),
           ),
         ),
-      );
+      ),
+    );
   }
+
   @override
   Widget build(BuildContext context) {
-    _textEditingController.addListener((){
-      if(_textEditingController.text != ''){
+    _textEditingController.addListener(() {
+      if (_textEditingController.text != '') {
         setState(() {
           searchingText = _textEditingController.text;
         });
       }
 
-      if(_textEditingController.text != '' && !isCancelButtonActive){
+      if (_textEditingController.text != '' && !isCancelButtonActive) {
         setState(() {
           isCancelButtonActive = true;
         });
-      } else if (_textEditingController.text == '' && isCancelButtonActive){
+      } else if (_textEditingController.text == '' && isCancelButtonActive) {
         setState(() {
           isCancelButtonActive = false;
         });
@@ -107,15 +140,15 @@ class _SwSearchState extends State<SwSearch> {
 
     dynamic list = widget.onSearchChanged(searchingText);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        title: _buildSearchField(),
-        leading: _buildBackButton(),
-      ),
-      body: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (context, index) => _buildListItem(context, index, list)
-      )
-    );
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: primaryColor50,
+          title: _buildSearchField(),
+          leading: _buildBackButton(),
+        ),
+        body: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) =>
+                _buildListItem(context, index, list)));
   }
 }

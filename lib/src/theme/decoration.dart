@@ -36,17 +36,137 @@ BoxDecoration ProfileItemBoxDecoration() {
   );
 }
 
-
 BoxDecoration HomeItemBoxDecoration() {
-  return BoxDecoration(
-    color: whiteColor,
-    shape: BoxShape.circle
-  );
+  return BoxDecoration(color: whiteColor, shape: BoxShape.circle);
 }
 
 BoxDecoration HomeItemBoxDecorationWithOpacity(double opacity) {
   return BoxDecoration(
-    color: whiteColor.withOpacity(opacity),
-    shape: BoxShape.circle
-  );
+      color: whiteColor.withOpacity(opacity), shape: BoxShape.circle);
+}
+
+InputDecoration FormFieldDecoration(
+  String labelText,
+  String hintText,
+  IconData prefixIcon,
+  dynamic suffixIcon,
+) {
+  double iconSize = 16.0;
+  return hintText == null
+      ? InputDecoration(
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 3.0)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 2.0)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 2.0)),
+          labelText: labelText,
+          labelStyle: labelStyle,
+          prefixIcon: Icon(
+            prefixIcon,
+            color: primaryColor,
+            size: iconSize,
+          ),
+          suffixIcon: suffixIcon != null
+              ? suffixIcon is IconData
+                  ? Icon(
+                      suffixIcon,
+                      color: primaryColor,
+                      size: iconSize,
+                    )
+                  : suffixIcon
+              : null)
+      : InputDecoration(
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 3.0)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 2.0)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 2.0)),
+          hintText: hintText,
+          labelStyle: labelStyle,
+          prefixIcon: Icon(
+            prefixIcon,
+            color: primaryColor,
+            size: iconSize,
+          ),
+          suffixIcon: suffixIcon != null
+              ? suffixIcon is IconData
+                  ? Icon(
+                      suffixIcon,
+                      color: primaryColor,
+                      size: iconSize,
+                    )
+                  : suffixIcon
+              : null);
+}
+
+InputDecoration SmallFormFieldDecoration(
+  String labelText,
+  String hintText,
+  IconData prefixIcon,
+  dynamic suffixIcon,
+) {
+  double iconSize = 20.0;
+  return hintText == null
+      ? InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 3.0)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 2.0)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 2.0)),
+          labelText: labelText,
+          labelStyle: labelStyle,
+          prefixIcon: Icon(
+            prefixIcon,
+            color: primaryColor,
+            size: iconSize,
+          ),
+          suffixIcon: suffixIcon != null
+              ? suffixIcon is IconData
+                  ? Icon(
+                      suffixIcon,
+                      color: primaryColor,
+                      size: iconSize,
+                    )
+                  : suffixIcon
+              : null)
+      : InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(vertical: 0.0),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 3.0)),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 2.0)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              borderSide: BorderSide(color: primaryColor, width: 2.0)),
+          hintText: hintText,
+          labelStyle: labelStyle,
+          prefixIcon: Icon(
+            prefixIcon,
+            color: primaryColor,
+            size: iconSize,
+          ),
+          suffixIcon: suffixIcon != null
+              ? suffixIcon is IconData
+                  ? Icon(
+                      suffixIcon,
+                      color: primaryColor,
+                      size: iconSize,
+                    )
+                  : suffixIcon
+              : null);
 }

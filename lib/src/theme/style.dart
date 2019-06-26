@@ -229,9 +229,21 @@ const TextStyle secondaryColorTextStyle = TextStyle(
   color: secondaryColor,
 );
 
+const TextStyle secondaryColorTextStyle16 = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 16,
+  color: secondaryColor,
+);
+
 const TextStyle primaryColorTextStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 12,
+  color: primaryColor,
+);
+
+const TextStyle smallTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 16,
   color: primaryColor,
 );
 
