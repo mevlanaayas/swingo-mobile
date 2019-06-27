@@ -60,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
                   Expanded(
                     child: ProfileItem(
                       toPage:
-                          BaseProfile(child: MatchesScreen(), type: "Matches"),
+                          BaseProfile(child: Matches(), type: "Matches"),
                       icon: FontAwesomeIcons.equals,
                       text: "Matches",
                       right: true,

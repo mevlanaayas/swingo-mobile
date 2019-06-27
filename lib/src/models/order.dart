@@ -56,25 +56,5 @@ class Order {
       json['deleted_by'],
       json['is_deleted'],
     );
-    /*
-    return Order(
-      id: json['id'],
-      from_city: json['from_city'],
-      from_date: json['from_date'],
-      to_city: json['to_city'],
-      to_date: json['to_date'],
-      price: json['price'],
-      size: json['size'],
-      weight: json['weight'],
-      comments: json['comments'],
-      status: json['status'],
-      created_at: json['created_at'],
-      created_by: json['created_by'],
-      updated_at: json['updated_at'],
-      updated_at: json['updated_by'],
-      deleted_at: json['deleted_at'],
-      deleted_by: json['deleted_by'],
-      is_deleted: json['is_deleted'],
-    );*/
   }
 }

@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:swingo/src/classes/SwNetwork.dart';
-import 'package:swingo/src/models/order.dart';
 
 const swBaseUrl = 'https://www.goswingo.com/swingo';
 
