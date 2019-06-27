@@ -1,138 +1,68 @@
+import 'package:flutter/foundation.dart';
+import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
-import 'package:swingo/src/theme/colors.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Message {
   final int userId;
   final String text;
+
   Message(this.userId, this.text);
 }
 
 class ChatPage extends StatefulWidget {
+  final WebSocketChannel channel = IOWebSocketChannel.connect(
+      'ws://localhost:3000/socket.io/?EIO=3&transport=websocket');
+
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage>{
-  ValueChanged<String> onSubmitted;
-  TextEditingController textEditingController = TextEditingController();
-  int userId = 2; // TODO: user kendi bilgisini alınca burası düzeltilecek
-  List<Message> messages = [
-    new Message(1, 'İrmaaaa cideydrum hoooooooooy anasini aloooooooooooo. Alooooooooooo.'),
-    new Message(1, 'Heee oni diyrum.'),
-    new Message(2, 'Hamsi çekayi???'),
-    new Message(2, 'Sorry?'),
-    new Message(1, 'Hacı abi canım hamsi çekayi.'),
-  ];
+class _ChatPageState extends State<ChatPage> {
+  TextEditingController _controller = TextEditingController();
 
-  Widget _buildMessageBox(Message message, Color color, Alignment alignment){
-    double screenWidth = MediaQuery.of(context).size.width; //TODO: Bu bir yerde saklanılabilir.
-    double maximumMessageSize = screenWidth / 100 * 75;
-
-    return  Align(
-        alignment: alignment,
-        child: Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(8),
-          decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.all(Radius.circular(10)),
-              color: color
-          ),
-          constraints: BoxConstraints(
-              maxWidth: maximumMessageSize,
-          ),
-          child: Text(
-            message.text,
-            style: TextStyle(color: Colors.white),
-          ),
-        )
-    );
+  @override
+  void dispose() {
+    widget.channel.sink.close();
+    super.dispose();
   }
 
-  Widget _buildListItem(BuildContext context, int index){
-    Message message = messages[index];
-    Widget messageRow;
-    if(userId != message.userId){
-      messageRow = _buildMessageBox(message, swLivingCoral300, Alignment.centerRight);
-    } else {
-      messageRow = _buildMessageBox(message, altDarkBlue, Alignment.centerLeft);
+  void _sendMessage() {
+    if (_controller.text.isNotEmpty) {
+      widget.channel.sink.add(_controller.text);
     }
-    return messageRow;
-  }
-
-  void _onEmojiPressed(){
-    print("Emojiye tıklandı");
-  }
-
-  void _onSendButtonPressed(){
-    if(textEditingController.text != ''){
-      _insertMessageToList(Message(userId, textEditingController.text));
-    }
-  }
-
-  void _handleSubmission(String text){
-    _insertMessageToList(Message(userId, text));
-  }
-
-  void _insertMessageToList(Message message){
-    setState(() {
-        messages.insert(0, message);
-    });
-    textEditingController.text = '';
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.grey,
-            image: new DecorationImage(
-                image: new AssetImage('assets/images/chat-background.jpg'),
-                fit: BoxFit.cover
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Form(
+              child: TextFormField(
+                controller: _controller,
+                decoration: InputDecoration(labelText: 'Send a message'),
+              ),
+            ),
+            StreamBuilder(
+              stream: widget.channel.stream,
+              builder: (context, snapshot) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: Text(snapshot.hasData ? '${snapshot.data}' : ''),
+                );
+              },
             )
+          ],
         ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-          child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Expanded(
-                    child: ListView.builder(
-                        reverse: true,
-                        itemCount: messages.length,
-                        itemBuilder: _buildListItem
-                    ),
-                  ),
-                  TextField(
-                    onSubmitted: _handleSubmission,
-                    controller: textEditingController,
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.black12,
-                      hintText: 'Please enter something. :)',
-                      hintStyle: TextStyle(
-                          color: Colors.white
-                      ),
-                      prefixIcon: IconButton(
-                        color: Colors.white,
-                        icon: Icon(Icons.insert_emoticon),
-                        onPressed: _onEmojiPressed,
-                      ),
-                      suffixIcon: IconButton(
-                          color: altDarkBlue,
-                          icon: Icon(Icons.send),
-                          onPressed: _onSendButtonPressed
-                      ),
-                    ),
-                  )
-                ]
-            )
-          ),
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _sendMessage,
+        tooltip: 'Send message',
+        child: Icon(Icons.send),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
