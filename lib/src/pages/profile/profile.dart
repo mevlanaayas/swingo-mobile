@@ -76,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: ProfileItem(
-                      toPage: BaseProfile(child: BidsScreen(), type: "Bids"),
+                      toPage: BaseProfile(child: Bids(), type: "Bids"),
                       icon: FontAwesomeIcons.dollarSign,
                       text: "Bids",
                       right: false,

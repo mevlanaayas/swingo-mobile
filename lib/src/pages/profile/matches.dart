@@ -39,11 +39,10 @@ class _MatchesScreenState extends State<MatchesScreen> {
 
   _onRequestSuccess(BuildContext context) {
     return (responseData) async {
-      final orderJsonArray = responseData['matches'];
-      print(orderJsonArray);
+      final matchJsonArray = responseData['matches'];
       setState(() {
         matches = List<SwMatch>.from(
-            orderJsonArray.map((orderJson) => SwMatch.fromJson(orderJson)));
+            matchJsonArray.map((orderJson) => SwMatch.fromJson(orderJson)));
       });
     };
   }

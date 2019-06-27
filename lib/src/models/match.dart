@@ -34,8 +34,8 @@ class SwMatch {
   factory SwMatch.fromJson(Map<String, dynamic> json) {
     return SwMatch(
       json['id'],
-      User(id: json['carrier']['id'], username: json['carrier']['username']),
-      User(id: json['purchaser']['id'], username: json['purchaser']['username']),
+      User.fromJson(json['carrier']),
+      User.fromJson(json['purchaser']),
       json['from_address'],
       json['to_address'],
       json['value'],
