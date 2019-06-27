@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -11,8 +10,8 @@ class Message {
 }
 
 class ChatPage extends StatefulWidget {
-  final WebSocketChannel channel = IOWebSocketChannel.connect(
-      'ws://localhost:3000/socket.io/?EIO=3&transport=websocket');
+  final WebSocketChannel channel =
+      IOWebSocketChannel.connect('ws://localhost:3000');
 
   _ChatPageState createState() => _ChatPageState();
 }
@@ -28,7 +27,8 @@ class _ChatPageState extends State<ChatPage> {
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
-      widget.channel.sink.add(_controller.text);
+      widget.channel.sink
+          .add("{'event': 'SEND_MESSAGE', 'data': " + _controller.text + "}");
     }
   }
 
