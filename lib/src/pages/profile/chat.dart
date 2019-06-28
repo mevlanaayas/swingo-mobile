@@ -1,6 +1,6 @@
-import 'package:web_socket_channel/io.dart';
 import 'package:flutter/material.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'dart:convert';
+import 'package:adhara_socket_io/adhara_socket_io.dart';
 
 class Message {
   final int userId;
@@ -10,26 +10,81 @@ class Message {
 }
 
 class ChatPage extends StatefulWidget {
-  final WebSocketChannel channel =
-      IOWebSocketChannel.connect('ws://localhost:3000');
-
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
   TextEditingController _controller = TextEditingController();
 
+  List<String> toPrint = ["trying to conenct"];
+  SocketIOManager manager;
+  SocketIO socket;
+  bool isProbablyConnected = false;
+
   @override
-  void dispose() {
-    widget.channel.sink.close();
-    super.dispose();
+  void initState() {
+    super.initState();
+    manager = SocketIOManager();
+    initSocket();
   }
 
-  void _sendMessage() {
-    if (_controller.text.isNotEmpty) {
-      widget.channel.sink
-          .add("{'event': 'SEND_MESSAGE', 'data': " + _controller.text + "}");
+  initSocket() async {
+    setState(() => isProbablyConnected = true);
+    socket = await manager.createInstance("http://192.168.1.61:3000/");
+    socket.onConnect((data) {
+      pprint("connected...");
+      pprint(data);
+      sendMessage();
+    });
+    socket.onConnectError(pprint);
+    socket.onConnectTimeout(pprint);
+    socket.onError(pprint);
+    socket.onDisconnect(pprint);
+    socket.on("news", (data) {
+      pprint("news");
+      pprint(data);
+    });
+    socket.connect();
+  }
+
+  disconnect() async {
+    await manager.clearInstance(socket);
+    setState(() => isProbablyConnected = false);
+  }
+
+  sendMessage() {
+    if (socket != null) {
+      pprint("sending message...");
+      socket.emit("message", [
+        "Hello world!",
+        1908,
+        {
+          "wonder": "Woman",
+          "comics": ["DC", "Marvel"]
+        },
+        {"test": "=!./"},
+        [
+          "I'm glad",
+          2019,
+          {
+            "come back": "Tony",
+            "adhara means": ["base", "foundation"]
+          },
+          {"test": "=!./"},
+        ]
+      ]);
+      pprint("Message emitted...");
     }
+  }
+
+  pprint(data) {
+    setState(() {
+      if (data is Map) {
+        data = json.encode(data);
+      }
+      print(data);
+      toPrint.add(data);
+    });
   }
 
   @override
@@ -40,26 +95,12 @@ class _ChatPageState extends State<ChatPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Form(
-              child: TextFormField(
-                controller: _controller,
-                decoration: InputDecoration(labelText: 'Send a message'),
-              ),
-            ),
-            StreamBuilder(
-              stream: widget.channel.stream,
-              builder: (context, snapshot) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
-                  child: Text(snapshot.hasData ? '${snapshot.data}' : ''),
-                );
-              },
-            )
+            Text("sd")
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _sendMessage,
+        onPressed: sendMessage,
         tooltip: 'Send message',
         child: Icon(Icons.send),
       ), // This trailing comma makes auto-formatting nicer for build methods.
