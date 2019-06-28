@@ -50,6 +50,7 @@ class _SwSearchState extends State<SwSearch> {
     return Container(
       child: Center(
         child: TextField(
+          style: secondaryColorTextStyle,
           cursorColor: primaryColor,
           decoration: SmallFormFieldDecoration(
               null,

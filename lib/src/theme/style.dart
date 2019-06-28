@@ -247,6 +247,12 @@ const TextStyle smallTextStyle = TextStyle(
   color: primaryColor,
 );
 
+const TextStyle messageWhiteTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 16,
+  color: whiteColor,
+);
+
 Map<Part, Color> skillColor = {
   Part.send: const Color.fromRGBO(0, 179, 184, 1),
   Part.carry: const Color.fromRGBO(84, 114, 239, 1),

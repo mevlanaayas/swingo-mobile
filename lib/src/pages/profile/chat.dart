@@ -1,19 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:adhara_socket_io/adhara_socket_io.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
+
+// TODO: delete after completing design
+final rng = new Random();
 
 // TODO: get username and chat id from navigation and provider
 const String roomId = "5d0cfa9e379d92540791c497";
 const String username = "sender";
-
-class Message {
-  final int userId;
-  final String text;
-
-  Message(this.userId, this.text);
-}
 
 class ChatPage extends StatefulWidget {
   List<String> toPrint = [];
@@ -23,7 +22,6 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   TextEditingController _controller = TextEditingController();
-
   SocketIOManager manager;
   SocketIO socket;
 
@@ -51,8 +49,28 @@ class _ChatPageState extends State<ChatPage> {
     socket.connect();
   }
 
+  joinRoom() {
+    socket.emit("JOIN_ROOM", [
+      {"username": username, "roomId": roomId}
+    ]);
+    // TODO: get recent messages from api
+  }
+
   disconnect() async {
     await manager.clearInstance(socket);
+  }
+
+  disconnectRoom() {
+    socket.emit("LEAVE_ROOM", [
+      {"username": username, "roomId": roomId}
+    ]);
+  }
+
+  @override
+  void dispose() {
+    disconnectRoom();
+    disconnect();
+    super.dispose();
   }
 
   sendMessage() {
@@ -60,6 +78,7 @@ class _ChatPageState extends State<ChatPage> {
       socket.emit("SEND_MESSAGE", [
         {"username": username, "message": _controller.text, "roomId": roomId}
       ]);
+      _controller.clear();
     }
   }
 
@@ -73,40 +92,29 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
-  joinRoom() {
-    socket.emit("JOIN_ROOM", [
-      {"username": username, "roomId": roomId}
-    ]);
-    // TODO: get recent messages from api
-  }
-
-  disconnectRoom() {
-    socket.emit("LEAVE_ROOM", [
-      {"username": username, "roomId": roomId}
-    ]);
-  }
-
   Widget _buildMessageBox(String message, Color color, Alignment alignment) {
     double screenWidth =
         MediaQuery.of(context).size.width; //TODO: Bu bir yerde saklanılabilir.
     double maximumMessageSize = screenWidth / 100 * 75;
 
     return Align(
-        alignment: alignment,
-        child: Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(8),
-          decoration: new BoxDecoration(
-              borderRadius: new BorderRadius.all(Radius.circular(10)),
-              color: color),
-          constraints: BoxConstraints(
-            maxWidth: maximumMessageSize,
-          ),
-          child: Text(
-            message,
-            style: TextStyle(color: Colors.white),
-          ),
-        ));
+      alignment: alignment,
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(8),
+        decoration: new BoxDecoration(
+          borderRadius: new BorderRadius.all(Radius.circular(10)),
+          color: color,
+        ),
+        constraints: BoxConstraints(
+          maxWidth: maximumMessageSize,
+        ),
+        child: Text(
+          message,
+          style: messageWhiteTextStyle,
+        ),
+      ),
+    );
   }
 
   Widget _buildListItem(BuildContext context, int index) {
@@ -120,67 +128,54 @@ class _ChatPageState extends State<ChatPage> {
     }
     return messageRow;
      */
-    messageRow =
-        _buildMessageBox(message, secondaryColor, Alignment.centerRight);
+    messageRow = rng.nextInt(100) % 2 == 0
+        ? _buildMessageBox(message, primaryColor, Alignment.centerRight)
+        : _buildMessageBox(message, secondaryColor, Alignment.centerLeft);
     return messageRow;
-  }
-
-  @override
-  void dispose() {
-    disconnectRoom();
-    disconnect();
-    super.dispose();
-  }
-
-  void _handleSubmission(String text) {
-    _controller.clear();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-            color: Colors.grey,
-            image: new DecorationImage(
-                image: new AssetImage('assets/images/chat-background.jpg'),
-                fit: BoxFit.cover)),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                Expanded(
-                  child: ListView.builder(
-                      reverse: true,
-                      itemCount: widget.toPrint.length,
-                      itemBuilder: _buildListItem),
+      decoration: BoxDecoration(
+        image: new DecorationImage(
+          image: new AssetImage('assets/images/chat-background.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Expanded(
+                child: ListView.builder(
+                  reverse: true,
+                  itemCount: widget.toPrint.length,
+                  itemBuilder: _buildListItem,
                 ),
-                TextField(
-                  onSubmitted: _handleSubmission,
-                  controller: _controller,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.black12,
-                    hintText: 'Please enter something. :)',
-                    hintStyle: TextStyle(color: Colors.white),
-                    /*
-                        prefixIcon: IconButton(
-                          color: Colors.white,
-                          icon: Icon(Icons.insert_emoticon),
-                          onPressed: _onEmojiPressed,
-                        ),
-                         */
-                    suffixIcon: IconButton(
-                        color: primaryColor,
-                        icon: const Icon(FontAwesomeIcons.paperPlane),
-                        onPressed: sendMessage),
-                  ),
-                )
-              ])),
-        ));
+              ),
+              TextField(
+                style: whiteTextStyle,
+                cursorColor: primaryColor,
+                decoration: SmallFormFieldDecoration(
+                  null,
+                  null,
+                  null,
+                  IconButton(
+                      color: primaryColor,
+                      icon: const Icon(FontAwesomeIcons.paperPlane),
+                      onPressed: sendMessage),
+                ),
+                controller: _controller,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
