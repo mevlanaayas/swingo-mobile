@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:adhara_socket_io/adhara_socket_io.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:swingo/src/theme/style.dart';
+
+// TODO: get username and chat id from navigation and provider
+const String roomId = "5d0cfa9e379d92540791c497";
+const String username = "sender";
 
 class Message {
   final int userId;
@@ -10,16 +16,16 @@ class Message {
 }
 
 class ChatPage extends StatefulWidget {
+  List<String> toPrint = [];
+
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
   TextEditingController _controller = TextEditingController();
 
-  List<String> toPrint = ["trying to conenct"];
   SocketIOManager manager;
   SocketIO socket;
-  bool isProbablyConnected = false;
 
   @override
   void initState() {
@@ -29,19 +35,17 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   initSocket() async {
-    setState(() => isProbablyConnected = true);
     socket = await manager.createInstance("http://192.168.1.61:3000/");
     socket.onConnect((data) {
-      pprint("connected...");
-      pprint(data);
-      sendMessage();
+      joinRoom();
     });
-    socket.onConnectError(pprint);
-    socket.onConnectTimeout(pprint);
-    socket.onError(pprint);
-    socket.onDisconnect(pprint);
-    socket.on("news", (data) {
-      pprint("news");
+    /*
+    socket.onConnectError((data) => print(data));
+    socket.onConnectTimeout((data) => print(data));
+    socket.onError((data) => print(data));
+    socket.onDisconnect((data) => print(data));
+     */
+    socket.on("SEND_MESSAGE", (data) {
       pprint(data);
     });
     socket.connect();
@@ -49,31 +53,13 @@ class _ChatPageState extends State<ChatPage> {
 
   disconnect() async {
     await manager.clearInstance(socket);
-    setState(() => isProbablyConnected = false);
   }
 
   sendMessage() {
     if (socket != null) {
-      pprint("sending message...");
-      socket.emit("message", [
-        "Hello world!",
-        1908,
-        {
-          "wonder": "Woman",
-          "comics": ["DC", "Marvel"]
-        },
-        {"test": "=!./"},
-        [
-          "I'm glad",
-          2019,
-          {
-            "come back": "Tony",
-            "adhara means": ["base", "foundation"]
-          },
-          {"test": "=!./"},
-        ]
+      socket.emit("SEND_MESSAGE", [
+        {"username": username, "message": _controller.text, "roomId": roomId}
       ]);
-      pprint("Message emitted...");
     }
   }
 
@@ -83,27 +69,118 @@ class _ChatPageState extends State<ChatPage> {
         data = json.encode(data);
       }
       print(data);
-      toPrint.add(data);
+      widget.toPrint.insert(0, data);
     });
+  }
+
+  joinRoom() {
+    socket.emit("JOIN_ROOM", [
+      {"username": username, "roomId": roomId}
+    ]);
+    // TODO: get recent messages from api
+  }
+
+  disconnectRoom() {
+    socket.emit("LEAVE_ROOM", [
+      {"username": username, "roomId": roomId}
+    ]);
+  }
+
+  Widget _buildMessageBox(String message, Color color, Alignment alignment) {
+    double screenWidth =
+        MediaQuery.of(context).size.width; //TODO: Bu bir yerde saklanılabilir.
+    double maximumMessageSize = screenWidth / 100 * 75;
+
+    return Align(
+        alignment: alignment,
+        child: Container(
+          margin: EdgeInsets.all(10),
+          padding: EdgeInsets.all(8),
+          decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.all(Radius.circular(10)),
+              color: color),
+          constraints: BoxConstraints(
+            maxWidth: maximumMessageSize,
+          ),
+          child: Text(
+            message,
+            style: TextStyle(color: Colors.white),
+          ),
+        ));
+  }
+
+  Widget _buildListItem(BuildContext context, int index) {
+    String message = widget.toPrint[index];
+    Widget messageRow;
+    /*
+    if(userId != message.userId){
+      messageRow = _buildMessageBox(message, swLivingCoral300, Alignment.centerRight);
+    } else {
+      messageRow = _buildMessageBox(message, altDarkBlue, Alignment.centerLeft);
+    }
+    return messageRow;
+     */
+    messageRow =
+        _buildMessageBox(message, secondaryColor, Alignment.centerRight);
+    return messageRow;
+  }
+
+  @override
+  void dispose() {
+    disconnectRoom();
+    disconnect();
+    super.dispose();
+  }
+
+  void _handleSubmission(String text) {
+    _controller.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text("sd")
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: sendMessage,
-        tooltip: 'Send message',
-        child: Icon(Icons.send),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    return Container(
+        decoration: BoxDecoration(
+            color: Colors.grey,
+            image: new DecorationImage(
+                image: new AssetImage('assets/images/chat-background.jpg'),
+                fit: BoxFit.cover)),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                      reverse: true,
+                      itemCount: widget.toPrint.length,
+                      itemBuilder: _buildListItem),
+                ),
+                TextField(
+                  onSubmitted: _handleSubmission,
+                  controller: _controller,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.black12,
+                    hintText: 'Please enter something. :)',
+                    hintStyle: TextStyle(color: Colors.white),
+                    /*
+                        prefixIcon: IconButton(
+                          color: Colors.white,
+                          icon: Icon(Icons.insert_emoticon),
+                          onPressed: _onEmojiPressed,
+                        ),
+                         */
+                    suffixIcon: IconButton(
+                        color: primaryColor,
+                        icon: const Icon(FontAwesomeIcons.paperPlane),
+                        onPressed: sendMessage),
+                  ),
+                )
+              ])),
+        ));
   }
 }
