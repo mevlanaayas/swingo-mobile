@@ -16,7 +16,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppConfig(
-      apiBaseUrl: "https://www.goswingo.com/swingo",
+      apiBaseUrl: "http://localhost:8000/swingo",
       chatUrl: "http://localhost:3000/",
       child: ChangeNotifierProvider(
         builder: (context) {
@@ -34,13 +34,13 @@ class MainApp extends StatelessWidget {
             '/signin': (context) => SignInScreen(),
             '/signup': (context) => SignUpScreen(),
             '/create-send-order': (context) => BaseProfile(
-                  child: CreateOrdersScreen(),
-                  type: "SEND",
-                ),
+              child: CreateOrdersScreen(),
+              type: "SEND",
+            ),
             '/create-carry-order': (context) => BaseProfile(
-                  child: CreateOrdersScreen(),
-                  type: "CARRY",
-                ),
+              child: CreateOrdersScreen(),
+              type: "CARRY",
+            ),
           },
         ),
       ),

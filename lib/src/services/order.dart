@@ -1,14 +1,12 @@
-import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:swingo/app_config.dart';
 import 'package:swingo/src/classes/SwNetwork.dart';
-import 'package:swingo/src/models/order.dart';
-
-const swBaseUrl = 'https://www.goswingo.com/swingo';
 
 abstract class OrderService extends SwNetwork {
   static Future<http.Response> listSenders(BuildContext context,
       {int page, onError, onSuccess}) async {
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
@@ -22,6 +20,7 @@ abstract class OrderService extends SwNetwork {
 
   static Future<http.Response> listCarriers(BuildContext context,
       {int page, onError, onSuccess}) async {
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
       () => http.get(
