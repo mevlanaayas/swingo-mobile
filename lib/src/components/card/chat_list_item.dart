@@ -44,7 +44,7 @@ class _ChatListItemState extends State<ChatListItem> {
                   Text(
                     dateVerboseFormatter.format(DateTime.now()),
                     style: itemBodyDateContentStyle,
-                  )
+                  ),
                 ],
               ),
             ),
@@ -53,30 +53,37 @@ class _ChatListItemState extends State<ChatListItem> {
         const SizedBox(height: 12),
         Row(
           children: <Widget>[
-            widget.item.lastMessage.length > 30
-                ? Text(
-                    widget.item.lastMessage.substring(0, 30) + "...",
-                    style: itemBodyDetailContentStyle,
-                  )
-                : Text(
-                    widget.item.lastMessage,
-                    style: itemBodyDetailContentStyle,
-                  )
+            widget.item.lastMessage != null
+                ? widget.item.lastMessage.length > 30
+                    ? Text(
+                        widget.item.lastMessage.substring(0, 30) + "...",
+                        style: itemBodyDetailContentStyle,
+                      )
+                    : Text(
+                        widget.item.lastMessage,
+                        style: itemBodyDetailContentStyle,
+                      )
+                : Text(""),
           ],
         ),
       ],
     );
   }
 
-  bool isExpanded = false;
-
   Future<void> _handleTap(BuildContext context, ChatRoom item) async {
+    final userProvider = Provider.of<UserStatus>(context);
     Navigator.push(
       context,
       SlideTopRoute(
         page: BaseProfile(
-          child: ChatPage(),
-          type: item.bidId.toString(),
+          child: ChatPage(
+            chatRoom: item,
+            username: userProvider.currentUser.username,
+          ),
+          // TODO: write username who user is talking
+          type: item.secondUser.substring(0, 3) +
+              item.firstUser.substring(0, 3) +
+              userProvider.currentUser.username.substring(0, 3),
         ),
       ),
     );

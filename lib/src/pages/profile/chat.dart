@@ -3,19 +3,26 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:adhara_socket_io/adhara_socket_io.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/models/chat_room.dart';
+import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 
 // TODO: delete after completing design
 final rng = new Random();
 
-// TODO: get username and chat id from navigation and provider
-const String roomId = "5d0cfa9e379d92540791c497";
-const String username = "sender";
-
 class ChatPage extends StatefulWidget {
-  List<String> toPrint = [];
+  final ChatRoom chatRoom;
+  final String username;
+
+  List<Message> toPrint = [];
+
+  ChatPage({this.chatRoom, this.username});
 
   _ChatPageState createState() => _ChatPageState();
 }
@@ -30,10 +37,13 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     manager = SocketIOManager();
     initSocket();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _listMessages(context);
+    });
   }
 
   initSocket() async {
-    socket = await manager.createInstance("http://192.168.1.61:3000/");
+    socket = await manager.createInstance("http://127.0.0.1:3000/");
     socket.onConnect((data) {
       joinRoom();
     });
@@ -51,9 +61,8 @@ class _ChatPageState extends State<ChatPage> {
 
   joinRoom() {
     socket.emit("JOIN_ROOM", [
-      {"username": username, "roomId": roomId}
+      {"username": widget.username, "roomId": widget.chatRoom.id}
     ]);
-    // TODO: get recent messages from api
   }
 
   disconnect() async {
@@ -62,7 +71,7 @@ class _ChatPageState extends State<ChatPage> {
 
   disconnectRoom() {
     socket.emit("LEAVE_ROOM", [
-      {"username": username, "roomId": roomId}
+      {"username": widget.username, "roomId": widget.chatRoom.id}
     ]);
   }
 
@@ -76,7 +85,11 @@ class _ChatPageState extends State<ChatPage> {
   sendMessage() {
     if (socket != null) {
       socket.emit("SEND_MESSAGE", [
-        {"username": username, "message": _controller.text, "roomId": roomId}
+        {
+          "username": widget.username,
+          "message": _controller.text,
+          "roomId": widget.chatRoom.id
+        }
       ]);
       _controller.clear();
     }
@@ -84,11 +97,13 @@ class _ChatPageState extends State<ChatPage> {
 
   pprint(data) {
     setState(() {
-      if (data is Map) {
-        data = json.encode(data);
-      }
       print(data);
-      widget.toPrint.insert(0, data);
+      widget.toPrint.insert(0, Message(
+          id: data['_id'],
+          message: data['message'],
+          roomId: data['roomId'],
+          createdBy: data['createdBy'],
+          createdAt: DateTime.parse(data['createdAt'])));
     });
   }
 
@@ -118,24 +133,41 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _buildListItem(BuildContext context, int index) {
-    String message = widget.toPrint[index];
+    Message message = widget.toPrint[index];
     Widget messageRow;
-    /*
-    if(userId != message.userId){
-      messageRow = _buildMessageBox(message, swLivingCoral300, Alignment.centerRight);
+    if (widget.username == message.createdBy) {
+      messageRow = _buildMessageBox(
+          message.message, primaryColor, Alignment.centerRight);
     } else {
-      messageRow = _buildMessageBox(message, altDarkBlue, Alignment.centerLeft);
+      messageRow = _buildMessageBox(
+          message.message, secondaryColor, Alignment.centerLeft);
     }
     return messageRow;
-     */
-    messageRow = rng.nextInt(100) % 2 == 0
-        ? _buildMessageBox(message, primaryColor, Alignment.centerRight)
-        : _buildMessageBox(message, secondaryColor, Alignment.centerLeft);
-    return messageRow;
+  }
+
+  void _listMessages(BuildContext context) async {
+    ChatService.listMessages(
+      context,
+      onSuccess: _onRequestSuccess(context),
+      chatRoomId: widget.chatRoom.id,
+    );
+  }
+
+  _onRequestSuccess(BuildContext context) {
+    return (responseData) async {
+      final messageArray = responseData['messages'];
+      setState(() {
+        widget.toPrint = messageArray != null
+            ? List<Message>.from(messageArray
+                .map((messageJson) => Message.fromJson(messageJson)))
+            : [];
+      });
+    };
   }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserStatus>(context);
     return Container(
       decoration: BoxDecoration(
         image: new DecorationImage(
