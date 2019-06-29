@@ -42,6 +42,7 @@ class _ChatListItemState extends State<ChatListItem> {
                     width: 5.0,
                   ),
                   Text(
+                    // TODO: change with last message date
                     dateVerboseFormatter.format(DateTime.now()),
                     style: itemBodyDateContentStyle,
                   ),
@@ -53,6 +54,7 @@ class _ChatListItemState extends State<ChatListItem> {
         const SizedBox(height: 12),
         Row(
           children: <Widget>[
+            // TODO: implement last message on server side
             widget.item.lastMessage != null
                 ? widget.item.lastMessage.length > 30
                     ? Text(
@@ -81,9 +83,9 @@ class _ChatListItemState extends State<ChatListItem> {
             username: userProvider.currentUser.username,
           ),
           // TODO: write username who user is talking
-          type: item.secondUser.substring(0, 3) +
-              item.firstUser.substring(0, 3) +
-              userProvider.currentUser.username.substring(0, 3),
+          type: item.firstUser == userProvider.currentUser.username
+              ? item.secondUser
+              : item.firstUser,
         ),
       ),
     );

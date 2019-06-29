@@ -1,8 +1,5 @@
-import 'dart:math';
-
-import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:adhara_socket_io/adhara_socket_io.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -12,9 +9,6 @@ import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
-
-// TODO: delete after completing design
-final rng = new Random();
 
 class ChatPage extends StatefulWidget {
   final ChatRoom chatRoom;
@@ -98,12 +92,14 @@ class _ChatPageState extends State<ChatPage> {
   pprint(data) {
     setState(() {
       print(data);
-      widget.toPrint.insert(0, Message(
-          id: data['_id'],
-          message: data['message'],
-          roomId: data['roomId'],
-          createdBy: data['createdBy'],
-          createdAt: DateTime.parse(data['createdAt'])));
+      widget.toPrint.insert(
+          0,
+          Message(
+              id: data['_id'],
+              message: data['message'],
+              roomId: data['roomId'],
+              createdBy: data['createdBy'],
+              createdAt: DateTime.parse(data['createdAt'])));
     });
   }
 
