@@ -111,7 +111,7 @@ class _ChatPageState extends State<ChatPage> {
     return Align(
       alignment: alignment,
       child: Container(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(2.0),
         padding: const EdgeInsets.all(8),
         decoration: new BoxDecoration(
           borderRadius: new BorderRadius.all(Radius.circular(10)),
