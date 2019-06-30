@@ -31,10 +31,6 @@ class UserStatus with ChangeNotifier {
     token = prefs.getString(SW_TOKEN_KEY) ?? null;
     int userId = prefs.getInt(SW_USER_ID_KEY) ?? null;
     String username = prefs.getString(SW_USERNAME_KEY) ?? null;
-    print("****");
-    print(token);
-    print(username);
-    print(userId);
     if (userId != null && username != null) {
       currentUser = User(id: userId, username: username);
     }
