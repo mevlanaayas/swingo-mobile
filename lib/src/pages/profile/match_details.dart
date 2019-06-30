@@ -7,7 +7,6 @@ import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/profile/base.dart';
 import 'package:swingo/src/theme/style.dart';
-import 'package:swingo/src/utils/formatters.dart';
 import 'package:swingo/src/utils/sliders.dart';
 
 class MatchDetailScreen extends StatelessWidget {
@@ -20,8 +19,13 @@ class MatchDetailScreen extends StatelessWidget {
       children: <Widget>[
         Row(
           children: <Widget>[
-            const Icon(FontAwesomeIcons.share, size: 15.0,),
-            const SizedBox(width: 7.0,),
+            const Icon(
+              FontAwesomeIcons.share,
+              size: 15.0,
+            ),
+            const SizedBox(
+              width: 7.0,
+            ),
             Text(
               "Carrying from",
               style: itemBodyTextContentStyle,
@@ -41,8 +45,13 @@ class MatchDetailScreen extends StatelessWidget {
         const Divider(),
         Row(
           children: <Widget>[
-            const Icon(FontAwesomeIcons.reply, size: 15.0,),
-            const SizedBox(width: 7.0,),
+            const Icon(
+              FontAwesomeIcons.reply,
+              size: 15.0,
+            ),
+            const SizedBox(
+              width: 7.0,
+            ),
             Text(
               "Carrying to",
               style: itemBodyTextContentStyle,
@@ -283,15 +292,17 @@ class MatchDetailScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         SwButton(
+                          color: primaryColor,
                           text: 'CHECKPOINT',
                           onPressed: () {
                             Navigator.push(
                               context,
                               SlideLeftRoute(
-                                  page: BaseProfile(
-                                child: CheckpointScreen(),
-                                type: "Complete tasks",
-                              )),
+                                page: BaseProfile(
+                                  child: CheckpointScreen(match:item),
+                                  type: "Track you deal",
+                                ),
+                              ),
                             );
                           },
                         ),

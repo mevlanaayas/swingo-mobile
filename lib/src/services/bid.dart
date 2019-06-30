@@ -13,7 +13,7 @@ abstract class BidService extends SwNetwork {
     final response = await SwNetwork.sendRequest(
         context,
             () => http.get(
-          '$swBaseUrl/dashboard',
+          '$swBaseUrl/dashboard/',
           headers: {
             "Content-type": "application/json",
             "Authorization": 'Token ${userProvider.token}',

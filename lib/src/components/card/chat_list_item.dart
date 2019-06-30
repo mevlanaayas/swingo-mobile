@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
-import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/profile/base.dart';
 import 'package:swingo/src/pages/profile/chat.dart';
