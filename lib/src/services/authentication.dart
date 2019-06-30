@@ -56,4 +56,22 @@ abstract class AuthenticationService extends SwNetwork {
     SwNetwork.handleResponse(context, response,
         onError: onError, onSuccess: onSuccess);
   }
+
+  static Future<http.Response> auth(BuildContext context,
+      {onError, onSuccess}) async {
+    final userProvider = Provider.of<UserStatus>(context);
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final response = await SwNetwork.sendRequest(context, () {
+      return http.get(
+        '${swBaseUrl}/auth/user/',
+        headers: {
+          "Content-type": "application/json",
+          "Authorization": 'Token ${userProvider.token}'
+        },
+      );
+    });
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
 }

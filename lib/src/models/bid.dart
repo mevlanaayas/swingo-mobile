@@ -38,7 +38,7 @@ class Bid {
       json['transceiver'] != null ? Order.fromJson(json['transceiver']) : null,
       json['transporter'] != null ? Order.fromJson(json['transporter']) : null,
       //User.fromJson(json['bidder']), //TODO: backend username yolladığında düzeltilecek.
-      User(id: json['bidder'], username: "BURAYI DUZELT"),
+      User(id: json['bidder'], username: json['created_by']),
       json['price'],
       json['status'],
       SwModel.parseDate(json['created_at']),

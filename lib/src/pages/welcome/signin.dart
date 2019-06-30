@@ -26,14 +26,26 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
       context,
       username: _usernameController.text,
       password: _passwordController.text,
-      onSuccess: _onRequestSuccess(context),
+      onSuccess: _onSingInRequestSuccess(context),
     );
   }
 
-  _onRequestSuccess(BuildContext context) {
+  _onSingInRequestSuccess(BuildContext context) {
     return (responseData) {
       final userProvider = Provider.of<UserStatus>(context);
-      userProvider.signin(responseData['key'], _usernameController.text);
+      userProvider.signin(responseData['key']);
+      AuthenticationService.auth(
+        context,
+        onSuccess: _onAuthRequestSuccess(context),
+        onError: _onAuthRequestFailed(context),
+      );
+    };
+  }
+
+  _onAuthRequestSuccess(BuildContext context) {
+    return (responseData) {
+      final userProvider = Provider.of<UserStatus>(context);
+      userProvider.auth(responseData['pk'], responseData['username']);
       Navigator.popUntil(context, (Route<dynamic> route) {
         bool shouldPop = false;
         if (route.settings.name != '/signin' &&
@@ -43,6 +55,13 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
         }
         return shouldPop;
       });
+    };
+  }
+
+  _onAuthRequestFailed(BuildContext context) {
+    return (responseData) {
+      final userProvider = Provider.of<UserStatus>(context);
+      userProvider.signout();
     };
   }
 
