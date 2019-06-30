@@ -16,17 +16,36 @@ class SwMatch {
   final String updated_by;
 
   SwMatch(
-      {this.id,
-      this.carrier,
-      this.purchaser,
-      this.fromAddress,
-      this.toAddress,
-      this.value,
-      this.paymentType,
-      this.failReason,
-      this.status,
-      this.created_at,
-      this.created_by,
-      this.updated_at,
-      this.updated_by});
+    this.id,
+    this.carrier,
+    this.purchaser,
+    this.fromAddress,
+    this.toAddress,
+    this.value,
+    this.paymentType,
+    this.failReason,
+    this.status,
+    this.created_at,
+    this.created_by,
+    this.updated_at,
+    this.updated_by,
+  );
+
+  factory SwMatch.fromJson(Map<String, dynamic> json) {
+    return SwMatch(
+      json['id'],
+      User.fromJson(json['carrier']),
+      User.fromJson(json['purchaser']),
+      json['from_address'],
+      json['to_address'],
+      json['value'],
+      json['payment_type'],
+      json['fail_reason'],
+      json['status'],
+      DateTime.parse(json['created_at']),
+      json['created_by'],
+      DateTime.parse(json['updated_at']),
+      json['updated_by'],
+    );
+  }
 }

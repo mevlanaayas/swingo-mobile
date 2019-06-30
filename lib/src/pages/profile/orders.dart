@@ -1,72 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
+import 'package:swingo/src/services/order.dart';
 
-class OrdersScreen extends StatelessWidget {
-  final List<Order> myOrders = [
-    Order(
-        1,
-        "Trabzon",
-        DateTime.now(),
-        "Berlin",
-        DateTime.now(),
-        120.0,
-        "SMALL",
-        20.0,
-        "There is a package to be delivered to Berlin. It is so small but "
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-            "Sed ac consequat turpis. Sed ullamcorper sem nec lectus mattis "
-            "tempor. Praesent pulvinar sed. qweqeqweqweqeqweqweqwe"
-            "qweqeqweqweqeqweqweqw.",
-        "status",
-        DateTime.now(),
-        "currentuser",
-        DateTime.now(),
-        "currentuser",
-        DateTime.now(),
-        "currentuser",
-        false),
-    Order(
-        1,
-        "Londra",
-        DateTime.now(),
-        "Zürih",
-        DateTime.now(),
-        50.0,
-        "MEDIUM",
-        20.0,
-        "There is a package to be delivered to Berlin. It is so small but heavy.",
-        "status",
-        DateTime.now(),
-        "currentuser",
-        DateTime.now(),
-        "currentuser",
-        DateTime.now(),
-        "currentuser",
-        false),
-    Order(
-        1,
-        "Toronto",
-        DateTime.now(),
-        "Dublin",
-        DateTime.now(),
-        230.0,
-        "SMALL",
-        20.0,
-        "There is a package to be delivered to Berlin. It is so small but heavy.",
-        "status",
-        DateTime.now(),
-        "currentuser",
-        DateTime.now(),
-        "currentuser",
-        DateTime.now(),
-        "currentuser",
-        false),
-  ];
+class Orders extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: OrdersScreen(),
+    );
+  }
+}
+
+class OrdersScreen extends StatefulWidget {
+  @override
+  _OrdersScreenState createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends State<OrdersScreen> {
+  List<Order> orders;
+
+
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _listOrders(context);
+    });
+    super.initState();
+  }
+
+  void _listOrders(BuildContext context) async {
+    OrderService.listAll(
+      context,
+      onSuccess: _onRequestSuccess(context),
+    );
+  }
+
+  _onRequestSuccess(BuildContext context) {
+    return (responseData) async {
+      final carryOrderJsonArray = responseData['carry_orders'];
+      final sendOrderJsonArray = responseData['send_orders'];
+      setState(() {
+        orders = List<Order>.from(
+        carryOrderJsonArray.map((orderJson) => Order.fromJson(orderJson)))
+        ..addAll(List<Order>.from(sendOrderJsonArray
+            .map((orderJson) => Order.fromJson(orderJson))));
+      });
+    };
+  }
 
   void _buildSection(List<Widget> slivers, double scale, List<Order> items) {
-    if (items.isNotEmpty) {
+    if (items != null && items.isNotEmpty) {
       slivers.add(
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
@@ -82,22 +68,20 @@ class OrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var slivers = <Widget>[];
     const scale = 1.0;
-    _buildSection(slivers, scale, myOrders);
-    return Scaffold(
-      body: Container(
-        constraints: const BoxConstraints(minWidth: double.infinity),
-        color: primaryColor50,
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
-            bottom: MediaQuery.of(context).padding.bottom,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(child: CustomScrollView(slivers: slivers)),
-            ],
-          ),
+    _buildSection(slivers, scale, orders);
+    return Container(
+      constraints: const BoxConstraints(minWidth: double.infinity),
+      color: primaryColor50,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top,
+          bottom: MediaQuery.of(context).padding.bottom,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(child: CustomScrollView(slivers: slivers)),
+          ],
         ),
       ),
     );

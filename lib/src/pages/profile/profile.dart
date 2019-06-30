@@ -60,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
                   Expanded(
                     child: ProfileItem(
                       toPage:
-                          BaseProfile(child: MatchesScreen(), type: "Matches"),
+                          BaseProfile(child: Matches(), type: "Matches"),
                       icon: FontAwesomeIcons.equals,
                       text: "Matches",
                       right: true,
@@ -76,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: ProfileItem(
-                      toPage: BaseProfile(child: BidsScreen(), type: "Bids"),
+                      toPage: BaseProfile(child: Bids(), type: "Bids"),
                       icon: FontAwesomeIcons.dollarSign,
                       text: "Bids",
                       right: false,
@@ -98,7 +98,7 @@ class ProfileScreen extends StatelessWidget {
                   Expanded(
                     child: ProfileItem(
                       toPage:
-                          BaseProfile(child: OrdersScreen(), type: "MY ORDERS"),
+                          BaseProfile(child: Orders(), type: "MY ORDERS"),
                       icon: Icons.content_paste,
                       text: "Orders",
                       right: true,
