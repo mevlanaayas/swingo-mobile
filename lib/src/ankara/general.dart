@@ -32,16 +32,22 @@ class UserStatus with ChangeNotifier {
 
   init() async {
     _token = await _loadFromSharedPreferences('swUserToken');
+    _user =
+        User(id: 1, username: await _loadFromSharedPreferences('swUsername'));
   }
 
-  signin(String newToken) {
+  signin(String newToken, String username) {
     token = newToken;
+    currentUser = User(id: 1, username: username);
     _saveToSharedPreferences('swUserToken', newToken);
+    _saveToSharedPreferences('swUsername', username);
   }
 
   signout() {
     token = null;
+    currentUser = null;
     _saveToSharedPreferences('swUserToken', token);
+    _saveToSharedPreferences('swUsername', null);
   }
 
   _loadFromSharedPreferences(String key) async {

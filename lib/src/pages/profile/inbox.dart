@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/theme/style.dart';
 
-class InboxScreen extends StatelessWidget {
-  final List<ChatRoom> inbox = [
-    ChatRoom(
-        id: 1,
-        firstUser: "firstuser",
-        secondUser: "currentuser",
-        bidId: 1,
-        lastMessage: "selam"),
-    ChatRoom(
-        id: 2,
-        firstUser: "currentuser",
-        secondUser: "seconduser",
-        bidId: 2,
-        lastMessage: "selam"),
-    ChatRoom(
-        id: 3,
-        firstUser: "currentuser",
-        secondUser: "seconduser",
-        bidId: 3,
-        lastMessage: "selam"),
-  ];
+class InboxScreen extends StatefulWidget {
+  @override
+  _InboxScreenState createState() => _InboxScreenState();
+}
+
+class _InboxScreenState extends State<InboxScreen> {
+  List<ChatRoom> inbox;
+
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _listChatRooms(context);
+    });
+    super.initState();
+  }
 
   void _buildSection(List<Widget> slivers, double scale, List<ChatRoom> items) {
-    if (items.isNotEmpty) {
+    if (items != null && items.isNotEmpty) {
       slivers.add(
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
@@ -36,6 +34,25 @@ class InboxScreen extends StatelessWidget {
         ),
       );
     }
+  }
+
+  void _listChatRooms(BuildContext context) async {
+    ChatService.listChatRooms(
+      context,
+      onSuccess: _onRequestSuccess(context),
+    );
+  }
+
+  _onRequestSuccess(BuildContext context) {
+    return (responseData) async {
+      final chatRoomJsonArray = responseData['chatRooms'];
+      setState(() {
+        inbox = chatRoomJsonArray != null
+            ? List<ChatRoom>.from(chatRoomJsonArray
+                .map((chatRoomJson) => ChatRoom.fromJson(chatRoomJson)))
+            : [];
+      });
+    };
   }
 
   @override

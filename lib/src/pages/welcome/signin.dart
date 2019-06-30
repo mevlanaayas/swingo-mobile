@@ -33,7 +33,7 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
   _onRequestSuccess(BuildContext context) {
     return (responseData) {
       final userProvider = Provider.of<UserStatus>(context);
-      userProvider.signin(responseData['key']);
+      userProvider.signin(responseData['key'], _usernameController.text);
       Navigator.popUntil(context, (Route<dynamic> route) {
         bool shouldPop = false;
         if (route.settings.name != '/signin' &&

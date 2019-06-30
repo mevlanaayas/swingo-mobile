@@ -4,7 +4,7 @@ import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/profile/base.dart';
 import 'package:swingo/src/pages/profile/matches.dart';
-import 'package:swingo/src/pages/profile/messages.dart';
+import 'package:swingo/src/pages/profile/inbox.dart';
 import 'package:swingo/src/pages/profile/settings.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/routes.dart';

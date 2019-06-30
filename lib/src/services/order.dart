@@ -1,15 +1,15 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:swingo/app_config.dart';
 import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/classes/SwNetwork.dart';
-
-const swBaseUrl = 'https://www.goswingo.com/swingo';
 
 abstract class OrderService extends SwNetwork {
   static Future<http.Response> listAll(BuildContext context,
       {int page, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
@@ -26,6 +26,7 @@ abstract class OrderService extends SwNetwork {
 
   static Future<http.Response> listSenders(BuildContext context,
       {int page, onError, onSuccess}) async {
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
@@ -39,6 +40,7 @@ abstract class OrderService extends SwNetwork {
 
   static Future<http.Response> listCarriers(BuildContext context,
       {int page, onError, onSuccess}) async {
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
       () => http.get(
