@@ -2,23 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swingo/src/models/models.dart';
 
-class UserStatus with ChangeNotifier {
-  String _token;
-  bool _userLoggedIn = false;
-  User _user = User(id: 1, username: "currentuser");
+const SW_TOKEN_KEY = 'swUserToken';
+const SW_USER_ID_KEY = 'swUserId';
+const SW_USERNAME_KEY = 'swUsername';
 
-  bool get userLoggedIn => _userLoggedIn;
+class UserStatus with ChangeNotifier {
+  User _user;
+  String _token;
 
   User get currentUser => _user;
 
   String get token => _token;
 
-  bool get isLoggedIn => _token != null;
-
-  set userLoggedIn(bool newValue) {
-    _userLoggedIn = newValue;
-    notifyListeners();
-  }
+  bool get isLoggedIn => _token != null && currentUser != null;
 
   set currentUser(User newUser) {
     _user = newUser;
@@ -31,35 +27,49 @@ class UserStatus with ChangeNotifier {
   }
 
   init() async {
-    _token = await _loadFromSharedPreferences('swUserToken');
-    _user =
-        User(id: 1, username: await _loadFromSharedPreferences('swUsername'));
+    final prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(SW_TOKEN_KEY) ?? null;
+    int userId = prefs.getInt(SW_USER_ID_KEY) ?? null;
+    String username = prefs.getString(SW_USERNAME_KEY) ?? null;
+    print("****");
+    print(token);
+    print(username);
+    print(userId);
+    if (userId != null && username != null) {
+      currentUser = User(id: userId, username: username);
+    }
   }
 
-  signin(String newToken, String username) {
+  signin(String newToken) {
     token = newToken;
-    currentUser = User(id: 1, username: username);
-    _saveToSharedPreferences('swUserToken', newToken);
-    _saveToSharedPreferences('swUsername', username);
+    print(token);
+    notifyListeners();
+    _saveToSharedPreferences(SW_TOKEN_KEY, newToken);
+  }
+
+  auth(int userId, String username) async {
+    currentUser = User(id: userId, username: username);
+    notifyListeners();
+    _saveToSharedPreferences(SW_USER_ID_KEY, userId);
+    _saveToSharedPreferences(SW_USERNAME_KEY, username);
   }
 
   signout() {
     token = null;
     currentUser = null;
-    _saveToSharedPreferences('swUserToken', token);
-    _saveToSharedPreferences('swUsername', null);
+    notifyListeners();
+    _saveToSharedPreferences(SW_TOKEN_KEY, null);
+    _saveToSharedPreferences(SW_USER_ID_KEY, null);
+    _saveToSharedPreferences(SW_USERNAME_KEY, null);
   }
 
-  _loadFromSharedPreferences(String key) async {
+  _saveToSharedPreferences(String key, dynamic value) async {
     final prefs = await SharedPreferences.getInstance();
-    final value = prefs.getString(key) ?? null;
-    print('read: $value');
-    return value;
-  }
-
-  _saveToSharedPreferences(String key, String value) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, value);
+    if (value is String) {
+      prefs.setString(key, value);
+    } else if (value is int) {
+      prefs.setInt(key, value);
+    }
     print('saved $value');
   }
 }
