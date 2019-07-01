@@ -18,6 +18,7 @@ class RateScreen extends StatefulWidget {
 
 class _RateScreenState extends State<RateScreen> {
   String result = "";
+
   Widget _buildScreen() {
     return Column(
       children: <Widget>[
@@ -42,7 +43,6 @@ class _RateScreenState extends State<RateScreen> {
     );
   }
 
-
   void onTap() {
     print("tapped");
     // send request to step.url with matchId
@@ -56,7 +56,7 @@ class _RateScreenState extends State<RateScreen> {
 
   _onRequestSuccess(LinkedHashMap<String, dynamic> data) {
     setState(() {
-      if(data['isSuccessful'] == 'true') {
+      if (data['isSuccessful'] == 'true') {
         result = "Successful";
       } else {
         result = data['msg'];
@@ -69,7 +69,7 @@ class _RateScreenState extends State<RateScreen> {
     return Scaffold(
       body: Container(
         child: Padding(
-          padding: EdgeInsets.only(top: 20),
+          padding: EdgeInsets.all(50),
           child: _buildScreen(),
         ),
       ),

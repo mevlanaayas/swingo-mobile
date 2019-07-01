@@ -7,8 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/pages/checkpoint/rate.dart';
 import 'package:swingo/src/services/checkpoint.dart';
 import 'package:swingo/src/theme/style.dart';
+import 'package:swingo/src/utils/routes.dart';
 
 class DefaultStepScreen extends StatefulWidget {
   final CheckpointStep step;
@@ -25,7 +27,12 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
   String result = "";
   bool isSuccessful = false;
 
-  Widget _buildScreen(int currentUserId) {
+  Future<void> _handleRateTap(BuildContext context) async {
+    await Navigator.of(context).push(
+        TransparentRoute(builder: (BuildContext context) => RateScreen()));
+  }
+
+  Widget _buildScreen(int currentUserId, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -43,7 +50,7 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
                         color: secondaryColor,
                         text: 'Rate',
                         onPressed: () {
-                          print("rate");
+                          _handleRateTap(context);
                         },
                         iconData: FontAwesomeIcons.star,
                       )
@@ -66,7 +73,7 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
                         color: secondaryColor,
                         text: 'Rate',
                         onPressed: () {
-                          print("rate");
+                          _handleRateTap(context);
                         },
                         iconData: FontAwesomeIcons.star,
                       )
@@ -108,7 +115,7 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
     final userProvider = Provider.of<UserStatus>(context);
     return Container(
       alignment: Alignment.center,
-      child: _buildScreen(userProvider.currentUser.id),
+      child: _buildScreen(userProvider.currentUser.id, context),
     );
   }
 }
