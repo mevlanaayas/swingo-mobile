@@ -16,10 +16,10 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
   final List<CheckpointStep> steps = [
     const CheckpointStep(
       id: 1,
-      key: 'Make a Payment',
-      title: 'Make a Payment',
-      description: 'Waiting for Payment',
-      completedCondition: 'Payment Passed for On Delivery',
+      title: 'Waiting for Payment',
+      carrierDescription: 'Waiting for Payment',
+      senderDescription: 'Waiting for Payment',
+      activatedCondition: 'None',
       carrier: false,
       illustration: '',
       url: 'pass_payment',
@@ -27,10 +27,10 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
     ),
     const CheckpointStep(
       id: 2,
-      key: 'Check Packet',
-      title: 'Check Packet',
-      description: 'Please check your box carefully.',
-      completedCondition: 'Box Check Passed',
+      title: 'Waiting for Carrier to Check an Item',
+      carrierDescription: 'Please check the item carefully.',
+      senderDescription: 'Carrier is checking an item.',
+      activatedCondition: 'Payment Passed for On Delivery',
       carrier: true,
       illustration: '',
       url: 'check_box_done',
@@ -38,10 +38,12 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
     ),
     const CheckpointStep(
       id: 3,
-      key: 'Request Taking Packet',
-      title: 'Request Taking Packet',
-      description: 'We will send confirmation code to Sender.',
-      completedCondition: 'Packet Taking Code Sent',
+      title: 'Waiting for Carrier to take an item.',
+      carrierDescription:
+          'Progress, When you ready to take an item, We will send confirmation code to Sender.',
+      senderDescription:
+          'When Carrier ready to take an item, We will send confirmation code to you.',
+      activatedCondition: 'Box Check Passed',
       carrier: true,
       illustration: '',
       url: 'ready_for_taking_box',
@@ -49,10 +51,10 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
     ),
     const CheckpointStep(
       id: 4,
-      key: 'Confirm Code',
-      title: 'Take Packet',
-      description: 'Package and Sender are ready to go.',
-      completedCondition: 'On Way',
+      title: 'Confirm Code',
+      carrierDescription: 'Waiting for Item taking confirmation.',
+      senderDescription: 'Waiting for Item taking confirmation.',
+      activatedCondition: 'Packet Taking Code Sent',
       carrier: true,
       illustration: '',
       url: 'ready_to_travel',
@@ -60,10 +62,10 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
     ),
     const CheckpointStep(
       id: 5,
-      key: 'Request Delivery',
       title: 'Request Delivery',
-      description: 'Carrier arrived, send the confirm code.',
-      completedCondition: 'Confirm Code Sent',
+      carrierDescription: 'Progress, When you ready to deliver an item, We will send confirmation code to Receiver.',
+      senderDescription: 'We sent confirm code to Receiver.',
+      activatedCondition: 'On Way',
       carrier: true,
       illustration: '',
       url: 'ready_for_code_confirm',
@@ -71,10 +73,11 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
     ),
     const CheckpointStep(
       id: 6,
-      key: 'Confirm Code',
       title: 'Confirm Code',
-      description: 'We sent confirm code to you. Check your inbox.',
-      completedCondition: 'Finished',
+      carrierDescription:
+          'Confirm Code',
+      senderDescription: 'Carrier Confirming Code',
+      activatedCondition: 'Confirm Code Sent',
       carrier: true,
       illustration: '',
       url: 'confirm_confirmation_code',
@@ -82,11 +85,12 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
     ),
     const CheckpointStep(
       id: 7,
-      key: 'Finished',
       title: 'Finished',
-      description:
+      carrierDescription:
           'We are happy to see yu finished a deal. Always a pleasure to serve you.',
-      completedCondition: 'Finished',
+      senderDescription:
+          'We are happy to see yu finished a deal. Always a pleasure to serve you.',
+      activatedCondition: 'Finished',
       carrier: false,
       illustration: '',
       url: '',
@@ -97,10 +101,18 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
   Widget _buildScreen() {
     Widget result = Text("none");
     steps.forEach((step) {
-      if (step.completedCondition == widget.match.status) {
+      if (step.activatedCondition == widget.match.status) {
         result = step.requiresParam == true
-            ? ParamStepScreen(step: step, matchId: widget.match.id)
-            : DefaultStepScreen(step: step, matchId: widget.match.id);
+            ? ParamStepScreen(
+                step: step,
+                matchId: widget.match.id,
+                carrierId: widget.match.carrier.id,
+              )
+            : DefaultStepScreen(
+                step: step,
+                matchId: widget.match.id,
+                carrierId: widget.match.carrier.id,
+              );
       }
     });
     return result;
@@ -109,13 +121,7 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AspectRatio(
-        aspectRatio: 1,
-        child: Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: _buildScreen(),
-        ),
-      ),
+      body: _buildScreen(),
     );
   }
 }

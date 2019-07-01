@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/sliders.dart';
 

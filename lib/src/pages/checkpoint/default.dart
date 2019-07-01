@@ -1,6 +1,10 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/services/checkpoint.dart';
@@ -9,8 +13,9 @@ import 'package:swingo/src/theme/style.dart';
 class DefaultStepScreen extends StatefulWidget {
   final CheckpointStep step;
   final int matchId;
+  final int carrierId;
 
-  DefaultStepScreen({this.step, this.matchId});
+  DefaultStepScreen({this.step, this.matchId, this.carrierId});
 
   @override
   _DefaultStepScreenState createState() => _DefaultStepScreenState();
@@ -20,19 +25,60 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
   String result = "";
   bool isSuccessful = false;
 
-  Widget _buildScreen() {
-    return Column(
-      children: <Widget>[
-        Text(widget.step.completedCondition),
-        Text(result),
-        SwButton(
-          color: primaryColor,
-          text: 'Progress',
-          onPressed: () {
-            onTap();
-          },
-        ),
-      ],
+  Widget _buildScreen(int currentUserId) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: currentUserId == widget.carrierId
+            ? <Widget>[
+                Text("I am carrier of match"),
+                Text(widget.step.activatedCondition),
+                Text(widget.step.url),
+                Text(result),
+                Text(widget.step.carrierDescription),
+                widget.step.activatedCondition == 'Finished'
+                    ? SwButton(
+                        color: secondaryColor,
+                        text: 'Rate',
+                        onPressed: () {
+                          print("rate");
+                        },
+                        iconData: FontAwesomeIcons.star,
+                      )
+                    : SwButton(
+                        color: primaryColor,
+                        text: 'Progress',
+                        onPressed: () {
+                          print("not allowed");
+                        },
+                      ),
+              ]
+            : <Widget>[
+                Text("I am sender of match"),
+                Text(widget.step.activatedCondition),
+                Text(widget.step.url),
+                Text(result),
+                Text(widget.step.carrierDescription),
+                widget.step.activatedCondition == 'Finished'
+                    ? SwButton(
+                        color: secondaryColor,
+                        text: 'Rate',
+                        onPressed: () {
+                          print("rate");
+                        },
+                        iconData: FontAwesomeIcons.star,
+                      )
+                    : SwButton(
+                        color: disabledColor,
+                        text: 'Progress',
+                        onPressed: () {
+                          print("not allowed");
+                        },
+                      ),
+              ],
+      ),
     );
   }
 
@@ -49,7 +95,7 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
 
   _onRequestSuccess(LinkedHashMap<String, dynamic> data) {
     setState(() {
-      if(data['isSuccessful'] == 'true') {
+      if (data['isSuccessful'] == 'true') {
         result = "Successful";
       } else {
         result = data['msg'];
@@ -59,13 +105,10 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: _buildScreen(),
-        ),
-      ),
+    final userProvider = Provider.of<UserStatus>(context);
+    return Container(
+      alignment: Alignment.center,
+      child: _buildScreen(userProvider.currentUser.id),
     );
   }
 }

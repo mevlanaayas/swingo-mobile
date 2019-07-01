@@ -10,14 +10,11 @@ const Color primaryColor100 = const Color(0xFFBAE9E3);
 final Color _primaryColor50 = Color(0xFFE3F6F4);
 const Color primaryColor50 = const Color(0xFFE3F6F4);
 
-
 final Color _secondaryColor = Color(0xFFFADA5E);
 const Color secondaryColor = Color(0xFFFADA5E);
 
-
 final Color _secondaryColor50 = Color(0xFFFEF9E3);
 const Color secondaryColor50 = Color(0xFFFEF9E3);
-
 
 final Color _secondaryColor100 = Color(0xFFFCEEB8);
 const Color secondaryColor100 = Color(0xFFFCEEB8);
@@ -31,14 +28,11 @@ const Color contentColorDark = Color.fromRGBO(38, 38, 47, 1);
 final Color _whiteColor = Color(0xFFFFFFFF);
 const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
 
-
 final Color _blackColor = Color(0xFF000000);
 const Color blackColor = Color(0xFF000000);
 
-
 final Color _blackColor600 = Color(0xFF555555);
 const Color blackColor600 = Color(0xFF555555);
-
 
 final Color _blackColor400 = Color(0xFF9D9D9D);
 const Color blackColor400 = Color(0xFF9D9D9D);
@@ -166,13 +160,12 @@ const TextStyle itemFrontLayerTitleStyle = TextStyle(
 );
 
 const TextStyle profileCardTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
-  fontSize: 14,
-  color: skillTextColor,
-  // color: Color(0xFFFF00FF),
-  fontWeight: FontWeight.w600,
-  letterSpacing: 1.5
-);
+    fontFamily: 'MontserratRegular',
+    fontSize: 14,
+    color: skillTextColor,
+    // color: Color(0xFFFF00FF),
+    fontWeight: FontWeight.w600,
+    letterSpacing: 1.5);
 
 const TextStyle contentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
@@ -187,11 +180,10 @@ const TextStyle contentLargeStyle = TextStyle(
 );
 
 const TextStyle buttonTextStyle = TextStyle(
-  fontFamily: 'MontserratMedium',
-  fontSize: 16,
-  color: whiteColor,
-  fontWeight: FontWeight.w100
-);
+    fontFamily: 'MontserratMedium',
+    fontSize: 16,
+    color: whiteColor,
+    fontWeight: FontWeight.w100);
 
 const TextStyle inputFieldStyle = TextStyle(
   fontFamily: 'MontserratRegular',
@@ -253,6 +245,12 @@ const TextStyle messageWhiteTextStyle = TextStyle(
   color: whiteColor,
 );
 
+const TextStyle disabledColorTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 12,
+  color: disabledColor,
+);
+
 Map<Part, Color> skillColor = {
   Part.send: const Color.fromRGBO(0, 179, 184, 1),
   Part.carry: const Color.fromRGBO(84, 114, 239, 1),
@@ -264,7 +262,6 @@ Map<Part, String> skillFlareIcon = {
   Part.carry: 'assets/flare/EngineeringIcon.flr',
   Part.profile: 'assets/flare/UxIcon.flr'
 };
-
 
 /*
 * Date Picker Styles

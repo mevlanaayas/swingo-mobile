@@ -1,9 +1,9 @@
 class CheckpointStep {
   final int id;
-  final String key;
   final String title;
-  final String description;
-  final String completedCondition;
+  final String carrierDescription;
+  final String senderDescription;
+  final String activatedCondition;
   final bool carrier;
   final String illustration;
   final String url;
@@ -11,10 +11,10 @@ class CheckpointStep {
 
   const CheckpointStep(
       {this.id,
-      this.key,
       this.title,
-      this.description,
-      this.completedCondition,
+      this.carrierDescription,
+      this.senderDescription,
+      this.activatedCondition,
       this.carrier,
       this.illustration,
       this.url,
@@ -23,10 +23,10 @@ class CheckpointStep {
   factory CheckpointStep.fromJson(Map<String, dynamic> json) {
     return CheckpointStep(
       id: json['id'],
-      key: json['key'],
       title: json['title'],
-      description: json['description'],
-      completedCondition: json['completedCondition'],
+      carrierDescription: json['carrierDescription'],
+      senderDescription: json['senderDescription'],
+      activatedCondition: json['activatedCondition'],
       carrier: json['carrier'],
       illustration: json['illustration'],
       url: json['url'],

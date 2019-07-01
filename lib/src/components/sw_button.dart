@@ -30,6 +30,7 @@ class SwButton extends StatelessWidget {
   final IconData iconData;
   final bool fillParent;
   final Color color;
+
   // TODO: create new component as small button
   final double size;
 
@@ -69,6 +70,7 @@ class SwButton extends StatelessWidget {
                 : <Widget>[
                     Icon(
                       iconData,
+                      color: buttonTextStyle.color,
                     ),
                     SizedBox(
                       width: 8.0,
