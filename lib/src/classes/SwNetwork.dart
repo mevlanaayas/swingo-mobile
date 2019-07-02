@@ -22,6 +22,7 @@ abstract class SwNetwork {
   }
 
   static handleResponse(BuildContext context, response, {onError, onSuccess}){
+    print(response.statusCode);
     print("SW NETWORK: " +  response.body);
     if (response.statusCode != 200) {
       if (onError != null) {

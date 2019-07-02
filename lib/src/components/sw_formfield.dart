@@ -5,26 +5,26 @@ import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class SwFormField extends StatefulWidget {
-  final String text;
   final String labelText;
   final IconData prefixIcon;
   final IconData suffixIcon;
   final onFocused;
   final onEditingCompleted;
   final bool isNumber;
+  final bool isRequired;
   final bool obscureText;
   final FocusNode focusNode;
   final TextEditingController controller;
   final int maxLines;
 
   SwFormField(
-      {this.text,
-      this.labelText,
+      {this.labelText,
       this.prefixIcon,
       this.suffixIcon,
       this.onFocused,
       this.onEditingCompleted,
       this.isNumber,
+      this.isRequired,
       this.obscureText,
       this.focusNode,
       this.controller,
@@ -70,6 +70,10 @@ class SwFormFieldState extends State<SwFormField> {
   }
 
   String _validator(String value) {
+    if (value.isEmpty) {
+      return 'Please fill this field.';
+    }
+
     if (widget.isNumber != null && widget.isNumber == true) {
       return _numberValidator(value);
     }
@@ -104,10 +108,6 @@ class SwFormFieldState extends State<SwFormField> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.text != null || widget.text != '') {
-      textEditingController.text =
-          widget.text; //todo: bunu taşımak lazım hata basıyo
-    }
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         if (widget.onFocused != null) {

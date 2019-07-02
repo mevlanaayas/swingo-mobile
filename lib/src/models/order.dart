@@ -40,7 +40,7 @@ class Order {
     return Order(
       json['id'],
       json['from_city'],
-      json['from_date'] != null ? DateTime.parse(json['from_date']): null,
+      json['from_date'] != null ? DateTime.parse(json['from_date']) : null,
       json['to_city'],
       json['to_date'] != null ? DateTime.parse(json['to_date']) : null,
       json['price'],
@@ -56,5 +56,18 @@ class Order {
       json['deleted_by'],
       json['is_deleted'],
     );
+  }
+
+  static String toJson(
+      from_city, from_date, to_city, to_date, price, size, weight, comments) {
+    return '{'
+        '"from_city": "${from_city}",'
+        '"from_date": "${from_date}", '
+        '"to_city": "${to_city}", '
+        '"to_date": "${to_date}", '
+        '"price": "${price}",'
+        '"size": "${size}",'
+        '"weight": "${weight}",'
+        '"comments": "${comments}"}';
   }
 }
