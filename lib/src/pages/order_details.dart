@@ -272,6 +272,7 @@ class DetailScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               SwButton(
+                                color: primaryColor,
                                 text: 'MAKE A BID',
                                 onPressed: () {
                                   print(item.id);

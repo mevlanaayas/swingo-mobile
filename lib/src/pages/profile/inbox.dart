@@ -72,7 +72,24 @@ class _InboxScreenState extends State<InboxScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Expanded(child: CustomScrollView(slivers: slivers)),
+              slivers.length > 0
+                  ? Expanded(child: CustomScrollView(slivers: slivers))
+                  : Expanded(
+                      child: Container(
+                        constraints:
+                            const BoxConstraints(minWidth: double.infinity),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            // TODO: when there is no chatroom
+                            Placeholder(
+                              fallbackHeight: 200,
+                              fallbackWidth: 200,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),

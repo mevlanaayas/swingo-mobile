@@ -18,3 +18,4 @@ export 'package:swingo/src/components/sw_wide_button.dart';
 export 'package:swingo/src/components/card/chat_list_item.dart';
 export 'package:swingo/src/components/card/profile_item.dart';
 export 'package:swingo/src/components/card/home_item.dart';
+export 'package:swingo/src/components/card/match_item.dart';

@@ -37,7 +37,7 @@ class _ChatListItemState extends State<ChatListItem> {
                           widget.item.firstUser,
                           style: itemUsernameContentStyle,
                         ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5.0,
                   ),
                   Text(

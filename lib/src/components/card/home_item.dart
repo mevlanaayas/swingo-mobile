@@ -42,7 +42,7 @@ class _HomeItemState extends State<HomeItem> {
                   color: whiteColor,
                   size: 50.0,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
                 Text(

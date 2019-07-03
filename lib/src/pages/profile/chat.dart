@@ -78,13 +78,15 @@ class _ChatPageState extends State<ChatPage> {
 
   sendMessage() {
     if (socket != null) {
-      socket.emit("SEND_MESSAGE", [
-        {
-          "username": widget.username,
-          "message": _controller.text,
-          "roomId": widget.chatRoom.id
-        }
-      ]);
+      if(_controller.text != null && _controller.text != "") {
+        socket.emit("SEND_MESSAGE", [
+          {
+            "username": widget.username,
+            "message": _controller.text,
+            "roomId": widget.chatRoom.id
+          }
+        ]);
+      }
       _controller.clear();
     }
   }

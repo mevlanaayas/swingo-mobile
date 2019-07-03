@@ -162,7 +162,7 @@ class MatchDetailScreen extends StatelessWidget {
             ),
             Text(
               item.status,
-              style: itemBodyDateContentStyle,
+              style: blackTextStyle,
             ),
           ],
         ),

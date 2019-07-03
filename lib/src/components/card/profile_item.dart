@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/sliders.dart';
-import 'package:swingo/src/utils/routes.dart';
-import 'package:swingo/src/pages/pages.dart';
 
 class ProfileItem extends StatefulWidget {
   final Widget toPage;
@@ -62,7 +60,7 @@ class _ProfileItemState extends State<ProfileItem> {
                           widget.text,
                           style: blackTextStyle,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10.0,
                         ),
                         Icon(
@@ -77,7 +75,7 @@ class _ProfileItemState extends State<ProfileItem> {
                           color: secondaryColor,
                           size: 30.0,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10.0,
                         ),
                         Text(
