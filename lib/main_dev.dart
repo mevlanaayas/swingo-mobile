@@ -34,11 +34,11 @@ class MainApp extends StatelessWidget {
             '/signin': (context) => SignInScreen(),
             '/signup': (context) => SignUpScreen(),
             '/create-send-order': (context) => BaseProfile(
-              child: CreateOrders(),
+              child: CreateOrders("Send"),
               type: "SEND",
             ),
             '/create-carry-order': (context) => BaseProfile(
-              child: CreateOrders(),
+              child: CreateOrders("Carry"),
               type: "CARRY",
             ),
           },

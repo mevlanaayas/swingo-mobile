@@ -69,12 +69,39 @@ abstract class OrderService extends SwNetwork {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
-      () => http.post('${swBaseUrl}/transceiver_order',
+      () => http.post('${swBaseUrl}/transceiver_order/',
           headers: {
             "Content-type": "application/json",
             "Authorization": 'Token ${userProvider.token}'
           },
           body: Order.toJson(from_city, from_date, to_city, to_date, price,
+              size, weight, comments)),
+    );
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
+
+  static Future<http.Response> createCarrier(BuildContext context,
+      {from_city,
+        from_date,
+        to_city,
+        to_date,
+        size,
+        weight,
+        comments,
+        onError,
+        onSuccess}) async {
+    final userProvider = Provider.of<UserStatus>(context);
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final response = await SwNetwork.sendRequest(
+      context,
+          () => http.post('${swBaseUrl}/transceiver_order/',
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": 'Token ${userProvider.token}'
+          },
+          body: Order.toJson(from_city, from_date, to_city, to_date, null,
               size, weight, comments)),
     );
 

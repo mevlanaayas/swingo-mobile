@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:swingo/src/models/city.dart';
@@ -7,6 +8,7 @@ import 'package:swingo/src/components/sw_button.dart';
 import 'package:swingo/src/components/sw_select.dart';
 import 'package:swingo/src/components/sw_datepicker.dart';
 import 'package:swingo/src/components/sw_formfield.dart';
+import 'package:swingo/src/services/option.dart';
 import 'package:swingo/src/services/order.dart';
 
 class CreateOrderForm {
@@ -21,15 +23,27 @@ class CreateOrderForm {
 }
 
 class CreateOrders extends StatelessWidget {
+  String type;
+
+  CreateOrders(this.type);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CreateOrdersScreen(),
+      body: CreateOrdersScreen(
+        type: this.type,
+      ),
     );
   }
 }
 
 class CreateOrdersScreen extends StatefulWidget {
+  String type;
+
+  CreateOrdersScreen({
+    this.type,
+  });
+
   @override
   CreateOrdersScreenState createState() {
     return CreateOrdersScreenState();
@@ -47,7 +61,21 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
   TextEditingController toDateController = TextEditingController();
   TextEditingController sizeController = TextEditingController();
   TextEditingController weightController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
   TextEditingController commentsController = TextEditingController();
+
+  @override
+  void initState() {
+    //TODO: city, size backendden çekilecek
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _listCities(context);
+    });
+    super.initState();
+  }
+
+  _listCities(BuildContext) {
+    OptionService.listCities(context);
+  }
 
   final _formKey = GlobalKey<FormState>();
   var _form = CreateOrderForm();
@@ -62,39 +90,52 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
     toCityController.text = toCity.name;
   }
 
-  void _onFromDateSelected(DateTime fromDate){
+  void _onFromDateSelected(DateTime fromDate) {
     setState(() => _form.fromDate = fromDate);
     fromDateController.text = fromDate.toString();
   }
 
-  void _onToDateSelected(DateTime toDate){
+  void _onToDateSelected(DateTime toDate) {
     setState(() => _form.toDate = toDate);
     toDateController.text = toDate.toString();
   }
 
-  void _onPacketSizeSelected(PacketSize size){
+  void _onPacketSizeSelected(PacketSize size) {
     setState(() => _form.size = size);
     sizeController.text = size.name;
   }
 
   _submit(BuildContext context) {
     if (_formKey.currentState.validate()) {
-      OrderService.createSender(
-        context,
-        from_city: _form.fromCity != null ? _form.fromCity.id : null,
-        to_city: _form.toCity != null ? _form.toCity.id : null,
-        from_date: _form.fromDate,
-        to_date: _form.fromDate,
-        price: 5,
-        size: _form.size != null ? _form.size.id : null,
-        weight: _form.weight,
-        comments: _form.comments,
-      );
+      if (widget.type == "Send") {
+        OrderService.createSender(
+          context,
+          from_city: _form.fromCity.name,
+          to_city: _form.toCity.name,
+          from_date: _form.fromDate,
+          to_date: _form.fromDate,
+          price: int.parse(priceController.text),
+          size: _form.size.name,
+          weight: int.parse(weightController.text),
+          comments: _form.comments,
+        );
+      } else {
+        OrderService.createCarrier(
+          context,
+          from_city: _form.fromCity.name,
+          to_city: _form.toCity.name,
+          from_date: _form.fromDate,
+          to_date: _form.fromDate,
+          size: _form.size.name,
+          weight: int.parse(weightController.text),
+          comments: _form.comments,
+        );
+      }
     }
   }
 
   _onRequestSuccess(BuildContext context) {
-    return (response) => Navigator.of(context).pushNamed('/signin');
+    //return (response) => Navigator.of(context).pushNamed('/signin');
   }
 
   List<City> _onSearchChanged(String searchingText) {
@@ -183,14 +224,23 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
                     isNumber: true,
                   ),
                   SwSelect(
-                      isRequired: true,
-                      prefixIcon: FontAwesomeIcons.expand,
-                      labelText: 'Size',
-                      onSelected: _onPacketSizeSelected,
-                      onSearchChanged: _onPacketSizeSearchChanged,
-                      hideSearchBar: true,
-                      textEditingController: sizeController,
+                    isRequired: true,
+                    prefixIcon: FontAwesomeIcons.expand,
+                    labelText: 'Size',
+                    onSelected: _onPacketSizeSelected,
+                    onSearchChanged: _onPacketSizeSearchChanged,
+                    hideSearchBar: true,
+                    textEditingController: sizeController,
                   ),
+                  widget.type == "Send"
+                      ? SwFormField(
+                          isRequired: true,
+                          prefixIcon: FontAwesomeIcons.moneyBill,
+                          labelText: 'Price To Pay',
+                          controller: priceController,
+                          isNumber: true,
+                        )
+                      : SizedBox(),
                   SwFormField(
                     isRequired: true,
                     prefixIcon: FontAwesomeIcons.infoCircle,
@@ -199,11 +249,12 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
                     maxLines: 3,
                   ),
                   Center(
-                      child: SwButton(
-                    text: 'Create',
-                    fillParent: true,
-                    onPressed: () => _submit(context),
-                  )),
+                    child: SwButton(
+                      text: 'Create',
+                      fillParent: true,
+                      onPressed: () => _submit(context),
+                    ),
+                  ),
                 ],
               ),
             )),
