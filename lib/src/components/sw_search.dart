@@ -5,8 +5,8 @@ import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class SwSearch extends StatefulWidget {
-  dynamic onSearchChanged;
-  bool hideSearchBar;
+  final onSearchChanged;
+  final bool hideSearchBar;
 
   SwSearch({this.onSearchChanged, this.hideSearchBar});
 
@@ -15,8 +15,7 @@ class SwSearch extends StatefulWidget {
 }
 
 class _SwSearchState extends State<SwSearch> {
-  String searchingText = '';
-  bool isCancelButtonActive = false;
+  List<dynamic> list = [];
   TextEditingController _textEditingController = TextEditingController();
 
   void _onBackPressed(context) {
@@ -43,7 +42,7 @@ class _SwSearchState extends State<SwSearch> {
     );
   }
 
-  Widget _buildSearchField() {
+  Widget _buildSearchField(BuildContext context) {
     if (widget.hideSearchBar != null && widget.hideSearchBar == true) {
       return null;
     }
@@ -56,7 +55,7 @@ class _SwSearchState extends State<SwSearch> {
               null,
               null,
               FontAwesomeIcons.search,
-              isCancelButtonActive
+              _textEditingController.text != ''
                   ? IconButton(
                       color: secondaryColor,
                       splashColor: Colors.transparent,
@@ -67,9 +66,17 @@ class _SwSearchState extends State<SwSearch> {
                       onPressed: _cleanTextEditing)
                   : null),
           controller: _textEditingController,
+          onChanged: (newText) => _onTextChanged(context, newText),
         ),
       ),
     );
+  }
+
+  _onTextChanged(BuildContext context, String newText) async {
+    final newList = await widget.onSearchChanged(context, newText) ?? [];
+    setState((){
+      list = newList;
+    });
   }
 
   void _onListItemTap(dynamic element) {
@@ -98,16 +105,12 @@ class _SwSearchState extends State<SwSearch> {
                 children: [
                   Row(
                     children: <Widget>[
-                      Icon(
-                        FontAwesomeIcons.city,
-                        color: primaryColor,
-                        size: 20.0
-                      ),
+                      Icon(FontAwesomeIcons.city,
+                          color: primaryColor, size: 20.0),
                       SizedBox(
                         width: 12.0,
                       ),
-                      Text(element.name,
-                          style: secondaryColorTextStyle16)
+                      Text(element.name, style: secondaryColorTextStyle16)
                     ],
                   )
                 ],
@@ -121,30 +124,13 @@ class _SwSearchState extends State<SwSearch> {
 
   @override
   Widget build(BuildContext context) {
-    _textEditingController.addListener(() {
-      if (_textEditingController.text != '') {
-        setState(() {
-          searchingText = _textEditingController.text;
-        });
-      }
-
-      if (_textEditingController.text != '' && !isCancelButtonActive) {
-        setState(() {
-          isCancelButtonActive = true;
-        });
-      } else if (_textEditingController.text == '' && isCancelButtonActive) {
-        setState(() {
-          isCancelButtonActive = false;
-        });
-      }
-    });
-
-    dynamic list = widget.onSearchChanged(searchingText);
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: primaryColor50,
-          title: _buildSearchField(),
+          title: Builder(
+              builder: (BuildContext titleContext) =>
+                  _buildSearchField(titleContext)),
           leading: _buildBackButton(),
         ),
         body: ListView.builder(

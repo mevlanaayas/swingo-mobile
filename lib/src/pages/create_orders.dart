@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:swingo/src/models/city.dart';
@@ -64,19 +65,6 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
   TextEditingController priceController = TextEditingController();
   TextEditingController commentsController = TextEditingController();
 
-  @override
-  void initState() {
-    //TODO: city, size backendden çekilecek
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _listCities(context);
-    });
-    super.initState();
-  }
-
-  _listCities(BuildContext) {
-    OptionService.listCities(context);
-  }
-
   final _formKey = GlobalKey<FormState>();
   var _form = CreateOrderForm();
 
@@ -134,29 +122,22 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
     }
   }
 
-  _onRequestSuccess(BuildContext context) {
-    //return (response) => Navigator.of(context).pushNamed('/signin');
-  }
+  _onSearchChanged(BuildContext context, String searchingText) async {
+    print(searchingText);
+    final response = await OptionService.listCities(
+      context,
+      searchingText: searchingText,
+      page: 0,
+    );
 
-  List<City> _onSearchChanged(String searchingText) {
-    //todo: backendden alınan değer döndürülmeli
-    if (searchingText == 'a') {
-      return [
-        City(id: 0, name: 'İstanbul'),
-        City(id: 1, name: 'Ankara'),
-        City(id: 2, name: 'Adana'),
-        City(id: 3, name: 'İzmir'),
-        City(id: 4, name: 'Muğla'),
-      ];
-    } else if (searchingText == 'b') {
-      return [
-        City(id: 1, name: 'Ankara'),
-        City(id: 2, name: 'Adana'),
-        City(id: 3, name: 'İzmir'),
-      ];
-    } else {
-      return [];
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+      final cityJsonArray = responseData['results'];
+      print(cityJsonArray);
+      return List<City>.from(
+          cityJsonArray.map((orderJson) => City.fromJson(orderJson)));
     }
+    return [];
   }
 
   List<PacketSize> _onPacketSizeSearchChanged(String searchingText) {

@@ -6,21 +6,20 @@ import 'package:swingo/src/classes/SwNetwork.dart';
 import 'package:swingo/src/ankara/general.dart';
 
 abstract class OptionService extends SwNetwork {
-  static Future<http.Response> listCities(BuildContext context,
-      {onError, onSuccess}) async {
+  static listCities(BuildContext context,
+      {searchingText, page, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
         context,
             () => http.get(
-          '$swBaseUrl/city/',
+          '$swBaseUrl/city/?name__icontains=${searchingText}',
           headers: {
             "Content-type": "application/json",
             "Authorization": 'Token ${userProvider.token}',
           },
         ));
 
-    SwNetwork.handleResponse(context, response,
-        onError: onError, onSuccess: onSuccess);
+    return response;
   }
 }
