@@ -11,6 +11,7 @@ import 'package:swingo/src/components/sw_datepicker.dart';
 import 'package:swingo/src/components/sw_formfield.dart';
 import 'package:swingo/src/services/option.dart';
 import 'package:swingo/src/services/order.dart';
+import 'package:swingo/src/utils/constans.dart';
 
 class CreateOrderForm {
   //todo: backenddeki fieldlar ile senkron olmalı.
@@ -98,23 +99,23 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
       if (widget.type == "Send") {
         OrderService.createSender(
           context,
-          from_city: _form.fromCity.name,
-          to_city: _form.toCity.name,
+          from_city: _form.fromCity.cityId,
+          to_city: _form.toCity.cityId,
           from_date: _form.fromDate,
           to_date: _form.fromDate,
           price: int.parse(priceController.text),
-          size: _form.size.name,
+          size: _form.size.id,
           weight: int.parse(weightController.text),
           comments: _form.comments,
         );
       } else {
         OrderService.createCarrier(
           context,
-          from_city: _form.fromCity.name,
-          to_city: _form.toCity.name,
+          from_city: _form.fromCity.cityId,
+          to_city: _form.toCity.cityId,
           from_date: _form.fromDate,
           to_date: _form.fromDate,
-          size: _form.size.name,
+          size: _form.size.id,
           weight: int.parse(weightController.text),
           comments: _form.comments,
         );
@@ -130,7 +131,7 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
       page: 0,
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       final responseData = json.decode(response.body);
       final cityJsonArray = responseData['results'];
       print(cityJsonArray);
@@ -138,17 +139,6 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
           cityJsonArray.map((orderJson) => City.fromJson(orderJson)));
     }
     return [];
-  }
-
-  List<PacketSize> _onPacketSizeSearchChanged(String searchingText) {
-    return [
-      //todo: backendden alınması gerekiyor
-      PacketSize(id: 0, name: 'Xsmall'),
-      PacketSize(id: 1, name: 'Small'),
-      PacketSize(id: 2, name: 'Medium'),
-      PacketSize(id: 3, name: 'Large'),
-      PacketSize(id: 4, name: 'Xlarge'),
-    ];
   }
 
   @override
@@ -209,7 +199,7 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
                     prefixIcon: FontAwesomeIcons.expand,
                     labelText: 'Size',
                     onSelected: _onPacketSizeSelected,
-                    onSearchChanged: _onPacketSizeSearchChanged,
+                    list: PACKET_SIZES,
                     hideSearchBar: true,
                     textEditingController: sizeController,
                   ),

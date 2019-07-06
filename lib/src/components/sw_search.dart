@@ -6,8 +6,9 @@ import 'package:swingo/src/theme/style.dart';
 class SwSearch extends StatefulWidget {
   final onSearchChanged;
   final bool hideSearchBar;
+  final List<dynamic> list;
 
-  SwSearch({this.onSearchChanged, this.hideSearchBar});
+  SwSearch({this.onSearchChanged, this.hideSearchBar, this.list});
 
   @override
   _SwSearchState createState() => _SwSearchState();
@@ -17,6 +18,14 @@ class _SwSearchState extends State<SwSearch> {
   List<dynamic> list = [];
   TextEditingController _textEditingController = TextEditingController();
   DateTime searchingTextChangedAt;
+
+  @override
+  void initState() {
+    if(widget.list != null){
+      list = widget.list;
+    }
+    super.initState();
+  }
 
   void _onBackPressed(context) {
     Navigator.pop(context, null);
@@ -44,7 +53,7 @@ class _SwSearchState extends State<SwSearch> {
 
   Widget _buildSearchField(BuildContext context) {
     if (widget.hideSearchBar != null && widget.hideSearchBar == true) {
-      return null;
+      return SizedBox();
     }
     return Container(
       child: Center(

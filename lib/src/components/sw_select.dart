@@ -11,6 +11,7 @@ class SwSelect extends StatelessWidget {
   final hideSearchBar;
   final bool isRequired;
   final TextEditingController textEditingController;
+  final List<dynamic> list;
 
   SwSelect({
     this.onSelected,
@@ -20,6 +21,7 @@ class SwSelect extends StatelessWidget {
     this.hideSearchBar,
     this.isRequired,
     this.textEditingController,
+    this.list,
   });
 
   _onFocused(BuildContext context, FocusNode focusNode) async {
@@ -27,10 +29,12 @@ class SwSelect extends StatelessWidget {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SwSearch(
-                onSearchChanged: this.onSearchChanged,
-                hideSearchBar: this.hideSearchBar,
-              )),
+        builder: (context) => SwSearch(
+              onSearchChanged: this.onSearchChanged,
+              hideSearchBar: this.hideSearchBar,
+              list: this.list,
+            ),
+      ),
     );
 
     if (result != null) {
