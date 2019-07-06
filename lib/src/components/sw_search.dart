@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/theme/decoration.dart';
-
 import 'package:swingo/src/theme/style.dart';
 
 class SwSearch extends StatefulWidget {
@@ -17,6 +16,7 @@ class SwSearch extends StatefulWidget {
 class _SwSearchState extends State<SwSearch> {
   List<dynamic> list = [];
   TextEditingController _textEditingController = TextEditingController();
+  DateTime searchingTextChangedAt;
 
   void _onBackPressed(context) {
     Navigator.pop(context, null);
@@ -73,9 +73,19 @@ class _SwSearchState extends State<SwSearch> {
   }
 
   _onTextChanged(BuildContext context, String newText) async {
-    final newList = await widget.onSearchChanged(context, newText) ?? [];
-    setState((){
-      list = newList;
+    DateTime newSearchingTextChangedAt = DateTime.now();
+
+    await setState(() {
+      searchingTextChangedAt = newSearchingTextChangedAt;
+    });
+
+    Future.delayed(const Duration(milliseconds: 500), () async {
+      if(newSearchingTextChangedAt == searchingTextChangedAt){
+        final newList = await widget.onSearchChanged(context, newText) ?? [];
+        setState((){
+          list = newList;
+        });
+      }
     });
   }
 

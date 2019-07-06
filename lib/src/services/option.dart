@@ -11,14 +11,16 @@ abstract class OptionService extends SwNetwork {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
-        context,
-            () => http.get(
-          '$swBaseUrl/city/?name__icontains=${searchingText}',
-          headers: {
-            "Content-type": "application/json",
-            "Authorization": 'Token ${userProvider.token}',
-          },
-        ));
+      context,
+      () => http.get(
+            '$swBaseUrl/city/?name__icontains=${searchingText}',
+            headers: {
+              "Content-type": "application/json",
+              "Authorization": 'Token ${userProvider.token}',
+            },
+          ),
+      hideLoadingScreen: true,
+    );
 
     return response;
   }
