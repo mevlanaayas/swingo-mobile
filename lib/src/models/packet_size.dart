@@ -1,5 +1,5 @@
 class PacketSize{
-  int id;
+  String id;
   String name;
 
   PacketSize({this.id, this.name});

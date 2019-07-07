@@ -5,7 +5,7 @@ import 'package:swingo/src/theme/colors.dart';
 import 'package:swingo/src/models/filter.dart';
 import 'package:swingo/src/models/city.dart';
 
-
+/*
 class FilterMenuPage extends StatelessWidget {
   final Filter currentFilter;
   final ValueChanged<Filter> onFilterChange;
@@ -112,9 +112,7 @@ class FromCity extends StatefulWidget{
 class _FromCityState extends State<FromCity>{
   City selectedCity;
   List<City> cities = <City>[
-    City(id: 1, name:'Trabzon'),
-    City(id: 2, name:'Kadıköy'),
-    City(id: 3, name:'Marmara'),
+    City("PLYM", "UK", "PLH", "Plymouth"),
   ];
 
   @override
@@ -150,3 +148,4 @@ class _FromCityState extends State<FromCity>{
     );
   }
 }
+*/
