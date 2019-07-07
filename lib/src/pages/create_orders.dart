@@ -9,9 +9,11 @@ import 'package:swingo/src/components/sw_button.dart';
 import 'package:swingo/src/components/sw_select.dart';
 import 'package:swingo/src/components/sw_datepicker.dart';
 import 'package:swingo/src/components/sw_formfield.dart';
+import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/services/option.dart';
 import 'package:swingo/src/services/order.dart';
 import 'package:swingo/src/utils/constans.dart';
+import 'package:swingo/src/utils/sliders.dart';
 
 class CreateOrderForm {
   //todo: backenddeki fieldlar ile senkron olmalı.
@@ -69,6 +71,11 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
   final _formKey = GlobalKey<FormState>();
   var _form = CreateOrderForm();
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void _onFromCitySelected(City fromCity) {
     setState(() => _form.fromCity = fromCity);
     fromCityController.text = fromCity.name;
@@ -107,6 +114,7 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
           size: _form.size.id,
           weight: int.parse(weightController.text),
           comments: _form.comments,
+          onSuccess: _onRequestSuccess(context),
         );
       } else {
         OrderService.createCarrier(
@@ -118,9 +126,17 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
           size: _form.size.id,
           weight: int.parse(weightController.text),
           comments: _form.comments,
+          onSuccess: _onRequestSuccess(context),
         );
       }
     }
+  }
+
+  _onRequestSuccess(BuildContext context) {
+    return (responseData) =>
+        Navigator.of(context).pushReplacement(SlideRightRoute(
+          page: Builder(builder: (BuildContext newContext) => Orders()),
+        ));
   }
 
   _onSearchChanged(BuildContext context, String searchingText) async {

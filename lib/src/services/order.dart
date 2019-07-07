@@ -96,7 +96,7 @@ abstract class OrderService extends SwNetwork {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
-          () => http.post('${swBaseUrl}/transceiver_order/',
+          () => http.post('${swBaseUrl}/transporter_order/',
           headers: {
             "Content-type": "application/json",
             "Authorization": 'Token ${userProvider.token}'
