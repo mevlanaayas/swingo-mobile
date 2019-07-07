@@ -1,12 +1,22 @@
-import 'package:flutter/foundation.dart';
-
 class City {
-  const City({
-    @required this.id,
-    @required this.name,
-  })  : assert(id != null),
-        assert(name != null);
-
-  final int id;
+  final String cityId;
+  final String countryId;
+  final String iataCode;
   final String name;
+
+  City(
+    this.cityId,
+    this.countryId,
+    this.iataCode,
+    this.name,
+  );
+
+  factory City.fromJson(Map<String, dynamic> json) {
+    return City(
+      json['city_id'],
+      json['country_id'],
+      json['iata_code'],
+      json['name'],
+    );
+  }
 }
