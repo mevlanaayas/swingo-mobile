@@ -10,11 +10,6 @@ import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/routes.dart';
 
 class ProfileScreen extends StatelessWidget {
-  Future<void> _handleSignOutTap(BuildContext context) async {
-    await Navigator.of(context).push(
-        TransparentRoute(builder: (BuildContext context) => SignOutScreen()));
-  }
-
   @override
   Widget build(BuildContext context) {
     final double spaceWidth = MediaQuery.of(context).size.width / 2;
@@ -59,8 +54,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: ProfileItem(
-                      toPage:
-                          BaseProfile(child: Matches(), type: "Matches"),
+                      toPage: BaseProfile(child: Matches(), type: "Matches"),
                       icon: FontAwesomeIcons.equals,
                       text: "Matches",
                       right: true,
@@ -97,8 +91,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: ProfileItem(
-                      toPage:
-                          BaseProfile(child: Orders(), type: "MY ORDERS"),
+                      toPage: BaseProfile(child: Orders(), type: "MY ORDERS"),
                       icon: Icons.content_paste,
                       text: "Orders",
                       right: true,
@@ -137,12 +130,8 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: ProfileItem(
-                      handleTap: _handleSignOutTap,
-                      toPage: BaseProfile(
-                        child: SignOutScreen(),
-                        type: "Settings",
-                      ),
                       icon: FontAwesomeIcons.signOutAlt,
+                      toDialog: SignOutScreen(),
                       text: "Sign Out",
                       right: true,
                     ),
