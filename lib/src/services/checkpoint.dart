@@ -41,4 +41,22 @@ abstract class CheckpointService extends SwNetwork {
     SwNetwork.handleResponse(context, response,
         onError: onError, onSuccess: onSuccess);
   }
+
+  static Future<http.Response> get(BuildContext context,
+      {onError, onSuccess, matchId, url}) async {
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final userProvider = Provider.of<UserStatus>(context);
+    final response = await SwNetwork.sendRequest(
+        context,
+        () => http.get(
+              '$swBaseUrl/match/$matchId/',
+              headers: {
+                "Content-type": "application/json",
+                "Authorization": 'Token ${userProvider.token}',
+              },
+            ));
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
 }

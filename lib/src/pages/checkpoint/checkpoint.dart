@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/checkpoint/default.dart';
 import 'package:swingo/src/pages/checkpoint/param_required.dart';
+import 'package:swingo/src/services/checkpoint.dart';
 
 class CheckpointScreen extends StatefulWidget {
-  final SwMatch match;
+  SwMatch match;
 
   CheckpointScreen({this.match});
 
@@ -116,6 +118,31 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
       }
     });
     return result;
+  }
+
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _getCheckpoint(context);
+    });
+    super.initState();
+  }
+
+  void _getCheckpoint(BuildContext context) async {
+    CheckpointService.get(
+      context,
+      onSuccess: _onRequestSuccess(context),
+      matchId: widget.match.id,
+    );
+  }
+
+  _onRequestSuccess(BuildContext context) {
+    return (responseData) async {
+      final matchJsonArray = responseData['matches'];
+      setState(() {
+        widget.match = matchJsonArray;
+      });
+    };
   }
 
   @override

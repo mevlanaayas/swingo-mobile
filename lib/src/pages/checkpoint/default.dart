@@ -16,8 +16,9 @@ class DefaultStepScreen extends StatefulWidget {
   final CheckpointStep step;
   final int matchId;
   final int carrierId;
+  final dynamic onSuccess;
 
-  DefaultStepScreen({this.step, this.matchId, this.carrierId});
+  DefaultStepScreen({this.step, this.matchId, this.carrierId, this.onSuccess});
 
   @override
   _DefaultStepScreenState createState() => _DefaultStepScreenState();
@@ -34,17 +35,17 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
 
   Widget _buildScreen(int currentUserId, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left:8.0, right: 8.0, top: 8.0, bottom: 16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: currentUserId == widget.carrierId
             ? <Widget>[
-                Text("I am carrier of match"),
-                Text(widget.step.activatedCondition),
-                Text(widget.step.url),
-                Text(result),
+                Text(widget.step.title),
                 Text(widget.step.carrierDescription),
+                Placeholder(
+                  fallbackHeight: 300,
+                ),
                 widget.step.activatedCondition == 'Finished'
                     ? SwButton(
                         color: secondaryColor,
@@ -58,16 +59,16 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
                         color: primaryColor,
                         text: 'Progress',
                         onPressed: () {
-                          print("not allowed");
+                          print("progress");
                         },
                       ),
               ]
             : <Widget>[
-                Text("I am sender of match"),
-                Text(widget.step.activatedCondition),
-                Text(widget.step.url),
-                Text(result),
-                Text(widget.step.carrierDescription),
+                Text(widget.step.title),
+                Text(widget.step.senderDescription),
+                Placeholder(
+                  fallbackHeight: 300,
+                ),
                 widget.step.activatedCondition == 'Finished'
                     ? SwButton(
                         color: secondaryColor,
@@ -77,12 +78,9 @@ class _DefaultStepScreenState extends State<DefaultStepScreen> {
                         },
                         iconData: FontAwesomeIcons.star,
                       )
-                    : SwButton(
-                        color: disabledColor,
-                        text: 'Progress',
-                        onPressed: () {
-                          print("not allowed");
-                        },
+                    : const Text(
+                        "Waiting for Carrier",
+                        style: primaryColorTextStyle,
                       ),
               ],
       ),

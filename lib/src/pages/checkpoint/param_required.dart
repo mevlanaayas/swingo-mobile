@@ -26,16 +26,14 @@ class _ParamStepScreenState extends State<ParamStepScreen> {
 
   Widget _buildScreen(int currentUserId) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding:
+          const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 16.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: currentUserId == widget.carrierId
             ? <Widget>[
-                Text("I am carrier of match"),
-                Text(widget.step.activatedCondition),
-                Text(widget.step.url),
-                Text(result),
+                Text(widget.step.title),
                 Text(widget.step.carrierDescription),
                 TextField(
                   style: secondaryColorTextStyle,
@@ -56,11 +54,8 @@ class _ParamStepScreenState extends State<ParamStepScreen> {
                 ),
               ]
             : <Widget>[
-                Text("I am sender of match"),
-                Text(widget.step.activatedCondition),
-                Text(widget.step.url),
-                Text(result),
-                Text(widget.step.carrierDescription),
+                Text(widget.step.title),
+                Text(widget.step.senderDescription),
                 TextField(
                   style: disabledColorTextStyle,
                   cursorColor: primaryColor,
@@ -71,12 +66,9 @@ class _ParamStepScreenState extends State<ParamStepScreen> {
                     null,
                   ),
                 ),
-                SwButton(
-                  color: disabledColor,
-                  text: 'Confirm',
-                  onPressed: () {
-                    print("not allowed");
-                  },
+                const Text(
+                  "Waiting for Carrier",
+                  style: primaryColorTextStyle,
                 ),
               ],
       ),
