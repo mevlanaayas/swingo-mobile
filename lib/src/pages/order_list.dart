@@ -6,6 +6,7 @@ import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/services/order.dart';
+import 'package:swingo/src/utils/constans.dart';
 
 class ListScreen extends StatefulWidget with SwScreen {
   final String type;
@@ -23,8 +24,10 @@ class _ListScreenState extends State<ListScreen> {
 
   @override
   void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_){
-      widget.type == "senders" ? _listSenders(context, currentPage) : _listCarriers(context, currentPage);
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      widget.type == ORDER_OWNER_TYPES["SENDER"]
+          ? _listSenders(context, currentPage)
+          : _listCarriers(context, currentPage);
     });
     super.initState();
   }
@@ -35,7 +38,10 @@ class _ListScreenState extends State<ListScreen> {
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
             Order item = items[index];
-            return ListItem(item: item);
+            return ListItem(
+              item: item,
+              orderOwnerType: widget.type,
+            );
           }, childCount: items.length),
         ),
       );
@@ -61,13 +67,15 @@ class _ListScreenState extends State<ListScreen> {
   _onRequestSuccess(BuildContext context) {
     return (responseData) async {
       final orderJsonArray = responseData['results'];
-      if(widget.type == 'senders'){
+      if (widget.type == ORDER_OWNER_TYPES["SENDER"]) {
         setState(() {
-          senders = List<Order>.from(orderJsonArray.map((orderJson) => Order.fromJson(orderJson)));
+          senders = List<Order>.from(
+              orderJsonArray.map((orderJson) => Order.fromJson(orderJson)));
         });
       } else {
         setState(() {
-          carriers = List<Order>.from(orderJsonArray.map((orderJson) => Order.fromJson(orderJson)));
+          carriers = List<Order>.from(
+              orderJsonArray.map((orderJson) => Order.fromJson(orderJson)));
         });
       }
     };
@@ -77,7 +85,7 @@ class _ListScreenState extends State<ListScreen> {
   Widget build(BuildContext context) {
     var slivers = <Widget>[];
     const scale = 1.0;
-    widget.type == "senders"
+    widget.type == ORDER_OWNER_TYPES["SENDER"]
         ? _buildSection(slivers, scale, this.senders)
         : _buildSection(slivers, scale, this.carriers);
     return Container(

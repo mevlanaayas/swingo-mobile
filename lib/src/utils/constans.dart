@@ -9,3 +9,5 @@ List<PacketSize> PACKET_SIZES = [
   PacketSize(id: "LARGE", name: 'Large'),
   PacketSize(id: "XLARGE", name: 'Xlarge'),
 ];
+
+Map<String, String> ORDER_OWNER_TYPES = {"CARRIER": "CARRIER", "SENDER": "SENDER"};

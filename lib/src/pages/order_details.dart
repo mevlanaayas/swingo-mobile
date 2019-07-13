@@ -6,69 +6,27 @@ import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';
-import 'package:swingo/src/dialogs/make_a_bid.dart';
+import 'package:swingo/src/pages/make_a_bid.dart';
 
 class DetailScreen extends StatelessWidget {
   final Order item;
+  final String orderOwnerType;
 
-  DetailScreen({Key key, @required this.item}) : super(key: key);
+  DetailScreen({
+    Key key,
+    @required this.item,
+    @required this.orderOwnerType,
+  }) : super(key: key);
 
   _onMakeABidPressed(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)
-            ),
-            child: Container(
-                padding: EdgeInsets.all(15.0),
-                constraints: BoxConstraints(
-                  maxWidth: width / 10 * 9,
-                  maxHeight: height / 10 * 3,
-                ),
-                decoration: BoxDecoration(
-                    color: secondaryColor,
-                    borderRadius: BorderRadius.circular(20.0)),
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Are you sure you want to sign out?',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SwButton(
-                          color: primaryColor,
-                          text: 'Signout',
-                          onPressed: () {},
-                          size: width,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        SwButton(
-                          color: primaryColor,
-                          text: 'Cancel',
-                          onPressed: () {},
-                          size: width,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return MakeABid(
+          orderOwnerType: this.orderOwnerType,
+        );
+      },
+    );
   }
 
   Widget _buildTravelDetails() {
@@ -206,6 +164,7 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserStatus>(context);
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Container(
         constraints: const BoxConstraints(minWidth: double.infinity),
         color: primaryColor50,
