@@ -121,7 +121,7 @@ class _ListItemState extends State<ListItem> {
     Navigator.push(
       context,
       SlideTopRoute(
-          page: DetailScreen(
+          page: Detail(
         item: item,
         orderOwnerType: widget.orderOwnerType,
       )),
