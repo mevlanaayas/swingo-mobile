@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
+import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/services/authentication.dart';
-import 'package:swingo/src/theme/style.dart';
-import 'package:swingo/src/components/sw_button.dart';
 
-class SignOutScreen extends StatelessWidget with SwScreen {
-  void _onCancelTap(BuildContext context) {
-    Navigator.of(context).pop();
-  }
-
-  void _onSignOutTap(BuildContext context) async {
+class SignOutScreen extends StatelessWidget {
+  _onSignOutTap(BuildContext context) async {
     AuthenticationService.signout(
       context,
       onSuccess: _onRequestSuccess(context),
@@ -30,7 +25,9 @@ class SignOutScreen extends StatelessWidget with SwScreen {
 
   _onRequestError(BuildContext context) {
     return (responseData) {
-      if(responseData['detail'] != null && responseData['detail'] == 'Invalid token.'){ //TODO: adam akıllı bi kontrol yapmak gerekiyor.
+      if (responseData['detail'] != null &&
+          responseData['detail'] == 'Invalid token.') {
+        //TODO: adam akıllı bi kontrol yapmak gerekiyor.
         final signOutFn = _onRequestSuccess(context);
         signOutFn(responseData);
       } else {
@@ -39,66 +36,15 @@ class SignOutScreen extends StatelessWidget with SwScreen {
     };
   }
 
-  Widget _buildBody(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        padding: EdgeInsets.all(15.0),
-        constraints: BoxConstraints(
-          maxWidth: width / 10 * 9,
-          maxHeight: height / 10 * 3,
-        ),
-        decoration: BoxDecoration(
-            color: secondaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Are you sure you want to sign out?',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SwButton(
-                  color: primaryColor,
-                  text: 'Signout',
-                  onPressed: () => _onSignOutTap(context),
-                  size: width,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                SwButton(
-                  color: primaryColor,
-                  text: 'Cancel',
-                  onPressed: () => _onCancelTap(context),
-                  size: width,
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    //AuthenticationService.signout(context);
-    return Scaffold(
-        backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
-        body: new Builder(
-          builder: (BuildContext scaffoldContext) => _buildBody(
-                scaffoldContext,
-              ),
-        ));
+    return SwDialog(
+      isDismissButtonActive: true,
+      isAcceptButtonActive: true,
+      dismissButtonText: 'Cancel',
+      acceptButtonText: 'Signout',
+      contentText: 'Are you sure you want to sign out?',
+      onAcceptTap: _onSignOutTap,
+    );
   }
 }

@@ -2,15 +2,63 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';
+import 'package:swingo/src/pages/make_a_bid.dart';
+
+class Detail extends StatelessWidget {
+  final Order item;
+  final String orderOwnerType;
+
+  Detail({
+    Key key,
+    @required this.item,
+    @required this.orderOwnerType,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomPadding: true,
+      body: DetailScreen(
+        item: this.item,
+        orderOwnerType: this.orderOwnerType,
+      ),
+    );
+  }
+}
 
 class DetailScreen extends StatelessWidget {
   final Order item;
+  final String orderOwnerType;
 
-  DetailScreen({Key key, @required this.item}) : super(key: key);
+  DetailScreen({
+    Key key,
+    @required this.item,
+    @required this.orderOwnerType,
+  }) : super(key: key);
+
+  _onMakeABidPressed(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext newContext) {
+        return MakeABid(
+          orderOwnerType: this.orderOwnerType,
+          order: this.item,
+          onRequestError: _onMakeABidRequestError(context),
+        );
+      },
+    );
+  }
+
+  _onMakeABidRequestError(BuildContext context){
+    return (responseData){
+      SwScreen.showSnackBar(context, 'Failed');
+    };
+  }
 
   Widget _buildTravelDetails() {
     return Column(
@@ -146,146 +194,142 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserStatus>(context);
-    return Scaffold(
-      body: Container(
-        constraints: const BoxConstraints(minWidth: double.infinity),
-        color: primaryColor50,
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
-            bottom: MediaQuery.of(context).padding.bottom + 5,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: ButtonTheme(
-                            minWidth: 0,
-                            child: FlatButton(
-                              splashColor: Colors.transparent,
-                              padding: const EdgeInsets.all(0),
-                              shape: null,
-                              onPressed: () => Navigator.pop(context, null),
-                              child: const Icon(
-                                FontAwesomeIcons.times,
-                                color: secondaryColor,
-                              ),
+    return Container(
+      constraints: const BoxConstraints(minWidth: double.infinity),
+      color: primaryColor50,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top,
+          bottom: MediaQuery.of(context).padding.bottom + 5,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: ButtonTheme(
+                          minWidth: 0,
+                          child: FlatButton(
+                            splashColor: Colors.transparent,
+                            padding: const EdgeInsets.all(0),
+                            shape: null,
+                            onPressed: () => Navigator.pop(context, null),
+                            child: const Icon(
+                              FontAwesomeIcons.times,
+                              color: secondaryColor,
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Material(
-                            elevation: 0.0,
-                            type: MaterialType.transparency,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(9)),
-                            clipBehavior: Clip.antiAlias,
-                            child: InkWell(
-                              splashColor: Colors.transparent,
-                              onTap: () => print(item.created_by),
-                              child: Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: userProvider.currentUser.username !=
-                                        item.created_by
-                                    ? Row(
-                                        children: <Widget>[
-                                          item.created_by.length > 20
-                                              ? Text(
-                                                  item.created_by
-                                                          .substring(0, 20) +
-                                                      "...",
-                                                  style:
-                                                      itemUsernameContentStyle,
-                                                )
-                                              : Text(
-                                                  item.created_by,
-                                                  style:
-                                                      itemUsernameContentStyle,
-                                                ),
-                                          const SizedBox(
-                                            width: 5.0,
-                                          ),
-                                          const Icon(FontAwesomeIcons.user,
-                                              size: 15)
-                                        ],
-                                      )
-                                    : null,
-                              ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Material(
+                          elevation: 0.0,
+                          type: MaterialType.transparency,
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(9)),
+                          clipBehavior: Clip.antiAlias,
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            onTap: () => print(item.created_by),
+                            child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: userProvider.currentUser.username !=
+                                  item.created_by
+                                  ? Row(
+                                children: <Widget>[
+                                  item.created_by.length > 20
+                                      ? Text(
+                                    item.created_by
+                                        .substring(0, 20) +
+                                        "...",
+                                    style:
+                                    itemUsernameContentStyle,
+                                  )
+                                      : Text(
+                                    item.created_by,
+                                    style:
+                                    itemUsernameContentStyle,
+                                  ),
+                                  const SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  const Icon(FontAwesomeIcons.user,
+                                      size: 15)
+                                ],
+                              )
+                                  : null,
                             ),
                           ),
-                        )
-                      ],
+                        ),
+                      )
+                    ],
+                  ),
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: const Text(
+                      "TRAVEL DETAILS",
+                      style: itemDetailHeadingStyle,
                     ),
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: const Text(
-                        "TRAVEL DETAILS",
-                        style: itemDetailHeadingStyle,
-                      ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: _buildTravelDetails(),
+              ),
+            ),
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: const Text(
+                      "PACKAGE DETAILS",
+                      style: itemDetailHeadingStyle,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: _buildTravelDetails(),
-                ),
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: _buildPackageDetails(context),
               ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: const Text(
-                        "PACKAGE DETAILS",
-                        style: itemDetailHeadingStyle,
+            ),
+            userProvider.currentUser.username != item.created_by
+                ? Container(
+              child: Column(
+                children: <Widget>[
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SwButton(
+                        color: primaryColor,
+                        text: 'MAKE A BID',
+                        onPressed: () => _onMakeABidPressed(context),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  )
+                ],
               ),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: _buildPackageDetails(context),
-                ),
-              ),
-              userProvider.currentUser.username != item.created_by
-                  ? Container(
-                      child: Column(
-                        children: <Widget>[
-                          const Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              SwButton(
-                                color: primaryColor,
-                                text: 'MAKE A BID',
-                                onPressed: () {
-                                  print(item.id);
-                                },
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  : Row(),
-            ],
-          ),
+            )
+                : Row(),
+          ],
         ),
       ),
     );

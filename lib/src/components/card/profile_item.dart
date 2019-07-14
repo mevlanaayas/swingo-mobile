@@ -5,12 +5,20 @@ import 'package:swingo/src/utils/sliders.dart';
 
 class ProfileItem extends StatefulWidget {
   final Widget toPage;
+  final Widget toDialog;
   final IconData icon;
   final String text;
   final bool right;
   final handleTap;
 
-  ProfileItem({this.toPage, this.icon, this.text, this.right, this.handleTap});
+  ProfileItem({
+    this.toPage,
+    this.toDialog,
+    this.icon,
+    this.text,
+    this.right,
+    this.handleTap,
+  });
 
   @override
   _ProfileItemState createState() => _ProfileItemState();
@@ -18,10 +26,19 @@ class ProfileItem extends StatefulWidget {
 
 class _ProfileItemState extends State<ProfileItem> {
   Future<void> _handleTap(BuildContext context) async {
-    Navigator.push(
-      context,
-      SlideRightRoute(page: widget.toPage),
-    );
+    if (widget.toPage != null) {
+      Navigator.push(
+        context,
+        SlideRightRoute(page: widget.toPage),
+      );
+    } else if (widget.toDialog != null) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return widget.toDialog;
+        },
+      );
+    }
   }
 
   static const double padding = 10.0;
@@ -43,7 +60,9 @@ class _ProfileItemState extends State<ProfileItem> {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
-            onTap: () => widget.handleTap != null ? widget.handleTap(context) : _handleTap(context),
+            onTap: () => widget.handleTap != null
+                ? widget.handleTap(context)
+                : _handleTap(context),
             child: Padding(
               padding: widget.right == true
                   ? const EdgeInsets.only(

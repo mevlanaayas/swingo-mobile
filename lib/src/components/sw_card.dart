@@ -12,8 +12,9 @@ import 'package:swingo/src/utils/sliders.dart';
 
 class ListItem extends StatefulWidget {
   final Order item;
+  final String orderOwnerType;
 
-  const ListItem({this.item});
+  const ListItem({this.item, this.orderOwnerType});
 
   @override
   _ListItemState createState() => _ListItemState();
@@ -119,7 +120,11 @@ class _ListItemState extends State<ListItem> {
   Future<void> _handleTap(BuildContext context, Order item) async {
     Navigator.push(
       context,
-      SlideTopRoute(page: DetailScreen(item: item)),
+      SlideTopRoute(
+          page: Detail(
+        item: item,
+        orderOwnerType: widget.orderOwnerType,
+      )),
     );
   }
 
@@ -207,7 +212,6 @@ class _MenuItemState extends State<MenuItem> {
     );
   }
 }
-
 
 class BidItem extends StatefulWidget {
   final Bid item;
