@@ -50,4 +50,15 @@ class Bid {
       json['is_deleted'],
     );
   }
+
+  static toSenderJson(double price, int orderId){
+    return '{'
+        '"price": "${price}",'
+        '"transporter": "${orderId}"}';
+  }
+
+  static toCarrierJson(int orderId){
+    return '{'
+        '"transporter": "${orderId}"}';
+  }
 }

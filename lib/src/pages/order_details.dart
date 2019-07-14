@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
@@ -21,12 +22,20 @@ class DetailScreen extends StatelessWidget {
   _onMakeABidPressed(BuildContext context) {
     return showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext newContext) {
         return MakeABid(
           orderOwnerType: this.orderOwnerType,
+          order: this.item,
+          onRequestError: _onMakeABidRequestError(context),
         );
       },
     );
+  }
+
+  _onMakeABidRequestError(BuildContext context){
+    return (responseData){
+      SwScreen.showSnackBar(context, 'Failed');
+    };
   }
 
   Widget _buildTravelDetails() {
