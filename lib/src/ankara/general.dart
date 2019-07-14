@@ -33,6 +33,8 @@ class UserStatus with ChangeNotifier {
     String username = prefs.getString(SW_USERNAME_KEY) ?? null;
     if (userId != null && username != null) {
       currentUser = User(id: userId, username: username);
+    } else {
+      currentUser = User(id: null, username: null);
     }
   }
 
@@ -52,7 +54,7 @@ class UserStatus with ChangeNotifier {
 
   signout() {
     token = null;
-    currentUser = null;
+    currentUser = User(id: null, username: null);
     notifyListeners();
     _saveToSharedPreferences(SW_TOKEN_KEY, null);
     _saveToSharedPreferences(SW_USER_ID_KEY, null);
