@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:swingo/app_config.dart';
 import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/models.dart';
@@ -30,14 +31,15 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
     manager = SocketIOManager();
-    initSocket();
     SchedulerBinding.instance.addPostFrameCallback((_) {
+      initSocket();
       _listMessages(context);
     });
   }
 
   initSocket() async {
-    socket = await manager.createInstance("http://127.0.0.1:3000/");
+    final String chatUrl = AppConfig.of(context).chatUrl;
+    socket = await manager.createInstance(chatUrl);
     socket.onConnect((data) {
       joinRoom();
     });

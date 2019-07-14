@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppConfig(
       apiBaseUrl: "https://www.goswingo.com/swingo",
-      chatUrl: "http://localhost:3000/",
+      chatUrl: "https://goswingo.com:5000/",
       child: ChangeNotifierProvider(
         builder: (context) {
           UserStatus userStatus = UserStatus();
