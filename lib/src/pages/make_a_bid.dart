@@ -60,6 +60,7 @@ class _MakeABidState extends State<MakeABid> {
 
   _onRequestSuccess(BuildContext context) {
     return (responseData) async {
+      //TODO: response a göre chat'e yönlendirme yapılacak.
       print(responseData);
     };
   }

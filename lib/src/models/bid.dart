@@ -59,6 +59,6 @@ class Bid {
 
   static toCarrierJson(int orderId){
     return '{'
-        '"transporter": "${orderId}"}';
+        '"transceiver": "${orderId}"}';
   }
 }
