@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/sw_dialog.dart';
+import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/order.dart';
+import 'package:swingo/src/pages/profile/base.dart';
+import 'package:swingo/src/pages/profile/chat.dart';
 import 'package:swingo/src/services/bid.dart';
+import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/utils/constans.dart';
+import 'package:swingo/src/utils/sliders.dart';
 
 class MakeABid extends StatefulWidget {
   final String orderOwnerType;
@@ -32,7 +39,7 @@ class _MakeABidState extends State<MakeABid> {
     BidService.createToCarry(
       context,
       transceiver: widget.order.id,
-      onSuccess: _onRequestSuccess(context),
+      onSuccess: _onMakeABidRequestSuccess(context),
       onError: _onRequestError(context),
     );
   }
@@ -53,20 +60,42 @@ class _MakeABidState extends State<MakeABid> {
       context,
       transporter: widget.order.id,
       price: price,
-      onSuccess: _onRequestSuccess(context),
+      onSuccess: _onMakeABidRequestSuccess(context),
       onError: _onRequestError(context),
     );
   }
 
-  _onRequestSuccess(BuildContext context) {
+  _onMakeABidRequestSuccess(BuildContext context) {
     return (responseData) async {
-      //TODO: response a göre chat'e yönlendirme yapılacak.
-      print(responseData);
+      final userProvider = Provider.of<UserStatus>(context);
+      String chatRoomId = responseData['chat_room_id'];
+      int bidId = responseData['bid_id'];
+      final chatRoom = ChatRoom(
+        id: chatRoomId,
+        firstUser: widget.order.created_by,
+        secondUser: userProvider.currentUser.username,
+        bidId: bidId,
+      );
+      _redirectToChat(context, chatRoom);
     };
   }
 
+  _redirectToChat(BuildContext context, ChatRoom chatRoom) {
+    Navigator.of(context).pushReplacement(
+      SlideTopRoute(
+        page: BaseProfile(
+            child: ChatPage(
+              chatRoom: chatRoom,
+              username: chatRoom.secondUser,
+            ),
+            // TODO: write username who user is talking
+            type: chatRoom.firstUser),
+      ),
+    );
+  }
+
   _onRequestError(BuildContext context) {
-    return (responseData){
+    return (responseData) {
       Navigator.of(context).pop();
       widget.onRequestError(responseData);
     };

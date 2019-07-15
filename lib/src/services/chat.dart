@@ -41,4 +41,23 @@ abstract class ChatService extends SwNetwork {
     SwNetwork.handleResponse(context, response,
         onError: onError, onSuccess: onSuccess);
   }
+
+  static Future<http.Response> getChatRoom(BuildContext context,
+      {onError, onSuccess, chatRoomId}) async {
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final userProvider = Provider.of<UserStatus>(context);
+    final response = await SwNetwork.sendRequest(
+        context,
+            () => http.get(
+          '$swBaseUrl/chat_list/$chatRoomId/',
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": 'Token ${userProvider.token}',
+          },
+        ));
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
+
 }
