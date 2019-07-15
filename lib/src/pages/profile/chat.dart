@@ -2,13 +2,16 @@ import 'package:adhara_socket_io/adhara_socket_io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:swingo/app_config.dart';
+import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/services/bid.dart';
 import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
+import 'package:swingo/src/utils/constans.dart';
 
 class Chat extends StatelessWidget {
   final ChatRoom chatRoom;
@@ -51,6 +54,8 @@ class _ChatPageState extends State<ChatPage> {
   TextEditingController _controller = TextEditingController();
   SocketIOManager manager;
   SocketIO socket;
+  String bidStatus;
+  bool isUserCarrier = false;
 
   @override
   void initState() {
@@ -201,11 +206,71 @@ class _ChatPageState extends State<ChatPage> {
 
   _onGetBidRequestSuccess(BuildContext context) {
     return (responseData) {
-      //TODO: bidStatu nün state i değiştirilecek.
+      final userProvider = Provider.of<UserStatus>(context);
+      setState(() {
+        //TODO: status değerine göre kontrol edip state'i değiştirmek daha sağlıklı olabilir.
+        bidStatus = responseData['status'];
+        if (responseData['transceiver'] != null) {
+          isUserCarrier = responseData['transceiver']['created_by'] !=
+              userProvider.currentUser.username;
+        } else if (responseData['transporter'] != null) {
+          isUserCarrier = responseData['transporter']['created_by'] ==
+              userProvider.currentUser.username;
+        }
+      });
     };
   }
 
+  Widget _buildStatusText(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontWeight: FontWeight.w700,
+        color: secondaryColor,
+        fontSize: 22,
+      ),
+    );
+  }
+
+  Widget _buildStatusActionButton(IconData iconData, onPressed) {
+    return IconButton(
+      alignment: Alignment.center,
+      icon: Icon(iconData),
+      onPressed: onPressed,
+    );
+  }
+
   Widget _buildStatusBar() {
+    List<Widget> row = [];
+    Widget initialText = Text(
+      "Next step: ",
+      style: TextStyle(
+        fontStyle: FontStyle.italic,
+        color: primaryColor,
+        fontSize: 15,
+      ),
+    );
+
+    print(this.bidStatus);
+    if (this.bidStatus == BID_STATUSES["CONSERVATION"]) {
+      //TODO: carrier ise ilk önce onaylamalı, sender'a uyarı çıkartmalıyız.
+      row = [
+        _buildStatusText("Dealing"),
+        _buildStatusActionButton(FontAwesomeIcons.check, () {}),
+        _buildStatusActionButton(FontAwesomeIcons.times, () {}),
+      ];
+    } else if (this.bidStatus == BID_STATUSES["APPROVED_BY_CARRIER"]) {
+      //TODO: carrier approved step, sender onaylayabilmeli
+    } else if (this.bidStatus == BID_STATUSES["APPROVED"]) {
+      //TODO: match statüsü alınmalı
+    } else if (this.bidStatus == BID_STATUSES["REJECTED"]) {
+      //TODO: reject oldu ne olacaksa olacak
+    }
+
+    if(row.length > 0){
+      row.insert(0, initialText);
+    }
+
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -220,38 +285,7 @@ class _ChatPageState extends State<ChatPage> {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              "Next step: ",
-              style: TextStyle(
-                fontStyle: FontStyle.italic,
-                color: primaryColor,
-                fontSize: 15,
-              ),
-            ),
-            Text(
-              "Dealing",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                color: secondaryColor,
-                fontSize: 22,
-              ),
-            ),
-            IconButton(
-              alignment: Alignment.center,
-              icon: Icon(
-                FontAwesomeIcons.check,
-              ),
-              onPressed: () {},
-            ),
-            IconButton(
-              alignment: Alignment.center,
-              icon: Icon(
-                FontAwesomeIcons.times,
-              ),
-              onPressed: () {},
-            ),
-          ],
+          children: row,
         ),
       ),
     );

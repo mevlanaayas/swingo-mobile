@@ -11,3 +11,10 @@ List<PacketSize> PACKET_SIZES = [
 ];
 
 Map<String, String> ORDER_OWNER_TYPES = {"CARRIER": "CARRIER", "SENDER": "SENDER"};
+
+Map<String, String> BID_STATUSES = {
+  "CONSERVATION": "conservation",
+  "APPROVED_BY_CARRIER": "approved_by_carrier",
+  "APPROVED": "approved",
+  "REJECTED": "rejected"
+};
