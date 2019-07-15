@@ -80,7 +80,7 @@ class SwDialog extends StatelessWidget {
                 onPressed: () => this.onAcceptTap(context),
                 size: width,
               )
-            : null,
+            : SizedBox(),
         SizedBox(
           width: 10,
         ),

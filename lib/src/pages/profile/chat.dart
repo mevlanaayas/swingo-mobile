@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/app_config.dart';
 import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/services/bid.dart';
@@ -12,6 +13,10 @@ import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
+import 'package:swingo/src/utils/sliders.dart';
+
+import '../pages.dart';
+import 'base.dart';
 
 class Chat extends StatelessWidget {
   final ChatRoom chatRoom;
@@ -240,8 +245,23 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  _onBidStatusChanged(BuildContext context) {
+    return (responseData) {
+      _getBid(context);
+    };
+  }
+
   Widget _buildStatusBar() {
     List<Widget> row = [];
+    int bidId = widget.chatRoom.bidId;
+    dynamic onAcceptTap;
+    dynamic onRejectTap = () {
+      BidService.reject(
+        context,
+        bidId: bidId,
+        onSuccess: _onBidStatusChanged(context),
+      );
+    };
     Widget initialText = Text(
       "Next step: ",
       style: TextStyle(
@@ -252,22 +272,75 @@ class _ChatPageState extends State<ChatPage> {
     );
 
     print(this.bidStatus);
+    //TODO: karşı taraf onayladığında bunu aygılayabilmemiz gerek.
     if (this.bidStatus == BID_STATUSES["CONSERVATION"]) {
-      //TODO: carrier ise ilk önce onaylamalı, sender'a uyarı çıkartmalıyız.
+      if (this.isUserCarrier) {
+        onAcceptTap = () {
+          BidService.accept(
+            context,
+            bidId: bidId,
+            onSuccess: _onBidStatusChanged(context),
+          );
+        };
+      } else {
+        onAcceptTap = () {
+          return showDialog(
+            context: context,
+            builder: (BuildContext newContext) => SwDialog(
+                  isDismissButtonActive: true,
+                  dismissButtonText: 'Okey',
+                  contentText: 'You should wait sender to accept.',
+                ),
+          );
+        };
+      }
       row = [
         _buildStatusText("Dealing"),
-        _buildStatusActionButton(FontAwesomeIcons.check, () {}),
-        _buildStatusActionButton(FontAwesomeIcons.times, () {}),
+        _buildStatusActionButton(FontAwesomeIcons.check, onAcceptTap),
+        _buildStatusActionButton(FontAwesomeIcons.times, onRejectTap),
       ];
     } else if (this.bidStatus == BID_STATUSES["APPROVED_BY_CARRIER"]) {
-      //TODO: carrier approved step, sender onaylayabilmeli
+      if (this.isUserCarrier) {
+        row = [
+          _buildStatusText("Waiting Sender To Approve"),
+        ];
+      } else {
+        onAcceptTap = () {
+          BidService.accept(
+            context,
+            bidId: bidId,
+            onSuccess: _onBidStatusChanged(context),
+          );
+        };
+        row = [
+          _buildStatusText("Dealing"),
+          _buildStatusActionButton(FontAwesomeIcons.check, onAcceptTap),
+          _buildStatusActionButton(FontAwesomeIcons.times, onRejectTap),
+        ];
+      }
     } else if (this.bidStatus == BID_STATUSES["APPROVED"]) {
-      //TODO: match statüsü alınmalı
+      onAcceptTap = (){
+        Navigator.push(
+          context,
+          SlideLeftRoute(
+            page: BaseProfile(
+              child: CheckpointScreen(match:null), //TODO: match i almamız gerekiyor.
+              type: "Track you deal",
+            ),
+          ),
+        );
+      };
+      row = [
+        _buildStatusText("Go To Checkpoint Now!"),
+        _buildStatusActionButton(FontAwesomeIcons.arrowRight, onAcceptTap),
+      ];
     } else if (this.bidStatus == BID_STATUSES["REJECTED"]) {
-      //TODO: reject oldu ne olacaksa olacak
+      row = [
+        _buildStatusText("Rejected"),
+      ];
     }
 
-    if(row.length > 0){
+    if (row.length > 0) {
       row.insert(0, initialText);
     }
 
