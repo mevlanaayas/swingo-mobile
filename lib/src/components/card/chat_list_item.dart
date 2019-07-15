@@ -77,7 +77,7 @@ class _ChatListItemState extends State<ChatListItem> {
       context,
       SlideTopRoute(
         page: BaseProfile(
-          child: ChatPage(
+          child: Chat(
             chatRoom: item,
             username: userProvider.currentUser.username,
           ),

@@ -2,14 +2,39 @@ import 'package:adhara_socket_io/adhara_socket_io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:swingo/app_config.dart';
-import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/services/bid.dart';
 import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
+
+class Chat extends StatelessWidget {
+  final ChatRoom chatRoom;
+  final String username;
+
+  Chat({this.chatRoom, this.username});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        image: new DecorationImage(
+          image: new AssetImage('assets/images/chat-background.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: ChatPage(
+          chatRoom: this.chatRoom,
+          username: this.username,
+        ),
+      ),
+    );
+  }
+}
 
 class ChatPage extends StatefulWidget {
   final ChatRoom chatRoom;
@@ -32,6 +57,7 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     manager = SocketIOManager();
     SchedulerBinding.instance.addPostFrameCallback((_) {
+      _getBid(context);
       initSocket();
       _listMessages(context);
     });
@@ -80,7 +106,7 @@ class _ChatPageState extends State<ChatPage> {
 
   sendMessage() {
     if (socket != null) {
-      if(_controller.text != null && _controller.text != "") {
+      if (_controller.text != null && _controller.text != "") {
         socket.emit("SEND_MESSAGE", [
           {
             "username": widget.username,
@@ -165,48 +191,103 @@ class _ChatPageState extends State<ChatPage> {
     };
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserStatus>(context);
-    return Container(
-      decoration: BoxDecoration(
-        image: new DecorationImage(
-          image: new AssetImage('assets/images/chat-background.jpg'),
-          fit: BoxFit.cover,
+  _getBid(BuildContext context) {
+    BidService.get(
+      context,
+      bidId: widget.chatRoom.bidId,
+      onSuccess: _onGetBidRequestSuccess(context),
+    );
+  }
+
+  _onGetBidRequestSuccess(BuildContext context) {
+    return (responseData) {
+      //TODO: bidStatu nün state i değiştirilecek.
+    };
+  }
+
+  Widget _buildStatusBar() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        height: MediaQuery.of(context).size.height / 12,
+        padding: EdgeInsets.only(left: 10.0),
+        decoration: new BoxDecoration(
+          borderRadius: new BorderRadius.only(
+            topRight: Radius.circular(20.0),
+            bottomRight: Radius.circular(20.0),
+          ),
+          color: Color(0x88AAAAAA),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              "Next step: ",
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                color: primaryColor,
+                fontSize: 15,
+              ),
+            ),
+            Text(
+              "Dealing",
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                color: secondaryColor,
+                fontSize: 22,
+              ),
+            ),
+            IconButton(
+              alignment: Alignment.center,
+              icon: Icon(
+                FontAwesomeIcons.check,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+              alignment: Alignment.center,
+              icon: Icon(
+                FontAwesomeIcons.times,
+              ),
+              onPressed: () {},
+            ),
+          ],
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Expanded(
-                child: ListView.builder(
-                  reverse: true,
-                  itemCount: widget.toPrint.length,
-                  itemBuilder: _buildListItem,
-                ),
-              ),
-              TextField(
-                style: whiteTextStyle,
-                cursorColor: primaryColor,
-                decoration: SmallFormFieldDecoration(
-                  null,
-                  null,
-                  null,
-                  IconButton(
-                      color: primaryColor,
-                      icon: const Icon(FontAwesomeIcons.paperPlane),
-                      onPressed: sendMessage),
-                ),
-                controller: _controller,
-              ),
-            ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          _buildStatusBar(),
+          Expanded(
+            child: ListView.builder(
+              reverse: true,
+              itemCount: widget.toPrint.length,
+              itemBuilder: _buildListItem,
+            ),
           ),
-        ),
+          TextField(
+            style: whiteTextStyle,
+            cursorColor: primaryColor,
+            decoration: SmallFormFieldDecoration(
+              null,
+              null,
+              null,
+              IconButton(
+                  color: primaryColor,
+                  icon: const Icon(FontAwesomeIcons.paperPlane),
+                  onPressed: sendMessage),
+            ),
+            controller: _controller,
+          ),
+        ],
       ),
     );
   }

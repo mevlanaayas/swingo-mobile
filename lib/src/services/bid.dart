@@ -62,4 +62,22 @@ abstract class BidService extends SwNetwork {
     SwNetwork.handleResponse(context, response,
         onError: onError, onSuccess: onSuccess);
   }
+
+  static Future<http.Response> get(BuildContext context,
+      {bidId, onError, onSuccess}) async {
+    final userProvider = Provider.of<UserStatus>(context);
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final response = await SwNetwork.sendRequest(
+        context,
+            () => http.get(
+          '$swBaseUrl/bid/$bidId/',
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": 'Token ${userProvider.token}',
+          },
+        ));
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
 }
