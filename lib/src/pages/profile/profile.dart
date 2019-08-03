@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
+import 'package:swingo/src/pages/profile/signout.dart';
 
 class ProfileListItem {
   final IconData leadingIcon;
   final String title;
-  final void onPressed;
+  final dynamic onPressed;
 
   ProfileListItem({this.leadingIcon, this.title, this.onPressed});
 }
 
 class ProfileScreen extends StatelessWidget with SwScreen {
+  _navigateToAccountPage(){
+
+  }
+
+  static _showSignOutDialog(BuildContext context){
+    return showDialog(
+      context: context,
+      builder: (BuildContext newContext) {
+        return SignOutDialog();
+      },
+    );
+  }
+
   final List<ProfileListItem> profileListItems = <ProfileListItem>[
     ProfileListItem(
       leadingIcon: FontAwesomeIcons.user,
@@ -20,11 +34,9 @@ class ProfileScreen extends StatelessWidget with SwScreen {
     ProfileListItem(
       leadingIcon: FontAwesomeIcons.signOutAlt,
       title: 'Sign Out',
-      onPressed: () {},
+      onPressed: (BuildContext context) => _showSignOutDialog(context),
     ),
   ];
-
-  final List<int> colorCodes = <int>[600, 500, 100];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,7 @@ class ProfileScreen extends StatelessWidget with SwScreen {
           return ListTile(
             leading: Icon(profileListItem.leadingIcon),
             title: Text(profileListItem.title),
-            onTap: () => profileListItem.onPressed,
+            onTap: () => profileListItem.onPressed(context),
           );
         },
         separatorBuilder: (BuildContext context, int index) => Container(

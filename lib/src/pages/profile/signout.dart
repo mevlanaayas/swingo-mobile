@@ -5,7 +5,7 @@ import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/services/authentication.dart';
 
-class SignOutScreen extends StatelessWidget {
+class SignOutDialog extends StatelessWidget {
   _onSignOutTap(BuildContext context) async {
     AuthenticationService.signout(
       context,
