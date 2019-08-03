@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/components/sw_navbar.dart';
 import 'package:swingo/src/components/sw_button.dart';
+import 'package:swingo/src/pages/profile/matches.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
 import 'package:swingo/src/ankara/general.dart';
@@ -41,7 +42,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
         status == AnimationStatus.forward;
   }
 
-  void _onFloatingActionButtonPressed() {
+  void _onCreateButtonPressed() {
     _fabAnimationController.fling(
         velocity: _isCreateOptionsActive ? -swFlingVelocity : swFlingVelocity);
   }
@@ -57,7 +58,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   void _navigateToCreateOrders(int index) {
     final userProvider = Provider.of<UserStatus>(context);
     print(!userProvider.isLoggedIn);
-    if(!userProvider.isLoggedIn){
+    if (!userProvider.isLoggedIn) {
       Navigator.of(context).pushNamed('/route');
     } else if (index == 0) {
       Navigator.of(context).pushNamed('/create-send-order');
@@ -103,9 +104,20 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
       items: [
         NavBarItem(
           iconData: Icons.home,
-          text: 'Home',
+          text: 'Orders',
         ),
-        NavBarItem(iconData: Icons.account_circle, text: 'Profile'),
+        NavBarItem(
+          iconData: Icons.format_list_numbered,
+          text: 'My Orders',
+        ),
+        NavBarItem(
+          iconData: Icons.playlist_add_check,
+          text: 'Matches',
+        ),
+        NavBarItem(
+          iconData: Icons.account_circle,
+          text: 'Profile',
+        ),
       ],
     );
   }
@@ -118,29 +130,8 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
           size: 30,
           icon: AnimatedIcons.add_event,
           progress: _fabAnimationController.view),
-      onPressed: _onFloatingActionButtonPressed,
+      onPressed: _onCreateButtonPressed,
     );
-  }
-
-  Widget _buildStack(Animation fadeAnimation) {
-    Widget page;
-    Widget stack;
-
-    switch (_currentNavBarIndex) {
-      case 0:
-        {
-          page = HomePage();
-        }
-        break;
-      case 1:
-        {
-          page = ProfileScreen();
-        }
-        break;
-    }
-    stack = _buildStackContents(page, fadeAnimation, true);
-
-    return stack;
   }
 
   Widget _buildStackContents(
@@ -159,6 +150,29 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
         children: <Widget>[page],
       );
     }
+
+    return stack;
+  }
+
+  Widget _buildStack(Animation fadeAnimation) {
+    Widget page;
+    Widget stack;
+
+    switch (_currentNavBarIndex) {
+      case 0:
+        page = HomePage();
+        break;
+      case 1:
+        page = Orders();
+        break;
+      case 2:
+        page = Matches();
+        break;
+      case 3:
+        page = ProfileScreen();
+        break;
+    }
+    stack = _buildStackContents(page, fadeAnimation, true);
 
     return stack;
   }
