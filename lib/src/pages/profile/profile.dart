@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
+import 'package:swingo/src/pages/profile/account.dart';
 import 'package:swingo/src/pages/profile/signout.dart';
+import 'package:swingo/src/utils/sliders.dart';
 
 class ProfileListItem {
   final IconData leadingIcon;
@@ -12,11 +14,16 @@ class ProfileListItem {
 }
 
 class ProfileScreen extends StatelessWidget with SwScreen {
-  _navigateToAccountPage(){
-
+  static _navigateToAccountPage(BuildContext context) {
+    Navigator.push(
+      context,
+      SlideRightRoute(
+        page: AccountScreen(),
+      ),
+    );
   }
 
-  static _showSignOutDialog(BuildContext context){
+  static _showSignOutDialog(BuildContext context) {
     return showDialog(
       context: context,
       builder: (BuildContext newContext) {
@@ -29,7 +36,7 @@ class ProfileScreen extends StatelessWidget with SwScreen {
     ProfileListItem(
       leadingIcon: FontAwesomeIcons.user,
       title: 'Account',
-      onPressed: () {},
+      onPressed: (BuildContext context) => _navigateToAccountPage(context),
     ),
     ProfileListItem(
       leadingIcon: FontAwesomeIcons.signOutAlt,
