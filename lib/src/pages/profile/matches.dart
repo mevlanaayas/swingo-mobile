@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/services/match.dart';
 
-class Matches extends StatelessWidget {
+class MatchesScreen extends StatelessWidget with SwScreen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MatchesScreen(),
+      appBar: this.buildAppbar(
+        context,
+        hideBackButton: true,
+        title: 'Matches',
+      ),
+      body: Matches(),
     );
   }
 }
 
-class MatchesScreen extends StatefulWidget {
+class Matches extends StatefulWidget {
   @override
-  _MatchesScreenState createState() => _MatchesScreenState();
+  _MatchesState createState() => _MatchesState();
 }
 
-class _MatchesScreenState extends State<MatchesScreen> {
+class _MatchesState extends State<Matches> {
   List<SwMatch> matches;
 
   @override

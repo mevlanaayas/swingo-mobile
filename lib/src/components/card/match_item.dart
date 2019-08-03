@@ -130,7 +130,7 @@ class _MatchItemState extends State<MatchItem> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserStatus>(context);
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
+      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 2.5, top: 2.5),
       child: Container(
         decoration: CardItemDecoration(),
         child: Material(
