@@ -26,7 +26,7 @@ abstract class SwScreen {
       title: Text(
         title ?? '',
         style: TextStyle(
-          color: Colors.blue,
+          color: primaryColor,
         ),
       ),
     );
