@@ -81,7 +81,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
             child: SwButton(
                 color: secondaryColor,
                 onPressed: () => _navigateToCreateOrders(0),
-                text: 'Send'),
+                text: 'Senders'),
           ),
           Spacer(flex: 2),
           FadeTransition(
@@ -89,7 +89,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
             child: SwButton(
                 color: secondaryColor,
                 onPressed: () => _navigateToCreateOrders(1),
-                text: 'Carry'),
+                text: 'Carriers'),
           ),
           Spacer(flex: 5),
         ],
@@ -104,7 +104,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
       items: [
         NavBarItem(
           iconData: Icons.home,
-          text: 'Orders',
+          text: 'Home',
         ),
         NavBarItem(
           iconData: Icons.format_list_numbered,
@@ -160,7 +160,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
 
     switch (_currentNavBarIndex) {
       case 0:
-        page = HomePage();
+        page = HomeScreen();
         break;
       case 1:
         page = MyOrdersScreen();
@@ -183,7 +183,10 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
       begin: 0.0,
       end: 1.0,
     ).animate(_fabAnimationController);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: primaryColor, // status bar color
+        statusBarIconBrightness: Brightness.light
+    ));
 
     return Scaffold(
       extendBody: true,

@@ -99,7 +99,7 @@ class _ListScreenState extends State<ListScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Row(
+            /*Row(
               children: <Widget>[
                 Align(
                   alignment: Alignment.topLeft,
@@ -122,7 +122,7 @@ class _ListScreenState extends State<ListScreen> {
                   style: itemDetailHeadingStyle,
                 )
               ],
-            ),
+            ),*/
             Expanded(child: CustomScrollView(slivers: slivers)),
           ],
         ),
