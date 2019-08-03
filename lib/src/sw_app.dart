@@ -163,7 +163,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
         page = HomePage();
         break;
       case 1:
-        page = Orders();
+        page = MyOrdersScreen();
         break;
       case 2:
         page = MatchesScreen();

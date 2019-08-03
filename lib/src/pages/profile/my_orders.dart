@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/services/order.dart';
 
-class Orders extends StatelessWidget {
+class MyOrdersScreen extends StatelessWidget with SwScreen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: OrdersScreen(),
+      appBar: this.buildAppbar(
+        context,
+        hideBackButton: true,
+        title: 'My Orders',
+      ),
+      body: MyOrders(),
     );
   }
 }
 
-class OrdersScreen extends StatefulWidget {
+class MyOrders extends StatefulWidget {
   @override
-  _OrdersScreenState createState() => _OrdersScreenState();
+  _MyOrdersState createState() => _MyOrdersState();
 }
 
-class _OrdersScreenState extends State<OrdersScreen> {
+class _MyOrdersState extends State<MyOrders> {
   List<Order> orders;
 
 

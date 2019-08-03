@@ -135,7 +135,7 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
   _onRequestSuccess(BuildContext context) {
     return (responseData) =>
         Navigator.of(context).pushReplacement(SlideRightRoute(
-          page: Builder(builder: (BuildContext newContext) => Orders()),
+          page: Builder(builder: (BuildContext newContext) => MyOrders()),
         ));
   }
 

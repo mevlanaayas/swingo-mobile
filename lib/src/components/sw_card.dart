@@ -131,7 +131,7 @@ class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
+      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 2.5, top: 2.5),
       child: Container(
         decoration: CardItemDecoration(),
         child: Material(
