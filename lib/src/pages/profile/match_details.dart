@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/pages/cp/checkpoint.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/profile/base.dart';
 import 'package:swingo/src/theme/style.dart';
@@ -37,7 +38,7 @@ class MatchDetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              item.fromAddress,
+              item.order.from_city,
               style: itemDetailCityStyle,
             ),
           ],
@@ -63,7 +64,7 @@ class MatchDetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              item.toAddress,
+              item.order.to_city,
               style: itemDetailCityStyle,
             ),
           ],
@@ -228,14 +229,14 @@ class MatchDetailScreen extends StatelessWidget {
                                     const SizedBox(
                                       width: 5.0,
                                     ),
-                                    item.purchaser.username ==
+                                    item.sender.username ==
                                             userProvider.currentUser.username
                                         ? Text(
                                             item.carrier.username,
                                             style: itemUsernameContentStyle,
                                           )
                                         : Text(
-                                            item.purchaser.username,
+                                            item.sender.username,
                                             style: itemUsernameContentStyle,
                                           ),
                                   ],
@@ -299,7 +300,8 @@ class MatchDetailScreen extends StatelessWidget {
                               context,
                               SlideLeftRoute(
                                 page: BaseProfile(
-                                  child: CheckpointScreen(match:item),
+                                  //child: CheckpointScreen(match:item),
+                                  child: CpScaff(),
                                   type: "Track you deal",
                                 ),
                               ),

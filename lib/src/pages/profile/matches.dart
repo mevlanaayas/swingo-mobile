@@ -46,6 +46,8 @@ class _MatchesState extends State<Matches> {
   _onRequestSuccess(BuildContext context) {
     return (responseData) async {
       final matchJsonArray = responseData['results'];
+      print("***");
+      print(matchJsonArray);
       setState(() {
         matches = List<SwMatch>.from(
             matchJsonArray.map((orderJson) => SwMatch.fromJson(orderJson)));

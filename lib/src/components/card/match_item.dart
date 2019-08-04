@@ -26,7 +26,7 @@ class _MatchItemState extends State<MatchItem> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                widget.item.purchaser.username == username
+                widget.item.sender.username == username
                     ? const Icon(
                         FontAwesomeIcons.moneyBillWave,
                         color: secondaryColor,
@@ -40,7 +40,7 @@ class _MatchItemState extends State<MatchItem> {
                 const SizedBox(
                   width: 5.0,
                 ),
-                widget.item.purchaser.username == username
+                widget.item.sender.username == username
                     ? const Text(
                         "PURCHASING",
                         style: itemBodyDetailContentStyle,
@@ -65,7 +65,7 @@ class _MatchItemState extends State<MatchItem> {
         Row(
           children: <Widget>[
             Text(
-              widget.item.fromAddress,
+              widget.item.order.from_city,
               style: itemBodyDetailContentStyle,
             ),
           ],
@@ -74,7 +74,7 @@ class _MatchItemState extends State<MatchItem> {
         Row(
           children: <Widget>[
             Text(
-              widget.item.toAddress,
+              widget.item.order.to_city,
               style: itemBodyDetailContentStyle,
             ),
           ],
