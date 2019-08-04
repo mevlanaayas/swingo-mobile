@@ -7,7 +7,7 @@ import 'package:swingo/src/classes/SwNetwork.dart';
 import 'package:swingo/src/models/order.dart';
 
 abstract class OrderService extends SwNetwork {
-  static Future<http.Response> listMyOrders(BuildContext context,
+  static listMyOrders(BuildContext context,
       {int page, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
@@ -25,7 +25,7 @@ abstract class OrderService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> listSenders(BuildContext context,
+  static listSenders(BuildContext context,
       {int page, onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
@@ -39,7 +39,7 @@ abstract class OrderService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> listCarriers(BuildContext context,
+  static listCarriers(BuildContext context,
       {int page, onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
@@ -54,7 +54,7 @@ abstract class OrderService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> createSender(BuildContext context,
+  static createSender(BuildContext context,
       {from_city,
       from_date,
       to_city,
@@ -82,7 +82,7 @@ abstract class OrderService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> createCarrier(BuildContext context,
+  static createCarrier(BuildContext context,
       {from_city,
         from_date,
         to_city,

@@ -6,7 +6,7 @@ import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/classes/SwNetwork.dart';
 
 abstract class ChatService extends SwNetwork {
-  static Future<http.Response> listChatRooms(BuildContext context,
+  static listChatRooms(BuildContext context,
       {onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final userProvider = Provider.of<UserStatus>(context);
@@ -24,7 +24,7 @@ abstract class ChatService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> listMessages(BuildContext context,
+  static listMessages(BuildContext context,
       {onError, onSuccess, chatRoomId}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final userProvider = Provider.of<UserStatus>(context);
@@ -42,7 +42,7 @@ abstract class ChatService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> getChatRoom(BuildContext context,
+  static getChatRoom(BuildContext context,
       {onError, onSuccess, chatRoomId}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final userProvider = Provider.of<UserStatus>(context);

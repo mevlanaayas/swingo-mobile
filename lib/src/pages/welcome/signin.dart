@@ -38,12 +38,8 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
       ClientService.get(
         context,
         onSuccess: _onGetClientSuccess(context),
+        onError: _onGetClientRequestFailed(context),
       );
-      /*AuthenticationService.auth(
-        context,
-        onSuccess: _onAuthRequestSuccess(context),
-        onError: _onAuthRequestFailed(context),
-      );*/
     };
   }
 
@@ -66,23 +62,7 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
     };
   }
 
-  _onAuthRequestSuccess(BuildContext context) {
-    return (responseData) {
-      final userProvider = Provider.of<UserStatus>(context);
-      userProvider.auth(responseData['pk'], responseData['username']);
-      Navigator.popUntil(context, (Route<dynamic> route) {
-        bool shouldPop = false;
-        if (route.settings.name != '/signin' &&
-            route.settings.name != '/signup' &&
-            route.settings.name != '/route') {
-          shouldPop = true;
-        }
-        return shouldPop;
-      });
-    };
-  }
-
-  _onAuthRequestFailed(BuildContext context) {
+  _onGetClientRequestFailed(BuildContext context) {
     return (responseData) {
       final userProvider = Provider.of<UserStatus>(context);
       userProvider.signout();

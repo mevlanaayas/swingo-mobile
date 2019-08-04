@@ -6,7 +6,7 @@ import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/classes/SwNetwork.dart';
 
 abstract class ClientService extends SwNetwork {
-  static Future<http.Response> get(BuildContext context,
+  static get(BuildContext context,
       {onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final userProvider = Provider.of<UserStatus>(context);

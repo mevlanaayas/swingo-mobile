@@ -7,7 +7,7 @@ import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/models/bid.dart';
 
 abstract class BidService extends SwNetwork {
-  static Future<http.Response> listAll(BuildContext context,
+  static listAll(BuildContext context,
       {onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
@@ -25,7 +25,7 @@ abstract class BidService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> createToSend(BuildContext context,
+  static createToSend(BuildContext context,
       {price, transporter, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
@@ -44,7 +44,7 @@ abstract class BidService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> createToCarry(BuildContext context,
+  static createToCarry(BuildContext context,
       {transceiver, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;

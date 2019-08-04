@@ -6,7 +6,7 @@ import 'package:swingo/src/classes/SwNetwork.dart';
 import 'package:swingo/src/ankara/general.dart';
 
 abstract class MatchService extends SwNetwork {
-  static Future<http.Response> listAll(BuildContext context,
+  static listAll(BuildContext context,
       {onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
