@@ -16,6 +16,7 @@ class SwMatch {
   final String created_by;
   final DateTime updated_at;
   final String updated_by;
+  final String chatRoomId;
 
   SwMatch(
     this.id,
@@ -33,6 +34,7 @@ class SwMatch {
     this.created_by,
     this.updated_at,
     this.updated_by,
+    this.chatRoomId,
   );
 
   get order {
@@ -64,6 +66,7 @@ class SwMatch {
       json['created_by'],
       DateTime.parse(json['updated_at']),
       json['updated_by'],
+      json['chat_room_id'],
     );
   }
 
