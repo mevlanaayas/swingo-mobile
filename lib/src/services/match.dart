@@ -13,7 +13,7 @@ abstract class MatchService extends SwNetwork {
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
-              '$swBaseUrl/dashboard/',
+              '$swBaseUrl/match/',
               headers: {
                 "Content-type": "application/json",
                 "Authorization": 'Token ${userProvider.token}',

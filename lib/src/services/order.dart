@@ -7,14 +7,14 @@ import 'package:swingo/src/classes/SwNetwork.dart';
 import 'package:swingo/src/models/order.dart';
 
 abstract class OrderService extends SwNetwork {
-  static Future<http.Response> listAll(BuildContext context,
+  static Future<http.Response> listMyOrders(BuildContext context,
       {int page, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
-              '$swBaseUrl/dashboard/',
+              '$swBaseUrl/my_orders/',
               headers: {
                 "Content-type": "application/json",
                 "Authorization": 'Token ${userProvider.token}'
@@ -45,7 +45,7 @@ abstract class OrderService extends SwNetwork {
     final response = await SwNetwork.sendRequest(
       context,
       () => http.get(
-            '${swBaseUrl}/orders/send/?page=$page',
+            '${swBaseUrl}/orders/carry/?page=$page',
             headers: {"Content-type": "application/json"},
           ),
     );
@@ -69,7 +69,7 @@ abstract class OrderService extends SwNetwork {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
-      () => http.post('${swBaseUrl}/transceiver_order/',
+      () => http.post('${swBaseUrl}/orders/send/',
           headers: {
             "Content-type": "application/json",
             "Authorization": 'Token ${userProvider.token}'
@@ -96,7 +96,7 @@ abstract class OrderService extends SwNetwork {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
-          () => http.post('${swBaseUrl}/transporter_order/',
+          () => http.post('${swBaseUrl}/orders/carry/',
           headers: {
             "Content-type": "application/json",
             "Authorization": 'Token ${userProvider.token}'
