@@ -31,7 +31,7 @@ abstract class OrderService extends SwNetwork {
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
-              '$swBaseUrl/transceiver_order/?page=$page',
+              '$swBaseUrl/orders/send/?page=$page',
               headers: {"Content-type": "application/json"},
             ));
 
@@ -45,7 +45,7 @@ abstract class OrderService extends SwNetwork {
     final response = await SwNetwork.sendRequest(
       context,
       () => http.get(
-            '${swBaseUrl}/transporter_order/?page=$page',
+            '${swBaseUrl}/orders/send/?page=$page',
             headers: {"Content-type": "application/json"},
           ),
     );

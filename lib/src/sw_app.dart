@@ -91,7 +91,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
             child: SwButton(
                 color: secondaryColor,
                 onPressed: () => _navigateToCreateOrders(0),
-                text: 'Senders'),
+                text: 'Send'),
           ),
           Spacer(flex: 2),
           FadeTransition(
@@ -99,7 +99,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
             child: SwButton(
                 color: secondaryColor,
                 onPressed: () => _navigateToCreateOrders(1),
-                text: 'Carriers'),
+                text: 'Carry'),
           ),
           Spacer(flex: 5),
         ],
