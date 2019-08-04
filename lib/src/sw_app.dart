@@ -47,12 +47,22 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
         velocity: _isCreateOptionsActive ? -swFlingVelocity : swFlingVelocity);
   }
 
-  void _updateNavBarIndex(int index) {
+  void _updateNavBarIndex(int index) async {
     if (_currentNavBarIndex == index) return;
 
-    setState(() {
-      _currentNavBarIndex = index;
-    });
+    final userProvider = Provider.of<UserStatus>(context);
+    if(!userProvider.isLoggedIn && index != 0){
+      await Navigator.of(context).pushNamed('/route');
+      if(userProvider.isLoggedIn){
+        setState(() {
+          _currentNavBarIndex = index;
+        });
+      }
+    } else{
+      setState(() {
+        _currentNavBarIndex = index;
+      });
+    }
   }
 
   void _navigateToCreateOrders(int index) {
