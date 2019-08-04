@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:swingo/app_config.dart';
 import 'package:swingo/src/classes/SwNetwork.dart';
 import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/models/match.dart';
 
 abstract class MatchService extends SwNetwork {
   static listAll(BuildContext context,
@@ -19,6 +20,44 @@ abstract class MatchService extends SwNetwork {
                 "Authorization": 'Token ${userProvider.token}',
               },
             ));
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
+
+  static createToSend(BuildContext context,
+      {price, transporter, onError, onSuccess}) async {
+    final userProvider = Provider.of<UserStatus>(context);
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final response = await SwNetwork.sendRequest(
+        context,
+            () => http.post(
+          '$swBaseUrl/match/',
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": 'Token ${userProvider.token}',
+          },
+          body: SwMatch.toSenderJson(price, transporter),
+        ));
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
+
+  static createToCarry(BuildContext context,
+      {transceiver, onError, onSuccess}) async {
+    final userProvider = Provider.of<UserStatus>(context);
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final response = await SwNetwork.sendRequest(
+        context,
+            () => http.post(
+          '$swBaseUrl/match/',
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": 'Token ${userProvider.token}',
+          },
+          body: SwMatch.toCarrierJson(transceiver),
+        ));
 
     SwNetwork.handleResponse(context, response,
         onError: onError, onSuccess: onSuccess);

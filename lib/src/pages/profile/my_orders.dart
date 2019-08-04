@@ -38,7 +38,7 @@ class _MyOrdersState extends State<MyOrders> {
   }
 
   void _listOrders(BuildContext context) async {
-    OrderService.listAll(
+    OrderService.listMyOrders(
       context,
       onSuccess: _onRequestSuccess(context),
     );

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
-import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/order.dart';
 import 'package:swingo/src/pages/profile/base.dart';
 import 'package:swingo/src/pages/profile/chat.dart';
-import 'package:swingo/src/services/bid.dart';
-import 'package:swingo/src/services/chat.dart';
+import 'package:swingo/src/services/match.dart';
 import 'package:swingo/src/utils/constans.dart';
 import 'package:swingo/src/utils/sliders.dart';
 
@@ -36,7 +34,7 @@ class _MakeABidState extends State<MakeABid> {
   final TextEditingController textEditingController = TextEditingController();
 
   _onCarrierAcceptTap(BuildContext context) {
-    BidService.createToCarry(
+    MatchService.createToCarry(
       context,
       transceiver: widget.order.id,
       onSuccess: _onMakeABidRequestSuccess(context),
@@ -56,7 +54,7 @@ class _MakeABidState extends State<MakeABid> {
   }
 
   _onSenderAcceptTapSecondTime(BuildContext context) {
-    BidService.createToSend(
+    MatchService.createToSend(
       context,
       transporter: widget.order.id,
       price: price,

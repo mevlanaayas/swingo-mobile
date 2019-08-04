@@ -48,4 +48,16 @@ class SwMatch {
       json['updated_by'],
     );
   }
+
+  static toSenderJson(double price, int orderId){
+    return '{'
+        '"value": "${price}",'
+        '"carry_order": "${orderId}"}';
+  }
+
+  static toCarrierJson(int orderId){
+    return '{'
+        '"value": "${11}",' //TODO: geçici süreliğine yapıldı.
+        '"send_order": "${orderId}"}';
+  }
 }
