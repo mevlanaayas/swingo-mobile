@@ -14,6 +14,12 @@ class ProfileListItem {
 }
 
 class ProfileScreen extends StatelessWidget with SwScreen {
+  final dynamic updateNavBarIndex;
+
+  ProfileScreen({
+    this.updateNavBarIndex,
+  });
+
   static _navigateToAccountPage(BuildContext context) {
     Navigator.push(
       context,
@@ -23,30 +29,34 @@ class ProfileScreen extends StatelessWidget with SwScreen {
     );
   }
 
-  static _showSignOutDialog(BuildContext context) {
+  static _showSignOutDialog(BuildContext context, dynamic updateNavBarIndex) {
     return showDialog(
       context: context,
       builder: (BuildContext newContext) {
-        return SignOutDialog();
+        return SignOutDialog(updateNavBarIndex: updateNavBarIndex);
       },
     );
   }
 
-  final List<ProfileListItem> profileListItems = <ProfileListItem>[
-    ProfileListItem(
-      leadingIcon: FontAwesomeIcons.user,
-      title: 'Account',
-      onPressed: (BuildContext context) => _navigateToAccountPage(context),
-    ),
-    ProfileListItem(
-      leadingIcon: FontAwesomeIcons.signOutAlt,
-      title: 'Sign Out',
-      onPressed: (BuildContext context) => _showSignOutDialog(context),
-    ),
-  ];
+  List<ProfileListItem> _initProfileListItems() {
+    return <ProfileListItem>[
+      ProfileListItem(
+        leadingIcon: FontAwesomeIcons.user,
+        title: 'Account',
+        onPressed: (BuildContext context) => _navigateToAccountPage(context),
+      ),
+      ProfileListItem(
+        leadingIcon: FontAwesomeIcons.signOutAlt,
+        title: 'Sign Out',
+        onPressed: (BuildContext context) =>
+            _showSignOutDialog(context, this.updateNavBarIndex),
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
+    final profileListItems = _initProfileListItems();
     return Scaffold(
       appBar: this.buildAppbar(
         context,
@@ -56,7 +66,7 @@ class ProfileScreen extends StatelessWidget with SwScreen {
       body: ListView.separated(
         itemCount: profileListItems.length,
         itemBuilder: (BuildContext context, int index) {
-          ProfileListItem profileListItem = this.profileListItems[index];
+          ProfileListItem profileListItem = profileListItems[index];
           return ListTile(
             leading: Icon(profileListItem.leadingIcon),
             title: Text(profileListItem.title),

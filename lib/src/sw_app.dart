@@ -179,7 +179,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
         page = MatchesScreen();
         break;
       case 3:
-        page = ProfileScreen();
+        page = ProfileScreen(updateNavBarIndex: this._updateNavBarIndex);
         break;
     }
     stack = _buildStackContents(page, fadeAnimation, true);

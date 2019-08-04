@@ -6,6 +6,10 @@ import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/services/authentication.dart';
 
 class SignOutDialog extends StatelessWidget {
+  dynamic updateNavBarIndex;
+
+  SignOutDialog({this.updateNavBarIndex});
+
   _onSignOutTap(BuildContext context) async {
     AuthenticationService.signout(
       context,
@@ -19,6 +23,7 @@ class SignOutDialog extends StatelessWidget {
       final userProvider = Provider.of<UserStatus>(context);
       userProvider.signout();
       await Navigator.of(context).pop();
+      this.updateNavBarIndex(0);
       Navigator.of(context).pushNamed('/route');
     };
   }
