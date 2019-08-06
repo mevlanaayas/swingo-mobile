@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/pages/profile/base.dart';
+import 'package:swingo/src/pages/profile/chat.dart';
 import 'package:swingo/src/pages/profile/match_details.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
@@ -126,9 +128,30 @@ class _MatchItemState extends State<MatchItem> {
     );
   }
 
+  _redirectToChat(BuildContext context, ChatRoom chatRoom) {
+    Navigator.of(context).pushReplacement(
+      SlideTopRoute(
+        page: BaseProfile(
+            child: ChatPage(
+              chatRoom: chatRoom,
+              username: chatRoom.secondUser,
+            ),
+            // TODO: write username who user is talking
+            type: chatRoom.firstUser),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserStatus>(context);
+    final chatRoom = ChatRoom(
+      id: widget.item.chatRoomId,
+      firstUser: widget.item.order.created_by,
+      secondUser: userProvider.currentUser.username,
+      bidId: 1,
+    );
+
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 3, bottom: 2.5, top: 2.5),
       child: Container(
@@ -140,7 +163,7 @@ class _MatchItemState extends State<MatchItem> {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
-            onTap: () => _handleTap(context, widget.item),
+            onTap: () => _redirectToChat(context, chatRoom),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Column(

@@ -7,19 +7,37 @@ import 'package:swingo/src/classes/SwNetwork.dart';
 import 'package:swingo/src/models/order.dart';
 
 abstract class OrderService extends SwNetwork {
-  static listMyOrders(BuildContext context,
+  static listMySendOrders(BuildContext context,
       {int page, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
-              '$swBaseUrl/my_orders/',
+              '$swBaseUrl/my_orders/send',
               headers: {
                 "Content-type": "application/json",
                 "Authorization": 'Token ${userProvider.token}'
               },
             ));
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
+
+  static listMyCarryOrders(BuildContext context,
+      {int page, onError, onSuccess}) async {
+    final userProvider = Provider.of<UserStatus>(context);
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final response = await SwNetwork.sendRequest(
+        context,
+            () => http.get(
+          '$swBaseUrl/my_orders/carry',
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": 'Token ${userProvider.token}'
+          },
+        ));
 
     SwNetwork.handleResponse(context, response,
         onError: onError, onSuccess: onSuccess);

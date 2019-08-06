@@ -26,33 +26,49 @@ class MyOrders extends StatefulWidget {
 }
 
 class _MyOrdersState extends State<MyOrders> {
-  List<Order> orders;
-
+  List<Order> orders = [];
 
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _listOrders(context);
+      _listSendOrders(context);
+      _listCarryOrders(context);
     });
     super.initState();
   }
 
-  void _listOrders(BuildContext context) async {
-    OrderService.listMyOrders(
+  void _listSendOrders(BuildContext context) async {
+    OrderService.listMySendOrders(
       context,
-      onSuccess: _onRequestSuccess(context),
+      onSuccess: _onListSendOrderRequestSuccess(context),
     );
   }
 
-  _onRequestSuccess(BuildContext context) {
+  void _listCarryOrders(BuildContext context) async {
+    OrderService.listMyCarryOrders(
+      context,
+      onSuccess: _onListCarryOrderRequestSuccess(context),
+    );
+  }
+
+  _onListSendOrderRequestSuccess(BuildContext context) {
     return (responseData) async {
-      final carryOrderJsonArray = responseData['carry_orders'];
       final sendOrderJsonArray = responseData['send_orders'];
       setState(() {
-        orders = List<Order>.from(
-        carryOrderJsonArray.map((orderJson) => Order.fromJson(orderJson)))
+        orders = List<Order>.from(orders)
         ..addAll(List<Order>.from(sendOrderJsonArray
             .map((orderJson) => Order.fromJson(orderJson))));
+      });
+    };
+  }
+
+  _onListCarryOrderRequestSuccess(BuildContext context) {
+    return (responseData) async {
+      final carryOrderJsonArray = responseData['carry_orders'];
+      setState(() {
+        orders = List<Order>.from(orders)
+          ..addAll(List<Order>.from(carryOrderJsonArray
+              .map((orderJson) => Order.fromJson(orderJson))));
       });
     };
   }
