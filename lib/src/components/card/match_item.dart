@@ -129,15 +129,14 @@ class _MatchItemState extends State<MatchItem> {
   }
 
   _redirectToChat(BuildContext context, ChatRoom chatRoom) {
-    Navigator.of(context).pushReplacement(
-      SlideTopRoute(
-        page: BaseProfile(
-            child: ChatPage(
-              chatRoom: chatRoom,
-              username: chatRoom.secondUser,
-            ),
-            // TODO: write username who user is talking
-            type: chatRoom.firstUser),
+    final userProvider = Provider.of<UserStatus>(context);
+
+    Navigator.of(context).push(
+      SlideRightRoute(
+        page: ChatPage(
+          chatRoom: chatRoom,
+          username: userProvider.currentUser.username,
+        ),
       ),
     );
   }
@@ -146,10 +145,11 @@ class _MatchItemState extends State<MatchItem> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserStatus>(context);
     final chatRoom = ChatRoom(
+      // TODO: chatroom mantığı değişti modeli fixlemek gerek
       id: widget.item.chatRoomId,
-      firstUser: widget.item.order.created_by,
-      secondUser: userProvider.currentUser.username,
-      bidId: 1,
+      firstUser: '',
+      secondUser: '',
+      bidId: null,
     );
 
     return Padding(

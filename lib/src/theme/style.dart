@@ -245,6 +245,12 @@ const TextStyle messageWhiteTextStyle = TextStyle(
   color: whiteColor,
 );
 
+const TextStyle messageBlackTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 16,
+  color: blackColor,
+);
+
 const TextStyle disabledColorTextStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 12,

@@ -2,9 +2,8 @@ import 'package:adhara_socket_io/adhara_socket_io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:swingo/app_config.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/services/chat.dart';
@@ -22,7 +21,7 @@ class ChatPage extends StatefulWidget {
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageState extends State<ChatPage> with SwScreen {
   TextEditingController _controller = TextEditingController();
   SocketIOManager manager;
   SocketIO socket;
@@ -80,7 +79,7 @@ class _ChatPageState extends State<ChatPage> {
 
   sendMessage() {
     if (socket != null) {
-      if(_controller.text != null && _controller.text != "") {
+      if (_controller.text != null && _controller.text != "") {
         socket.emit("SEND_MESSAGE", [
           {
             "username": widget.username,
@@ -161,22 +160,18 @@ class _ChatPageState extends State<ChatPage> {
             ? List<Message>.from(messageArray
                 .map((messageJson) => Message.fromJson(messageJson)))
             : [];
+        widget.toPrint = widget.toPrint.reversed.toList();
       });
     };
   }
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserStatus>(context);
     return Container(
-      decoration: BoxDecoration(
-        image: new DecorationImage(
-          image: new AssetImage('assets/images/chat-background.jpg'),
-          fit: BoxFit.cover,
-        ),
-      ),
+      color: primaryColor50,
       child: Scaffold(
         backgroundColor: Colors.transparent,
+        appBar: this.buildAppbar(context),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -185,24 +180,28 @@ class _ChatPageState extends State<ChatPage> {
             children: <Widget>[
               Expanded(
                 child: ListView.builder(
+                  padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
                   reverse: true,
                   itemCount: widget.toPrint.length,
                   itemBuilder: _buildListItem,
                 ),
               ),
-              TextField(
-                style: whiteTextStyle,
-                cursorColor: primaryColor,
-                decoration: SmallFormFieldDecoration(
-                  null,
-                  null,
-                  null,
-                  IconButton(
-                      color: primaryColor,
-                      icon: const Icon(FontAwesomeIcons.paperPlane),
-                      onPressed: sendMessage),
+              Padding(
+                padding: EdgeInsets.all(4),
+                child: TextField(
+                  style: messageBlackTextStyle,
+                  cursorColor: Colors.black,
+                  decoration: SmallFormFieldDecoration(
+                    null,
+                    null,
+                    null,
+                    IconButton(
+                        color: primaryColor,
+                        icon: const Icon(FontAwesomeIcons.paperPlane),
+                        onPressed: sendMessage),
+                  ),
+                  controller: _controller,
                 ),
-                controller: _controller,
               ),
             ],
           ),
