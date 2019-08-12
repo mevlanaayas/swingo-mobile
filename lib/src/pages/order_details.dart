@@ -106,10 +106,10 @@ class DetailScreen extends StatelessWidget {
 
   _onMakeABidPressed(BuildContext context) {
     final userProvider = Provider.of<UserStatus>(context);
-    if(!userProvider.isLoggedIn){
+    if (!userProvider.isLoggedIn) {
       Navigator.of(context).pushNamed('/route');
     }
-    if(userProvider.isLoggedIn){
+    if (userProvider.isLoggedIn) {
       return showDialog(
         context: context,
         builder: (BuildContext newContext) {
@@ -239,7 +239,7 @@ class DetailScreen extends StatelessWidget {
               width: 12.0,
             ),
             Text(
-              item.price.toString(),
+              item.price != null ? "₺" + item.price.toString() : ' YOU DECIDE!',
               style: itemBodyDateContentStyle,
             ),
           ],

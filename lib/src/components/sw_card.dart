@@ -43,7 +43,12 @@ class _ListItemState extends State<ListItem> {
                   ),
           ],
         ),
-        Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
+        Text(
+          widget.item.price != null
+              ? "₺" + widget.item.price.toString()
+              : ' YOU DECIDE!',
+          style: itemPriceContentStyle,
+        )
       ],
     );
   }
