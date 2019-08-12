@@ -117,7 +117,7 @@ class _ListItemState extends State<ListItem> {
   Future<void> _handleTap(BuildContext context, Order item) async {
     Navigator.push(
       context,
-      SlideTopRoute(
+      SlideRightRoute(
           page: Detail(
         item: item,
         orderOwnerType: widget.orderOwnerType,
