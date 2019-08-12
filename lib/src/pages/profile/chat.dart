@@ -165,44 +165,130 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
     };
   }
 
+  Widget _buildTitle() {
+    return InkWell(
+      onTap: (){},
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              'furkan',
+              style: messageBlackTextStyle,
+            ),
+            Text(
+              'Please click to see details.',
+              style: blackTextStyle,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatusText(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontWeight: FontWeight.w700,
+        color: Colors.white,
+        fontSize: 22,
+      ),
+    );
+  }
+
+  Widget _buildStatusActionButton(IconData iconData, onPressed) {
+    return IconButton(
+      alignment: Alignment.center,
+      icon: Icon(
+        iconData,
+        color: secondaryColor,
+      ),
+      onPressed: onPressed,
+    );
+  }
+
+  Widget _buildStatusBar() {
+    List<Widget> row = [];
+    double screenWidth = MediaQuery.of(context).size.width;
+    dynamic onAcceptTap = () {};
+    dynamic onRejectTap = () {};
+
+    row = [
+      _buildStatusText("Dealing"),
+      _buildStatusActionButton(FontAwesomeIcons.times, onRejectTap),
+      _buildStatusActionButton(FontAwesomeIcons.check, onAcceptTap),
+    ];
+
+    return Container(
+      margin: EdgeInsets.only(left: 4, right: 4, bottom: 4),
+      width: screenWidth,
+      decoration: new BoxDecoration(
+        borderRadius: new BorderRadius.only(
+          bottomLeft: Radius.circular(20.0),
+          bottomRight: Radius.circular(20.0),
+        ),
+        color: primaryColor,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: row,
+      ),
+    );
+  }
+
+  Widget _buildMessageListView() {
+    return Expanded(
+      child: ListView.builder(
+        padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
+        reverse: true,
+        itemCount: widget.toPrint.length,
+        itemBuilder: _buildListItem,
+      ),
+    );
+  }
+
+  Widget _buildInputBar() {
+    return Padding(
+      padding: EdgeInsets.all(4),
+      child: TextField(
+        style: messageBlackTextStyle,
+        cursorColor: Colors.black,
+        decoration: SmallFormFieldDecoration(
+          null,
+          null,
+          null,
+          IconButton(
+              color: primaryColor,
+              icon: const Icon(FontAwesomeIcons.paperPlane),
+              onPressed: sendMessage),
+        ),
+        controller: _controller,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: primaryColor50,
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: this.buildAppbar(context),
+        appBar: this.buildAppbar(
+          context,
+          titleWidget: _buildTitle(),
+        ),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
-                  reverse: true,
-                  itemCount: widget.toPrint.length,
-                  itemBuilder: _buildListItem,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(4),
-                child: TextField(
-                  style: messageBlackTextStyle,
-                  cursorColor: Colors.black,
-                  decoration: SmallFormFieldDecoration(
-                    null,
-                    null,
-                    null,
-                    IconButton(
-                        color: primaryColor,
-                        icon: const Icon(FontAwesomeIcons.paperPlane),
-                        onPressed: sendMessage),
-                  ),
-                  controller: _controller,
-                ),
-              ),
+              _buildStatusBar(),
+              _buildMessageListView(),
+              _buildInputBar(),
             ],
           ),
         ),

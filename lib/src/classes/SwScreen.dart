@@ -7,6 +7,7 @@ abstract class SwScreen {
     BuildContext context, {
     bool hideBackButton = false,
     String title,
+    Widget titleWidget,
   }) {
     return AppBar(
       elevation: 0,
@@ -23,12 +24,14 @@ abstract class SwScreen {
                 color: primaryColor,
               ),
             ),
-      title: Text(
-        title ?? '',
-        style: TextStyle(
-          color: primaryColor,
-        ),
-      ),
+      title: titleWidget != null
+          ? titleWidget
+          : Text(
+              title ?? '',
+              style: TextStyle(
+                color: primaryColor,
+              ),
+            ),
     );
   }
 
