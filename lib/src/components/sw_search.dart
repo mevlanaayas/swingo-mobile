@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 
@@ -14,41 +15,21 @@ class SwSearch extends StatefulWidget {
   _SwSearchState createState() => _SwSearchState();
 }
 
-class _SwSearchState extends State<SwSearch> {
+class _SwSearchState extends State<SwSearch> with SwScreen {
   List<dynamic> list = [];
   TextEditingController _textEditingController = TextEditingController();
   DateTime searchingTextChangedAt;
 
   @override
   void initState() {
-    if(widget.list != null){
+    if (widget.list != null) {
       list = widget.list;
     }
     super.initState();
   }
 
-  void _onBackPressed(context) {
-    Navigator.pop(context, null);
-  }
-
   void _cleanTextEditing() {
     _textEditingController.clear();
-  }
-
-  Widget _buildBackButton() {
-    return ButtonTheme(
-      minWidth: 0,
-      child: FlatButton(
-        splashColor: Colors.transparent,
-        padding: const EdgeInsets.all(0),
-        shape: null,
-        onPressed: () => _onBackPressed(context),
-        child: const Icon(
-          FontAwesomeIcons.chevronLeft,
-          color: secondaryColor,
-        ),
-      ),
-    );
   }
 
   Widget _buildSearchField(BuildContext context) {
@@ -89,9 +70,9 @@ class _SwSearchState extends State<SwSearch> {
     });
 
     Future.delayed(const Duration(milliseconds: 500), () async {
-      if(newSearchingTextChangedAt == searchingTextChangedAt){
+      if (newSearchingTextChangedAt == searchingTextChangedAt) {
         final newList = await widget.onSearchChanged(context, newText) ?? [];
-        setState((){
+        setState(() {
           list = newList;
         });
       }
@@ -144,17 +125,17 @@ class _SwSearchState extends State<SwSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: primaryColor50,
-          title: Builder(
-              builder: (BuildContext titleContext) =>
-                  _buildSearchField(titleContext)),
-          leading: _buildBackButton(),
+      appBar: this.buildAppbar(
+        context,
+        titleWidget: Builder(
+          builder: (BuildContext titleContext) =>
+              _buildSearchField(titleContext),
         ),
-        body: ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (context, index) =>
-                _buildListItem(context, index, list)));
+      ),
+      body: ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) => _buildListItem(context, index, list),
+      ),
+    );
   }
 }
