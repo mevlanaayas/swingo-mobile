@@ -2,16 +2,18 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
+import 'package:swingo/src/components/components.dart';
 
 import 'package:swingo/src/models/city.dart';
 import 'package:swingo/src/models/packet_size.dart';
-import 'package:swingo/src/components/sw_button.dart';
 import 'package:swingo/src/components/sw_select.dart';
 import 'package:swingo/src/components/sw_datepicker.dart';
 import 'package:swingo/src/components/sw_formfield.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/services/option.dart';
 import 'package:swingo/src/services/order.dart';
+import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
 import 'package:swingo/src/utils/sliders.dart';
 
@@ -26,23 +28,29 @@ class CreateOrderForm {
   String comments;
 }
 
-class CreateOrders extends StatelessWidget {
-  String type;
+class CreateOrders extends StatelessWidget with SwScreen {
+  final String type;
 
   CreateOrders(this.type);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CreateOrdersScreen(
-        type: this.type,
+      appBar: this.buildAppbar(
+        context,
+        title: this.type,
+      ),
+      body: SwPage(
+        child: CreateOrdersScreen(
+          type: this.type,
+        ),
       ),
     );
   }
 }
 
 class CreateOrdersScreen extends StatefulWidget {
-  String type;
+  final String type;
 
   CreateOrdersScreen({
     this.type,
@@ -70,6 +78,9 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
 
   final _formKey = GlobalKey<FormState>();
   var _form = CreateOrderForm();
+
+  final stepperLength = 2;
+  int currentStepIndex = 0;
 
   @override
   void dispose() {
@@ -157,94 +168,183 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
     return [];
   }
 
+  _buildStepperContent(List<Widget> content) {
+    Size size = MediaQuery.of(context).size;
+    return SingleChildScrollView(
+      padding: EdgeInsets.only(
+        top: size.width / 20,
+        left: size.width / 10,
+        right: size.width / 10,
+        bottom: size.width / 10,
+      ),
+      child: Center(
+        child: Wrap(
+          runSpacing: 20,
+          children: content,
+        ),
+      ),
+    );
+  }
+
+  _buildTripDetails() {
+    return [
+      SwSelect(
+        isRequired: true,
+        prefixIcon: FontAwesomeIcons.planeDeparture,
+        labelText: 'Source City',
+        onSelected: _onFromCitySelected,
+        onSearchChanged: _onSearchChanged,
+        textEditingController: fromCityController,
+      ),
+      SwSelect(
+        isRequired: true,
+        prefixIcon: FontAwesomeIcons.planeArrival,
+        labelText: 'Destination City',
+        onSelected: _onToCitySelected,
+        onSearchChanged: _onSearchChanged,
+        textEditingController: toCityController,
+      ),
+      SwDatePicker(
+        isRequired: true,
+        prefixIcon: FontAwesomeIcons.calendarDay,
+        labelText: 'Date From',
+        onSelected: _onFromDateSelected,
+        textEditingController: fromDateController,
+      ),
+      SwDatePicker(
+        isRequired: true,
+        prefixIcon: FontAwesomeIcons.calendarDay,
+        labelText: 'Date To',
+        onSelected: _onToDateSelected,
+        textEditingController: toDateController,
+      ),
+    ];
+  }
+
+  _buildPacketDetails() {
+    return [
+      SwFormField(
+        isRequired: true,
+        prefixIcon: FontAwesomeIcons.dumbbell,
+        labelText: 'Weight',
+        controller: weightController,
+        isNumber: true,
+      ),
+      SwSelect(
+        isRequired: true,
+        prefixIcon: FontAwesomeIcons.expand,
+        labelText: 'Size',
+        onSelected: _onPacketSizeSelected,
+        list: PACKET_SIZES,
+        hideSearchBar: true,
+        textEditingController: sizeController,
+      ),
+      widget.type == "Send"
+          ? SwFormField(
+              isRequired: true,
+              prefixIcon: FontAwesomeIcons.moneyBill,
+              labelText: 'Price To Pay',
+              controller: priceController,
+              isNumber: true,
+            )
+          : SizedBox(),
+      SwFormField(
+        isRequired: true,
+        prefixIcon: FontAwesomeIcons.infoCircle,
+        labelText: 'Comments',
+        controller: commentsController,
+        maxLines: 3,
+      )
+    ];
+  }
+
+  StepState _setStepState(int currentStepIndex, int stepIndex) {
+    StepState stepState;
+    if (currentStepIndex < stepIndex) {
+      stepState = StepState.disabled;
+    } else if (currentStepIndex == stepIndex) {
+      stepState = StepState.editing;
+    } else {
+      stepState = StepState.complete;
+    }
+    return stepState;
+  }
+
+  bool _setStepActiveValue(int currentStepIndex, int stepIndex) {
+    return currentStepIndex != stepIndex ? false : true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Form(
         key: _formKey,
-        child: SingleChildScrollView(
-            padding: EdgeInsets.only(
-                top: size.width / 20,
-                left: size.width / 10,
-                right: size.width / 10,
-                bottom: size.width / 10),
-            child: Center(
-              child: Wrap(
-                runSpacing: 20,
-                children: <Widget>[
-                  SwSelect(
-                    isRequired: true,
-                    prefixIcon: FontAwesomeIcons.planeDeparture,
-                    labelText: 'Source City',
-                    onSelected: _onFromCitySelected,
-                    onSearchChanged: _onSearchChanged,
-                    textEditingController: fromCityController,
-                  ),
-                  SwSelect(
-                    isRequired: true,
-                    prefixIcon: FontAwesomeIcons.planeArrival,
-                    labelText: 'Destination City',
-                    onSelected: _onToCitySelected,
-                    onSearchChanged: _onSearchChanged,
-                    textEditingController: toCityController,
-                  ),
-                  SwDatePicker(
-                    isRequired: true,
-                    prefixIcon: FontAwesomeIcons.calendarDay,
-                    labelText: 'Date From',
-                    onSelected: _onFromDateSelected,
-                    textEditingController: fromDateController,
-                  ),
-                  SwDatePicker(
-                    isRequired: true,
-                    prefixIcon: FontAwesomeIcons.calendarDay,
-                    labelText: 'Date To',
-                    onSelected: _onToDateSelected,
-                    textEditingController: toDateController,
-                  ),
-                  SwFormField(
-                    isRequired: true,
-                    prefixIcon: FontAwesomeIcons.dumbbell,
-                    labelText: 'Weight',
-                    controller: weightController,
-                    isNumber: true,
-                  ),
-                  SwSelect(
-                    isRequired: true,
-                    prefixIcon: FontAwesomeIcons.expand,
-                    labelText: 'Size',
-                    onSelected: _onPacketSizeSelected,
-                    list: PACKET_SIZES,
-                    hideSearchBar: true,
-                    textEditingController: sizeController,
-                  ),
-                  widget.type == "Send"
-                      ? SwFormField(
-                          isRequired: true,
-                          prefixIcon: FontAwesomeIcons.moneyBill,
-                          labelText: 'Price To Pay',
-                          controller: priceController,
-                          isNumber: true,
-                        )
-                      : SizedBox(),
-                  SwFormField(
-                    isRequired: true,
-                    prefixIcon: FontAwesomeIcons.infoCircle,
-                    labelText: 'Comments',
-                    controller: commentsController,
-                    maxLines: 3,
-                  ),
-                  Center(
-                    child: SwButton(
-                      text: 'Create',
-                      fillParent: true,
-                      onPressed: () => _submit(context),
-                    ),
-                  ),
-                ],
+        child: Theme(
+          data: ThemeData(
+            primaryColor: primaryColor,
+            canvasColor: Colors.white,
+          ),
+          child: Stepper(
+            currentStep: currentStepIndex,
+            type: StepperType.horizontal,
+            steps: [
+              Step(
+                state: _setStepState(this.currentStepIndex, 0),
+                isActive: _setStepActiveValue(this.currentStepIndex, 0),
+                title: Text('Trip Details'),
+                content: _buildStepperContent(_buildTripDetails()),
               ),
-            )),
+              Step(
+                state: _setStepState(this.currentStepIndex, 1),
+                isActive: _setStepActiveValue(this.currentStepIndex, 1),
+                title: Text('Packet Details'),
+                content: _buildStepperContent(_buildPacketDetails()),
+              ),
+            ],
+            onStepContinue: () {
+              if (this.currentStepIndex < this.stepperLength - 1 &&
+                  !_formKey.currentState.validate()) {
+                return;
+              }
+              setState(() {
+                if (this.currentStepIndex < this.stepperLength - 1) {
+                  this.currentStepIndex = currentStepIndex + 1;
+                } else {
+                  _submit(context);
+                }
+              });
+            },
+            onStepCancel: () {
+              setState(() {
+                if (this.currentStepIndex > 0) {
+                  this.currentStepIndex = currentStepIndex - 1;
+                }
+              });
+            },
+            controlsBuilder: (
+              BuildContext context, {
+              VoidCallback onStepContinue,
+              VoidCallback onStepCancel,
+            }) {
+              return Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  SwButton(
+                    color: primaryColor,
+                    text: 'Back',
+                    onPressed: onStepCancel,
+                  ),
+                  SwButton(
+                    color: primaryColor,
+                    text: 'Next',
+                    onPressed: onStepContinue,
+                  )
+                ],
+              );
+            },
+          ),
+        ),
       ),
     );
   }
