@@ -10,12 +10,10 @@ import 'package:swingo/src/models/packet_size.dart';
 import 'package:swingo/src/components/sw_select.dart';
 import 'package:swingo/src/components/sw_datepicker.dart';
 import 'package:swingo/src/components/sw_formfield.dart';
-import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/services/option.dart';
 import 'package:swingo/src/services/order.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
-import 'package:swingo/src/utils/sliders.dart';
 
 class CreateOrderForm {
   //todo: backenddeki fieldlar ile senkron olmalı.
@@ -144,10 +142,10 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
   }
 
   _onRequestSuccess(BuildContext context) {
-    return (responseData) =>
-        Navigator.of(context).pushReplacement(SlideRightRoute(
-          page: Builder(builder: (BuildContext newContext) => MyOrders()),
-        ));
+    return (responseData) {
+      int nextNavBarIndex = 1; // My Orders Index
+      Navigator.of(context).pop(nextNavBarIndex);
+    };
   }
 
   _onSearchChanged(BuildContext context, String searchingText) async {
@@ -302,17 +300,17 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
               ),
             ],
             onStepContinue: () {
-              if (this.currentStepIndex < this.stepperLength - 1 &&
-                  !_formKey.currentState.validate()) {
-                return;
-              }
-              setState(() {
-                if (this.currentStepIndex < this.stepperLength - 1) {
-                  this.currentStepIndex = currentStepIndex + 1;
+              if (this.currentStepIndex < this.stepperLength - 1) {
+                if (!_formKey.currentState.validate()) {
+                  return;
                 } else {
-                  _submit(context);
+                  setState(() {
+                    this.currentStepIndex = currentStepIndex + 1;
+                  });
                 }
-              });
+              } else {
+                _submit(context);
+              }
             },
             onStepCancel: () {
               setState(() {

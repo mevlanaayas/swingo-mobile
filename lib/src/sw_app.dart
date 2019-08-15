@@ -51,29 +51,43 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
     if (_currentNavBarIndex == index) return;
 
     final userProvider = Provider.of<UserStatus>(context);
-    if(!userProvider.isLoggedIn && index != 0){
+    if (!userProvider.isLoggedIn && index != 0) {
       await Navigator.of(context).pushNamed('/route');
-      if(userProvider.isLoggedIn){
+      if (userProvider.isLoggedIn) {
         setState(() {
           _currentNavBarIndex = index;
         });
       }
-    } else{
+    } else {
       setState(() {
         _currentNavBarIndex = index;
       });
     }
   }
 
-  void _navigateToCreateOrders(int index) {
+  void _navigateToCreateOrders(int index) async {
     final userProvider = Provider.of<UserStatus>(context);
     print(!userProvider.isLoggedIn);
+    int nextNavBarIndex = null;
     if (!userProvider.isLoggedIn) {
       Navigator.of(context).pushNamed('/route');
     } else if (index == 0) {
-      Navigator.of(context).pushNamed('/create-send-order');
+      nextNavBarIndex =
+          await Navigator.of(context).pushNamed<dynamic>('/create-send-order');
     } else if (index == 1) {
-      Navigator.of(context).pushNamed('/create-carry-order');
+      nextNavBarIndex =
+          await Navigator.of(context).pushNamed<dynamic>('/create-carry-order');
+    }
+
+    if (nextNavBarIndex != null) {
+      if (this._currentNavBarIndex == 1) {
+        this._updateNavBarIndex(1);
+      } else {
+        // fixme: Force reload Şu an ki yöntem çakallık üzerine. Düzeltmek lazım.
+        this._updateNavBarIndex(3);
+        this._updateNavBarIndex(1);
+      }
+      // Update
     }
   }
 
@@ -195,8 +209,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
     ).animate(_fabAnimationController);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: primaryColor, // status bar color
-        statusBarIconBrightness: Brightness.light
-    ));
+        statusBarIconBrightness: Brightness.light));
 
     return Scaffold(
       extendBody: true,
