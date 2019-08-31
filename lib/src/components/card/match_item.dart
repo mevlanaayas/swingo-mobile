@@ -3,9 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/pages/profile/base.dart';
+import 'package:swingo/src/pages/profile/chat.dart';
 import 'package:swingo/src/pages/profile/match_details.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
+import 'package:swingo/src/utils/constans.dart';
 import 'package:swingo/src/utils/sliders.dart';
 
 class MatchItem extends StatefulWidget {
@@ -26,7 +29,7 @@ class _MatchItemState extends State<MatchItem> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                widget.item.purchaser.username == username
+                widget.item.sender.username == username
                     ? const Icon(
                         FontAwesomeIcons.moneyBillWave,
                         color: secondaryColor,
@@ -40,7 +43,7 @@ class _MatchItemState extends State<MatchItem> {
                 const SizedBox(
                   width: 5.0,
                 ),
-                widget.item.purchaser.username == username
+                widget.item.sender.username == username
                     ? const Text(
                         "PURCHASING",
                         style: itemBodyDetailContentStyle,
@@ -65,7 +68,7 @@ class _MatchItemState extends State<MatchItem> {
         Row(
           children: <Widget>[
             Text(
-              widget.item.fromAddress,
+              widget.item.order.from_city,
               style: itemBodyDetailContentStyle,
             ),
           ],
@@ -74,7 +77,7 @@ class _MatchItemState extends State<MatchItem> {
         Row(
           children: <Widget>[
             Text(
-              widget.item.toAddress,
+              widget.item.order.to_city,
               style: itemBodyDetailContentStyle,
             ),
           ],
@@ -126,11 +129,46 @@ class _MatchItemState extends State<MatchItem> {
     );
   }
 
+  _redirectToChat(BuildContext context, ChatRoom chatRoom, String status,
+      String userType, int matchId, String chattedUsername) {
+    final userProvider = Provider.of<UserStatus>(context);
+
+    Navigator.of(context).push(
+      SlideRightRoute(
+        page: Chat(
+          chatRoom: chatRoom,
+          username: userProvider.currentUser.username,
+          status: status,
+          userType: userType,
+          matchId: matchId,
+          chattedUsername: chattedUsername,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserStatus>(context);
+    final chatRoom = ChatRoom(
+      // TODO: chatroom mantığı değişti modeli fixlemek gerek
+      id: widget.item.chatRoomId,
+      firstUser: '',
+      secondUser: '',
+      bidId: null,
+    );
+    final matchId = widget.item.id;
+    final String chattedUsername =
+        widget.item.sender.username != userProvider.currentUser.username
+            ? widget.item.sender.username
+            : widget.item.carrier.username;
+    String userType = ORDER_OWNER_TYPES['CARRIER'];
+    if (widget.item.sender.username == userProvider.currentUser.username) {
+      userType = ORDER_OWNER_TYPES['SENDER'];
+    }
+
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 5),
+      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 2.5, top: 2.5),
       child: Container(
         decoration: CardItemDecoration(),
         child: Material(
@@ -140,7 +178,8 @@ class _MatchItemState extends State<MatchItem> {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
-            onTap: () => _handleTap(context, widget.item),
+            onTap: () => _redirectToChat(context, chatRoom, widget.item.status,
+                userType, matchId, chattedUsername),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Column(

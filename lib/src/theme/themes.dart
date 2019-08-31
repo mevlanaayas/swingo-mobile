@@ -3,6 +3,21 @@ import 'package:swingo/src/theme/style.dart';
 
 final ThemeData datePickerTheme = _buildDatePickerTheme();
 
+ThemeData _buildDatePickerTheme(){
+  final ThemeData base = ThemeData.light();
+  return ThemeData(
+    primaryColor: primaryColor,
+    accentColor: primaryColor,
+    textTheme: base.textTheme.copyWith(
+      subhead: dpYearStyle,
+      body1: dpItemStyle,
+      body2: dpSelectedItemStyle,
+    ),
+    primaryTextTheme: _buildTextTheme(base.primaryTextTheme),
+    accentTextTheme: _buildTextTheme(base.accentTextTheme),
+  );
+}
+/*
 ThemeData _buildDatePickerTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
@@ -38,7 +53,7 @@ ThemeData _buildDatePickerTheme() {
     ),
   );
 }
-
+*/
 TextTheme _buildTextTheme(TextTheme base) {
   return base.copyWith(
     display1: dpDayStyle,

@@ -5,6 +5,7 @@ import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/services/authentication.dart';
 import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/services/client.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -33,19 +34,22 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
   _onSingInRequestSuccess(BuildContext context) {
     return (responseData) {
       final userProvider = Provider.of<UserStatus>(context);
-      userProvider.signin(responseData['key']);
-      AuthenticationService.auth(
+      userProvider.signin(responseData['access']);
+      ClientService.get(
         context,
-        onSuccess: _onAuthRequestSuccess(context),
-        onError: _onAuthRequestFailed(context),
+        onSuccess: _onGetClientSuccess(context),
+        onError: _onGetClientRequestFailed(context),
       );
     };
   }
 
-  _onAuthRequestSuccess(BuildContext context) {
+  _onGetClientSuccess(BuildContext context) {
     return (responseData) {
       final userProvider = Provider.of<UserStatus>(context);
-      userProvider.auth(responseData['pk'], responseData['username']);
+      final user = responseData['results'][0];
+      final int userId = user['id'];
+      final String username = user['username'];
+      userProvider.auth(userId, username);
       Navigator.popUntil(context, (Route<dynamic> route) {
         bool shouldPop = false;
         if (route.settings.name != '/signin' &&
@@ -58,7 +62,7 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
     };
   }
 
-  _onAuthRequestFailed(BuildContext context) {
+  _onGetClientRequestFailed(BuildContext context) {
     return (responseData) {
       final userProvider = Provider.of<UserStatus>(context);
       userProvider.signout();

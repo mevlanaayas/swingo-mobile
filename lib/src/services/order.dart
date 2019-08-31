@@ -7,14 +7,14 @@ import 'package:swingo/src/classes/SwNetwork.dart';
 import 'package:swingo/src/models/order.dart';
 
 abstract class OrderService extends SwNetwork {
-  static Future<http.Response> listAll(BuildContext context,
+  static listMySendOrders(BuildContext context,
       {int page, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
-              '$swBaseUrl/dashboard/',
+              '$swBaseUrl/my_orders/send',
               headers: {
                 "Content-type": "application/json",
                 "Authorization": 'Token ${userProvider.token}'
@@ -25,13 +25,31 @@ abstract class OrderService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> listSenders(BuildContext context,
+  static listMyCarryOrders(BuildContext context,
+      {int page, onError, onSuccess}) async {
+    final userProvider = Provider.of<UserStatus>(context);
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final response = await SwNetwork.sendRequest(
+        context,
+            () => http.get(
+          '$swBaseUrl/my_orders/carry',
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": 'Token ${userProvider.token}'
+          },
+        ));
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
+
+  static listSenders(BuildContext context,
       {int page, onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
-              '$swBaseUrl/transceiver_order/?page=$page',
+              '$swBaseUrl/orders/send/?page=$page',
               headers: {"Content-type": "application/json"},
             ));
 
@@ -39,13 +57,13 @@ abstract class OrderService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> listCarriers(BuildContext context,
+  static listCarriers(BuildContext context,
       {int page, onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
       () => http.get(
-            '${swBaseUrl}/transporter_order/?page=$page',
+            '${swBaseUrl}/orders/carry/?page=$page',
             headers: {"Content-type": "application/json"},
           ),
     );
@@ -54,7 +72,7 @@ abstract class OrderService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> createSender(BuildContext context,
+  static createSender(BuildContext context,
       {from_city,
       from_date,
       to_city,
@@ -69,7 +87,7 @@ abstract class OrderService extends SwNetwork {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
-      () => http.post('${swBaseUrl}/transceiver_order/',
+      () => http.post('${swBaseUrl}/orders/send/',
           headers: {
             "Content-type": "application/json",
             "Authorization": 'Token ${userProvider.token}'
@@ -82,7 +100,7 @@ abstract class OrderService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> createCarrier(BuildContext context,
+  static createCarrier(BuildContext context,
       {from_city,
         from_date,
         to_city,
@@ -96,7 +114,7 @@ abstract class OrderService extends SwNetwork {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
-          () => http.post('${swBaseUrl}/transporter_order/',
+          () => http.post('${swBaseUrl}/orders/carry/',
           headers: {
             "Content-type": "application/json",
             "Authorization": 'Token ${userProvider.token}'

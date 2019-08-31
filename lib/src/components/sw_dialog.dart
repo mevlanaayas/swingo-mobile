@@ -33,8 +33,9 @@ class SwDialog extends StatelessWidget {
   Widget _buildContent(BuildContext context) {
     Widget content;
     if (this.isInputFieldActive ?? false) {
-      content = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      content = Wrap(
+        direction: Axis.horizontal, // main axis (rows or columns)
+        alignment: WrapAlignment.center,
         children: <Widget>[
           Text(
             this.contentText,
@@ -80,7 +81,7 @@ class SwDialog extends StatelessWidget {
                 onPressed: () => this.onAcceptTap(context),
                 size: width,
               )
-            : null,
+            : SizedBox(),
         SizedBox(
           width: 10,
         ),

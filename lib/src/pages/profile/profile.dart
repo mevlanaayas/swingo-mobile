@@ -1,162 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:swingo/src/components/components.dart';
-import 'package:swingo/src/pages/pages.dart';
-import 'package:swingo/src/pages/profile/base.dart';
-import 'package:swingo/src/pages/profile/matches.dart';
-import 'package:swingo/src/pages/profile/inbox.dart';
-import 'package:swingo/src/pages/profile/settings.dart';
-import 'package:swingo/src/theme/style.dart';
-import 'package:swingo/src/utils/routes.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
+import 'package:swingo/src/pages/profile/account.dart';
+import 'package:swingo/src/pages/profile/signout.dart';
+import 'package:swingo/src/utils/sliders.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileListItem {
+  final IconData leadingIcon;
+  final String title;
+  final dynamic onPressed;
+
+  ProfileListItem({this.leadingIcon, this.title, this.onPressed});
+}
+
+class ProfileScreen extends StatelessWidget with SwScreen {
+  final dynamic updateNavBarIndex;
+
+  ProfileScreen({
+    this.updateNavBarIndex,
+  });
+
+  static _navigateToAccountPage(BuildContext context) {
+    Navigator.push(
+      context,
+      SlideRightRoute(
+        page: AccountScreen(),
+      ),
+    );
+  }
+
+  static _showSignOutDialog(BuildContext context, dynamic updateNavBarIndex) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext newContext) {
+        return SignOutDialog(updateNavBarIndex: updateNavBarIndex);
+      },
+    );
+  }
+
+  List<ProfileListItem> _initProfileListItems() {
+    return <ProfileListItem>[
+      ProfileListItem(
+        leadingIcon: FontAwesomeIcons.user,
+        title: 'Account',
+        onPressed: (BuildContext context) => _navigateToAccountPage(context),
+      ),
+      ProfileListItem(
+        leadingIcon: FontAwesomeIcons.signOutAlt,
+        title: 'Sign Out',
+        onPressed: (BuildContext context) =>
+            _showSignOutDialog(context, this.updateNavBarIndex),
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    final double spaceWidth = MediaQuery.of(context).size.width / 2;
+    final profileListItems = _initProfileListItems();
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(top: 25.0),
-        height: MediaQuery.of(context).size.height,
-        constraints: const BoxConstraints(minWidth: double.infinity),
-        color: primaryColor,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top,
-              bottom: MediaQuery.of(context).padding.bottom + 33),
-          child: Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 25,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: ProfileItem(
-                      toPage: BaseProfile(child: InboxScreen(), type: "Inbox"),
-                      icon: FontAwesomeIcons.envelope,
-                      text: "Inbox",
-                      right: false,
-                    ),
-                  ),
-                  SizedBox(
-                    width: spaceWidth,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 40,
-              ),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: spaceWidth,
-                  ),
-                  Expanded(
-                    child: ProfileItem(
-                      toPage: BaseProfile(child: Matches(), type: "Matches"),
-                      icon: FontAwesomeIcons.equals,
-                      text: "Matches",
-                      right: true,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: ProfileItem(
-                      toPage: BaseProfile(child: Bids(), type: "Bids"),
-                      icon: FontAwesomeIcons.dollarSign,
-                      text: "Bids",
-                      right: false,
-                    ),
-                  ),
-                  SizedBox(
-                    width: spaceWidth,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 40,
-              ),
-              Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: spaceWidth,
-                  ),
-                  Expanded(
-                    child: ProfileItem(
-                      toPage: BaseProfile(child: Orders(), type: "MY ORDERS"),
-                      icon: Icons.content_paste,
-                      text: "Orders",
-                      right: true,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: ProfileItem(
-                      toPage: BaseProfile(
-                          child: SettingsScreen(), type: "Settings"),
-                      icon: FontAwesomeIcons.userCog,
-                      text: "Settings",
-                      right: false,
-                    ),
-                  ),
-                  SizedBox(
-                    width: spaceWidth,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  SizedBox(
-                    width: spaceWidth,
-                  ),
-                  Expanded(
-                    child: ProfileItem(
-                      icon: FontAwesomeIcons.signOutAlt,
-                      toDialog: SignOutScreen(),
-                      text: "Sign Out",
-                      right: true,
-                    ),
-                  ),
-                ],
-              ),
-              /*
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: MenuItem(
-                      toRoute: "/route",
-                      icon: FontAwesomeIcons.signOutAlt,
-                      text: "Sign Out",
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.width / 25,
-              ),
-               */
-            ],
-          ),
-        ),
+      appBar: this.buildAppbar(
+        context,
+        hideBackButton: true,
+        title: 'Profile',
+      ),
+      body: ListView.separated(
+        itemCount: profileListItems.length,
+        itemBuilder: (BuildContext context, int index) {
+          ProfileListItem profileListItem = profileListItems[index];
+          return ListTile(
+            leading: Icon(profileListItem.leadingIcon),
+            title: Text(profileListItem.title),
+            onTap: () => profileListItem.onPressed(context),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) => Container(
+              height: 0,
+              child: Divider(),
+            ),
       ),
     );
   }

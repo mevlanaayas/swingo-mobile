@@ -245,6 +245,12 @@ const TextStyle messageWhiteTextStyle = TextStyle(
   color: whiteColor,
 );
 
+const TextStyle messageBlackTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 16,
+  color: blackColor,
+);
+
 const TextStyle disabledColorTextStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 12,
@@ -270,13 +276,13 @@ Map<Part, String> skillFlareIcon = {
 const TextStyle dpDayStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 20,
-  color: primaryColor,
+  color: whiteColor,
 );
 
 const TextStyle dpYearStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 24,
-  color: primaryColor,
+  fontSize: 16,
+  color: blackColor,
 );
 
 const TextStyle dpDayHeadersStyle = TextStyle(

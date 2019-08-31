@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/components/sw_navbar.dart';
 import 'package:swingo/src/components/sw_button.dart';
+import 'package:swingo/src/pages/profile/matches.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
 import 'package:swingo/src/ankara/general.dart';
@@ -41,28 +42,52 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
         status == AnimationStatus.forward;
   }
 
-  void _onFloatingActionButtonPressed() {
+  void _onCreateButtonPressed() {
     _fabAnimationController.fling(
         velocity: _isCreateOptionsActive ? -swFlingVelocity : swFlingVelocity);
   }
 
-  void _updateNavBarIndex(int index) {
+  void _updateNavBarIndex(int index) async {
     if (_currentNavBarIndex == index) return;
 
-    setState(() {
-      _currentNavBarIndex = index;
-    });
+    final userProvider = Provider.of<UserStatus>(context);
+    if (!userProvider.isLoggedIn && index != 0) {
+      await Navigator.of(context).pushNamed('/route');
+      if (userProvider.isLoggedIn) {
+        setState(() {
+          _currentNavBarIndex = index;
+        });
+      }
+    } else {
+      setState(() {
+        _currentNavBarIndex = index;
+      });
+    }
   }
 
-  void _navigateToCreateOrders(int index) {
+  void _navigateToCreateOrders(int index) async {
     final userProvider = Provider.of<UserStatus>(context);
     print(!userProvider.isLoggedIn);
-    if(!userProvider.isLoggedIn){
+    int nextNavBarIndex = null;
+    if (!userProvider.isLoggedIn) {
       Navigator.of(context).pushNamed('/route');
     } else if (index == 0) {
-      Navigator.of(context).pushNamed('/create-send-order');
+      nextNavBarIndex =
+          await Navigator.of(context).pushNamed<dynamic>('/create-send-order');
     } else if (index == 1) {
-      Navigator.of(context).pushNamed('/create-carry-order');
+      nextNavBarIndex =
+          await Navigator.of(context).pushNamed<dynamic>('/create-carry-order');
+    }
+
+    if (nextNavBarIndex != null) {
+      if (this._currentNavBarIndex == 1) {
+        this._updateNavBarIndex(1);
+      } else {
+        // fixme: Force reload Şu an ki yöntem çakallık üzerine. Düzeltmek lazım.
+        this._updateNavBarIndex(3);
+        this._updateNavBarIndex(1);
+      }
+      // Update
     }
   }
 
@@ -105,7 +130,18 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
           iconData: Icons.home,
           text: 'Home',
         ),
-        NavBarItem(iconData: Icons.account_circle, text: 'Profile'),
+        NavBarItem(
+          iconData: Icons.format_list_numbered,
+          text: 'My Orders',
+        ),
+        NavBarItem(
+          iconData: Icons.playlist_add_check,
+          text: 'Matches',
+        ),
+        NavBarItem(
+          iconData: Icons.account_circle,
+          text: 'Profile',
+        ),
       ],
     );
   }
@@ -118,29 +154,8 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
           size: 30,
           icon: AnimatedIcons.add_event,
           progress: _fabAnimationController.view),
-      onPressed: _onFloatingActionButtonPressed,
+      onPressed: _onCreateButtonPressed,
     );
-  }
-
-  Widget _buildStack(Animation fadeAnimation) {
-    Widget page;
-    Widget stack;
-
-    switch (_currentNavBarIndex) {
-      case 0:
-        {
-          page = HomePage();
-        }
-        break;
-      case 1:
-        {
-          page = ProfileScreen();
-        }
-        break;
-    }
-    stack = _buildStackContents(page, fadeAnimation, true);
-
-    return stack;
   }
 
   Widget _buildStackContents(
@@ -163,13 +178,38 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
     return stack;
   }
 
+  Widget _buildStack(Animation fadeAnimation) {
+    Widget page;
+    Widget stack;
+
+    switch (_currentNavBarIndex) {
+      case 0:
+        page = HomeScreen();
+        break;
+      case 1:
+        page = MyOrdersScreen();
+        break;
+      case 2:
+        page = MatchesScreen();
+        break;
+      case 3:
+        page = ProfileScreen(updateNavBarIndex: this._updateNavBarIndex);
+        break;
+    }
+    stack = _buildStackContents(page, fadeAnimation, true);
+
+    return stack;
+  }
+
   @override
   Widget build(BuildContext context) {
     Animation _fadeAnimation = Tween(
       begin: 0.0,
       end: 1.0,
     ).animate(_fabAnimationController);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: primaryColor, // status bar color
+        statusBarIconBrightness: Brightness.light));
 
     return Scaffold(
       extendBody: true,

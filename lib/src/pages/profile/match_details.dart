@@ -37,7 +37,7 @@ class MatchDetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              item.fromAddress,
+              item.order.from_city,
               style: itemDetailCityStyle,
             ),
           ],
@@ -63,7 +63,7 @@ class MatchDetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              item.toAddress,
+              item.order.to_city,
               style: itemDetailCityStyle,
             ),
           ],
@@ -228,14 +228,14 @@ class MatchDetailScreen extends StatelessWidget {
                                     const SizedBox(
                                       width: 5.0,
                                     ),
-                                    item.purchaser.username ==
+                                    item.sender.username ==
                                             userProvider.currentUser.username
                                         ? Text(
                                             item.carrier.username,
                                             style: itemUsernameContentStyle,
                                           )
                                         : Text(
-                                            item.purchaser.username,
+                                            item.sender.username,
                                             style: itemUsernameContentStyle,
                                           ),
                                   ],

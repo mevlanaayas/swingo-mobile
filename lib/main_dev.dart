@@ -33,14 +33,8 @@ class MainApp extends StatelessWidget {
             '/route': (context) => WelcomeScreen(),
             '/signin': (context) => SignInScreen(),
             '/signup': (context) => SignUpScreen(),
-            '/create-send-order': (context) => BaseProfile(
-              child: CreateOrders("Send"),
-              type: "SEND",
-            ),
-            '/create-carry-order': (context) => BaseProfile(
-              child: CreateOrders("Carry"),
-              type: "CARRY",
-            ),
+            '/create-send-order': (context) => CreateOrders("Send"),
+            '/create-carry-order': (context) => CreateOrders("Carry"),
           },
         ),
       ),

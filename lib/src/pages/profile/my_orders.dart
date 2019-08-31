@@ -1,52 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/services/order.dart';
 
-class Orders extends StatelessWidget {
+class MyOrdersScreen extends StatelessWidget with SwScreen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: OrdersScreen(),
+      appBar: this.buildAppbar(
+        context,
+        hideBackButton: true,
+        title: 'My Orders',
+      ),
+      body: MyOrders(),
     );
   }
 }
 
-class OrdersScreen extends StatefulWidget {
+class MyOrders extends StatefulWidget {
   @override
-  _OrdersScreenState createState() => _OrdersScreenState();
+  _MyOrdersState createState() => _MyOrdersState();
 }
 
-class _OrdersScreenState extends State<OrdersScreen> {
-  List<Order> orders;
-
+class _MyOrdersState extends State<MyOrders> {
+  List<Order> orders = [];
+  List<Order> sendOrders = [];
+  List<Order> carryOrders = [];
 
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _listOrders(context);
+      _listSendOrders(context);
+      _listCarryOrders(context);
     });
     super.initState();
   }
 
-  void _listOrders(BuildContext context) async {
-    OrderService.listAll(
+  void _listSendOrders(BuildContext context) async {
+    OrderService.listMySendOrders(
       context,
-      onSuccess: _onRequestSuccess(context),
+      onSuccess: _onListSendOrderRequestSuccess(context),
     );
   }
 
-  _onRequestSuccess(BuildContext context) {
+  void _listCarryOrders(BuildContext context) async {
+    OrderService.listMyCarryOrders(
+      context,
+      onSuccess: _onListCarryOrderRequestSuccess(context),
+    );
+  }
+
+  _onListSendOrderRequestSuccess(BuildContext context) {
     return (responseData) async {
-      final carryOrderJsonArray = responseData['carry_orders'];
-      final sendOrderJsonArray = responseData['send_orders'];
+      final sendOrderJsonArray = responseData['results'];
       setState(() {
-        orders = List<Order>.from(
-        carryOrderJsonArray.map((orderJson) => Order.fromJson(orderJson)))
+        sendOrders = List<Order>.from(sendOrders)
         ..addAll(List<Order>.from(sendOrderJsonArray
             .map((orderJson) => Order.fromJson(orderJson))));
+      });
+    };
+  }
+
+  _onListCarryOrderRequestSuccess(BuildContext context) {
+    return (responseData) async {
+      final carryOrderJsonArray = responseData['results'];
+      setState(() {
+        carryOrders = List<Order>.from(carryOrders)
+          ..addAll(List<Order>.from(carryOrderJsonArray
+              .map((orderJson) => Order.fromJson(orderJson))));
       });
     };
   }
@@ -66,6 +90,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    orders = new List.from(sendOrders)..addAll(carryOrders);
     var slivers = <Widget>[];
     const scale = 1.0;
     _buildSection(slivers, scale, orders);

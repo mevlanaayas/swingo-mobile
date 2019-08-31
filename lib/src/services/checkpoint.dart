@@ -6,7 +6,7 @@ import 'package:swingo/src/ankara/general.dart';
 import 'package:swingo/src/classes/SwNetwork.dart';
 
 abstract class CheckpointService extends SwNetwork {
-  static Future<http.Response> callFunction(BuildContext context,
+  static callFunction(BuildContext context,
       {onError, onSuccess, matchId, url}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final userProvider = Provider.of<UserStatus>(context);
@@ -24,7 +24,7 @@ abstract class CheckpointService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> callFunctionWithParams(BuildContext context,
+  static callFunctionWithParams(BuildContext context,
       {onError, onSuccess, matchId, url}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final userProvider = Provider.of<UserStatus>(context);
@@ -42,7 +42,7 @@ abstract class CheckpointService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
-  static Future<http.Response> get(BuildContext context,
+  static get(BuildContext context,
       {onError, onSuccess, matchId, url}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final userProvider = Provider.of<UserStatus>(context);

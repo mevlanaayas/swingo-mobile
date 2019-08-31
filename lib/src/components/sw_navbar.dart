@@ -24,7 +24,7 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   Widget _buildTabItem(
       {NavBarItem item, int index, ValueChanged<int> onPressed}) {
-    Color color = widget.index == index ? blackColor : blackColor400;
+    Color color = widget.index == index ? primaryColor : Colors.grey;
     return Expanded(
       child: SizedBox(
         height: 56,
