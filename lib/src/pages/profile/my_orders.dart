@@ -27,6 +27,8 @@ class MyOrders extends StatefulWidget {
 
 class _MyOrdersState extends State<MyOrders> {
   List<Order> orders = [];
+  List<Order> sendOrders = [];
+  List<Order> carryOrders = [];
 
   @override
   void initState() {
@@ -53,9 +55,9 @@ class _MyOrdersState extends State<MyOrders> {
 
   _onListSendOrderRequestSuccess(BuildContext context) {
     return (responseData) async {
-      final sendOrderJsonArray = responseData['send_orders'];
+      final sendOrderJsonArray = responseData['results'];
       setState(() {
-        orders = List<Order>.from(orders)
+        sendOrders = List<Order>.from(sendOrders)
         ..addAll(List<Order>.from(sendOrderJsonArray
             .map((orderJson) => Order.fromJson(orderJson))));
       });
@@ -64,9 +66,9 @@ class _MyOrdersState extends State<MyOrders> {
 
   _onListCarryOrderRequestSuccess(BuildContext context) {
     return (responseData) async {
-      final carryOrderJsonArray = responseData['carry_orders'];
+      final carryOrderJsonArray = responseData['results'];
       setState(() {
-        orders = List<Order>.from(orders)
+        carryOrders = List<Order>.from(carryOrders)
           ..addAll(List<Order>.from(carryOrderJsonArray
               .map((orderJson) => Order.fromJson(orderJson))));
       });
@@ -88,6 +90,7 @@ class _MyOrdersState extends State<MyOrders> {
 
   @override
   Widget build(BuildContext context) {
+    orders = new List.from(sendOrders)..addAll(carryOrders);
     var slivers = <Widget>[];
     const scale = 1.0;
     _buildSection(slivers, scale, orders);
