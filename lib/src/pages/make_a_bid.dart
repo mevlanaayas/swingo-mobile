@@ -82,7 +82,7 @@ class _MakeABidState extends State<MakeABid> {
     Navigator.of(context).pushReplacement(
       SlideTopRoute(
         page: BaseProfile(
-            child: ChatPage(
+            child: Chat(
               chatRoom: chatRoom,
               username: chatRoom.secondUser,
             ),

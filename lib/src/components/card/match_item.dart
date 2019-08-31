@@ -8,6 +8,7 @@ import 'package:swingo/src/pages/profile/chat.dart';
 import 'package:swingo/src/pages/profile/match_details.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
+import 'package:swingo/src/utils/constans.dart';
 import 'package:swingo/src/utils/sliders.dart';
 
 class MatchItem extends StatefulWidget {
@@ -128,14 +129,19 @@ class _MatchItemState extends State<MatchItem> {
     );
   }
 
-  _redirectToChat(BuildContext context, ChatRoom chatRoom) {
+  _redirectToChat(BuildContext context, ChatRoom chatRoom, String status,
+      String userType, int matchId, String chattedUsername) {
     final userProvider = Provider.of<UserStatus>(context);
 
     Navigator.of(context).push(
       SlideRightRoute(
-        page: ChatPage(
+        page: Chat(
           chatRoom: chatRoom,
           username: userProvider.currentUser.username,
+          status: status,
+          userType: userType,
+          matchId: matchId,
+          chattedUsername: chattedUsername,
         ),
       ),
     );
@@ -151,6 +157,15 @@ class _MatchItemState extends State<MatchItem> {
       secondUser: '',
       bidId: null,
     );
+    final matchId = widget.item.id;
+    final String chattedUsername =
+        widget.item.sender.username != userProvider.currentUser.username
+            ? widget.item.sender.username
+            : widget.item.carrier.username;
+    String userType = ORDER_OWNER_TYPES['CARRIER'];
+    if (widget.item.sender.username == userProvider.currentUser.username) {
+      userType = ORDER_OWNER_TYPES['SENDER'];
+    }
 
     return Padding(
       padding: const EdgeInsets.only(left: 3, right: 3, bottom: 2.5, top: 2.5),
@@ -163,7 +178,8 @@ class _MatchItemState extends State<MatchItem> {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
-            onTap: () => _redirectToChat(context, chatRoom),
+            onTap: () => _redirectToChat(context, chatRoom, widget.item.status,
+                userType, matchId, chattedUsername),
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Column(

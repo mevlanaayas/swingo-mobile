@@ -11,3 +11,18 @@ List<PacketSize> PACKET_SIZES = [
 ];
 
 Map<String, String> ORDER_OWNER_TYPES = {"CARRIER": "CARRIER", "SENDER": "SENDER"};
+
+Map<String, String> MATCH_STATUSES = {
+  "INITIATED": "Initiated",
+  "CARRIER_APPROVED": "Carrier Approved",
+  "REJECTED": "Rejected",
+  "WAITING_FOR_PAYMENT": "Waiting For Payment",
+  "PAYMENT_PASSED_FOR_ON_ON_DELIVERY": "Payment Passed for On Delivery",
+  "PAYMENT_DONE": "Payment Done",
+  "BOX_CHECK_FAILED": "Box Check Failed",
+  "BOX_CHECK_PASSED": "Box Check Passed",
+  "PACKET_TAKING_CODE_SENT": "Packet Taking Code Sent",
+  "ON_WAY": "On Way",
+  "PACKET_DELIVERY_CODE_SENT": "Packet Delivery Code Sent",
+  "FINISHED": "Finished",
+};
