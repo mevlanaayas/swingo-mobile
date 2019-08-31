@@ -314,3 +314,25 @@ const TextStyle dpDisabledItemStyle = TextStyle(
   fontSize: 12,
   color: blackColor400,
 );
+
+const BorderRadiusGeometry cardBorderRadius = BorderRadius.all(
+  Radius.circular(9),
+);
+
+const double swPadding = 15.0;
+
+// Kartların kendi aralarındaki konumlandırılması
+const EdgeInsets cardMargin = EdgeInsets.only(
+  left: swPadding,
+  right: swPadding,
+  top: swPadding / 2,
+  bottom: swPadding / 2,
+);
+
+// Kartları oluşturan listenin ana ekrana göre konumlandırılması
+const EdgeInsets cardListMargin = EdgeInsets.only(
+  top: swPadding / 2,
+  bottom: swPadding / 2,
+);
+
+const EdgeInsets cardPadding = EdgeInsets.all(swPadding);

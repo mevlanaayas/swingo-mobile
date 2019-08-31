@@ -123,7 +123,14 @@ class _ListScreenState extends State<ListScreen> {
                 )
               ],
             ),*/
-            Expanded(child: CustomScrollView(slivers: slivers)),
+            Expanded(
+              child: Padding(
+                padding: cardListMargin,
+                child: CustomScrollView(
+                  slivers: slivers,
+                ),
+              ),
+            ),
           ],
         ),
       ),

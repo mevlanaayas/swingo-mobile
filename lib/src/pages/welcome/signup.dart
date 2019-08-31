@@ -101,7 +101,10 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
     return SwPage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: this.buildAppbar(context),
+        appBar: this.buildAppbar(
+          context,
+          title: 'Register',
+        ),
         body: new Builder(
             builder: (BuildContext scaffoldContext) => _buildBody(
                   scaffoldContext,

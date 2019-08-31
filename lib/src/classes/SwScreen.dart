@@ -10,7 +10,7 @@ abstract class SwScreen {
     Widget titleWidget,
   }) {
     return AppBar(
-      elevation: 0,
+      elevation: 1,
       backgroundColor: Colors.white,
       leading: hideBackButton
           ? null
@@ -24,6 +24,7 @@ abstract class SwScreen {
                 color: primaryColor,
               ),
             ),
+      centerTitle: true,
       title: titleWidget != null
           ? titleWidget
           : Text(

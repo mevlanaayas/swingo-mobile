@@ -113,7 +113,10 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
     return SwPage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: this.buildAppbar(context),
+        appBar: this.buildAppbar(
+          context,
+          title: 'Sign In',
+        ),
         body: new Builder(
             builder: (BuildContext scaffoldContext) => _buildBody(
                   scaffoldContext,
