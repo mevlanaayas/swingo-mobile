@@ -158,15 +158,21 @@ const TextStyle packageDetailHeaderStyle = TextStyle(
 
 const TextStyle accountDetailHeaderStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 18,
+  fontSize: 16,
   color: Colors.black,
   fontWeight: FontWeight.bold,
 );
 
 const TextStyle accountNonEditableDetailStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 18,
+  fontSize: 16,
   color: Colors.black54,
+);
+
+const TextStyle profileListItemStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 16,
+  color: Colors.black,
 );
 
 const TextStyle itemMenuTabStyle = TextStyle(
@@ -363,3 +369,5 @@ const EdgeInsets cardListMargin = EdgeInsets.only(
 const EdgeInsets cardPadding = EdgeInsets.all(swPadding);
 
 const EdgeInsets bodyMargin = EdgeInsets.all(swPadding);
+
+const EdgeInsets dividerPadding = EdgeInsets.symmetric(horizontal: swPadding);

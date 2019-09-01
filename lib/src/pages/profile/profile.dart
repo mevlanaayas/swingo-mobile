@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/pages/profile/account.dart';
 import 'package:swingo/src/pages/profile/signout.dart';
+import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/sliders.dart';
 
 class ProfileListItem {
@@ -58,6 +59,7 @@ class ProfileScreen extends StatelessWidget with SwScreen {
   Widget build(BuildContext context) {
     final profileListItems = _initProfileListItems();
     return Scaffold(
+      backgroundColor: primaryColor50,
       appBar: this.buildAppbar(
         context,
         hideBackButton: true,
@@ -67,15 +69,33 @@ class ProfileScreen extends StatelessWidget with SwScreen {
         itemCount: profileListItems.length,
         itemBuilder: (BuildContext context, int index) {
           ProfileListItem profileListItem = profileListItems[index];
-          return ListTile(
-            leading: Icon(profileListItem.leadingIcon),
-            title: Text(profileListItem.title),
-            onTap: () => profileListItem.onPressed(context),
+          return Container(
+            color: Colors.white,
+            child: ListTile(
+              leading: Icon(
+                profileListItem.leadingIcon,
+                color: primaryColor,
+              ),
+              trailing: Icon(
+                FontAwesomeIcons.chevronRight,
+                color: primaryColor,
+              ),
+              title: Text(
+                profileListItem.title,
+                style: profileListItemStyle,
+              ),
+              onTap: () => profileListItem.onPressed(context),
+            ),
           );
         },
         separatorBuilder: (BuildContext context, int index) => Container(
               height: 0,
-              child: Divider(),
+              child: Padding(
+                padding: dividerPadding,
+                child: Divider(
+                  color: primaryColor,
+                ),
+              ),
             ),
       ),
     );
