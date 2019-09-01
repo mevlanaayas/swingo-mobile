@@ -132,6 +132,12 @@ const TextStyle itemDetailHeadingStyle = TextStyle(
   color: secondaryColor,
 );
 
+const TextStyle blackItemDetailHeadingStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 22,
+  color: Colors.black,
+);
+
 const TextStyle itemDetailCityStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 21,
@@ -142,6 +148,12 @@ const TextStyle packageDetailStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 18,
   color: secondaryColor,
+);
+
+const TextStyle packageDetailHeaderStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 18,
+  color: Colors.black54,
 );
 
 const TextStyle itemMenuTabStyle = TextStyle(
@@ -336,3 +348,5 @@ const EdgeInsets cardListMargin = EdgeInsets.only(
 );
 
 const EdgeInsets cardPadding = EdgeInsets.all(swPadding);
+
+const EdgeInsets bodyMargin = EdgeInsets.all(swPadding);
