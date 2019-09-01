@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:swingo/src/components/sw_button.dart';
+import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class SwDialog extends StatelessWidget {
@@ -32,17 +33,17 @@ class SwDialog extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     Widget content;
+    Widget textContent = Text(
+      this.contentText,
+      style: dialogContentTextStyle,
+    );
     if (this.isInputFieldActive ?? false) {
       content = Wrap(
         direction: Axis.horizontal, // main axis (rows or columns)
         alignment: WrapAlignment.center,
         children: <Widget>[
-          Text(
-            this.contentText,
-            style: TextStyle(color: Colors.white, fontSize: 18),
-          ),
+          textContent,
           Container(
-            width: 75.0,
             child: new TextField(
               controller: this.textEditingController,
               keyboardType: TextInputType.number,
@@ -56,71 +57,66 @@ class SwDialog extends StatelessWidget {
         ],
       );
     } else {
-      content = Text(
-        this.contentText,
-        style: TextStyle(color: Colors.white, fontSize: 18),
-      );
+      content = textContent;
     }
 
-    return Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: content,
-      ),
-    );
+    return content;
   }
 
-  Widget _buildButtons(BuildContext context, double width) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        this.isAcceptButtonActive != null && this.isAcceptButtonActive == true
-            ? SwButton(
+  Widget _buildButtons(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: swPadding),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.only(right: swPadding / 2),
+              child: SwButton(
+                color: Colors.black12,
+                text: this.dismissButtonText ?? 'Cancel',
+                onPressed: () => this.onDismissTap != null
+                    ? this.onDismissTap(context)
+                    : _onDismissTap(context),
+                // size: width,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: EdgeInsets.only(left: swPadding / 2),
+              child: this.isAcceptButtonActive != null &&
+                  this.isAcceptButtonActive == true
+                  ? SwButton(
                 color: primaryColor,
                 text: this.acceptButtonText,
                 onPressed: () => this.onAcceptTap(context),
-                size: width,
+                // size: width,
               )
-            : SizedBox(),
-        SizedBox(
-          width: 10,
-        ),
-        SwButton(
-          color: primaryColor,
-          text: this.dismissButtonText ?? 'Cancel',
-          onPressed: () => this.onDismissTap != null
-              ? this.onDismissTap(context)
-              : _onDismissTap(context),
-          size: width,
-        )
-      ],
+                  : SizedBox(),
+            ),
+          )
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: cardBorderRadius,
+      ),
+      child: Container(
+        padding: cardPadding,
+        decoration: CardItemDecoration(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[_buildContent(context), _buildButtons(context)],
         ),
-        child: Container(
-          padding: EdgeInsets.all(15.0),
-          constraints: BoxConstraints(
-            maxWidth: width / 10 * 9,
-            maxHeight: height / 10 * 3,
-          ),
-          decoration: BoxDecoration(
-            color: secondaryColor,
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Column(
-            children: <Widget>[
-              _buildContent(context),
-              _buildButtons(context, width),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }

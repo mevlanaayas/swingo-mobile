@@ -288,6 +288,12 @@ const TextStyle disabledColorTextStyle = TextStyle(
   color: disabledColor,
 );
 
+const TextStyle dialogContentTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 16,
+  color: blackColor,
+);
+
 Map<Part, Color> skillColor = {
   Part.send: const Color.fromRGBO(0, 179, 184, 1),
   Part.carry: const Color.fromRGBO(84, 114, 239, 1),
