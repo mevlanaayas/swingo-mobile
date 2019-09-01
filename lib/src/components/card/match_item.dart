@@ -168,20 +168,20 @@ class _MatchItemState extends State<MatchItem> {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 2.5, top: 2.5),
+      padding: cardMargin,
       child: Container(
         decoration: CardItemDecoration(),
         child: Material(
           elevation: 0.0,
           type: MaterialType.transparency,
-          borderRadius: const BorderRadius.all(Radius.circular(9)),
+          borderRadius: cardBorderRadius,
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
             onTap: () => _redirectToChat(context, chatRoom, widget.item.status,
                 userType, matchId, chattedUsername),
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: cardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

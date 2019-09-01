@@ -72,6 +72,7 @@ class _MatchesState extends State<Matches> {
     const scale = 1.0;
     _buildSection(slivers, scale, matches);
     return Container(
+      padding: cardListMargin,
       constraints: const BoxConstraints(minWidth: double.infinity),
       color: primaryColor50,
       child: Padding(

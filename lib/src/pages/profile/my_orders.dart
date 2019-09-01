@@ -95,6 +95,7 @@ class _MyOrdersState extends State<MyOrders> {
     const scale = 1.0;
     _buildSection(slivers, scale, orders);
     return Container(
+      padding: cardListMargin,
       constraints: const BoxConstraints(minWidth: double.infinity),
       color: primaryColor50,
       child: Padding(

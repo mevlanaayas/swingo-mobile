@@ -24,7 +24,7 @@ abstract class SwScreen {
                 color: primaryColor,
               ),
             ),
-      centerTitle: true,
+      centerTitle: titleWidget == null ? true : false,
       title: titleWidget != null
           ? titleWidget
           : Text(

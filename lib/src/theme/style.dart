@@ -156,6 +156,19 @@ const TextStyle packageDetailHeaderStyle = TextStyle(
   color: Colors.black54,
 );
 
+const TextStyle accountDetailHeaderStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 18,
+  color: Colors.black,
+  fontWeight: FontWeight.bold,
+);
+
+const TextStyle accountNonEditableDetailStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 18,
+  color: Colors.black54,
+);
+
 const TextStyle itemMenuTabStyle = TextStyle(
     fontFamily: 'MontserratRegular',
     fontSize: 15,
