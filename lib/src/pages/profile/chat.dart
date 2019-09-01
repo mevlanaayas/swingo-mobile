@@ -7,11 +7,13 @@ import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/pages/cp/checkpoint.dart';
 import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/services/match.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
+import 'package:swingo/src/utils/sliders.dart';
 
 class Chat extends StatelessWidget with SwScreen {
   final ChatRoom chatRoom;
@@ -29,9 +31,16 @@ class Chat extends StatelessWidget with SwScreen {
       this.matchId,
       this.chattedUsername});
 
-  Widget _buildTitle() {
+  _navigateToCheckpoint(BuildContext context) {
+    Navigator.push(
+      context,
+      SlideRightRoute(page: CpScaff()),
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => _navigateToCheckpoint(context),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8),
         child: Column(
@@ -60,7 +69,7 @@ class Chat extends StatelessWidget with SwScreen {
         backgroundColor: Colors.transparent,
         appBar: this.buildAppbar(
           context,
-          titleWidget: _buildTitle(),
+          titleWidget: _buildTitle(context),
         ),
         body: ChatPage(
           chatRoom: this.chatRoom,
