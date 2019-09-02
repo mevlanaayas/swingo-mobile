@@ -59,21 +59,11 @@ class _ListItemState extends State<ListItem> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    widget.item.from_city.substring(0, 3).toUpperCase(),
-                    style: itemBodyTextContentStyle,
-                  ),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Text(
-                    dateVerboseFormatter.format(widget.item.from_date),
-                    style: itemBodyDateContentStyle,
-                  )
-                ],
+            Expanded(
+              flex: 1,
+              child: Text(
+                widget.item.from_city.substring(0, 3).toUpperCase(),
+                style: itemBodyTextContentStyle,
               ),
             ),
             Icon(
@@ -81,22 +71,30 @@ class _ListItemState extends State<ListItem> {
               color: Colors.black38,
               size: 15.0,
             ),
-            Container(
-                child: Row(
-              children: <Widget>[
-                Text(
-                  widget.item.to_city.substring(0, 3).toUpperCase(),
-                  style: itemBodyTextContentStyle,
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Text(
-                  dateVerboseFormatter.format(widget.item.to_date),
-                  style: itemBodyDateContentStyle,
-                )
-              ],
-            )),
+            Expanded(
+              flex: 1,
+              child: Text(
+                widget.item.to_city.substring(0, 3).toUpperCase(),
+                style: itemBodyTextContentStyle,
+                textAlign: TextAlign.right,
+              ),
+            )
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Text(
+              dateVerboseFormatter.format(widget.item.from_date),
+              style: itemBodyDateContentStyle,
+            ),
+            Text(
+              " ~ ",
+              style: itemBodyDateContentStyle,
+            ),
+            Text(
+              dateVerboseFormatter.format(widget.item.to_date),
+              style: itemBodyDateContentStyle,
+            ),
           ],
         ),
         const SizedBox(height: 12),
