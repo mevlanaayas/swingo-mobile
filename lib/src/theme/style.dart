@@ -104,13 +104,13 @@ const TextStyle itemUsernameContentStyle = TextStyle(
 
 const TextStyle itemPriceContentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 15,
+  fontSize: 20,
   color: Colors.deepOrange,
 );
 
 const TextStyle itemBodyTextContentStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 15,
+  fontSize: 16,
   color: Colors.black,
 );
 

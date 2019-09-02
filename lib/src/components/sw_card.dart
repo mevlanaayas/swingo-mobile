@@ -62,24 +62,26 @@ class _ListItemState extends State<ListItem> {
             Expanded(
               flex: 1,
               child: Text(
-                widget.item.from_city.substring(0, 3).toUpperCase(),
-                style: itemBodyTextContentStyle,
+                widget.item.from_city,
+                style: itemDetailCityStyle,
               ),
             ),
-            Icon(
+            const Icon(
               FontAwesomeIcons.chevronRight,
-              color: Colors.black38,
-              size: 15.0,
+              color: Colors.grey,
             ),
             Expanded(
               flex: 1,
               child: Text(
-                widget.item.to_city.substring(0, 3).toUpperCase(),
-                style: itemBodyTextContentStyle,
+                widget.item.to_city,
+                style: itemDetailCityStyle,
                 textAlign: TextAlign.right,
               ),
             )
           ],
+        ),
+        SizedBox(
+          height: 12,
         ),
         Row(
           children: <Widget>[
