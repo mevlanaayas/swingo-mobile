@@ -1,3 +1,4 @@
+import 'package:swingo/src/models/match_status.dart';
 import 'package:swingo/src/models/packet_size.dart';
 
 final double swFlingVelocity = 2.0;
@@ -10,19 +11,60 @@ List<PacketSize> PACKET_SIZES = [
   PacketSize(id: "XLARGE", name: 'Xlarge'),
 ];
 
-Map<String, String> ORDER_OWNER_TYPES = {"CARRIER": "CARRIER", "SENDER": "SENDER"};
+Map<String, String> ORDER_OWNER_TYPES = {
+  "CARRIER": "CARRIER",
+  "SENDER": "SENDER"
+};
 
-Map<String, String> MATCH_STATUSES = {
-  "INITIATED": "Initiated",
-  "CARRIER_APPROVED": "Carrier Approved",
-  "REJECTED": "Rejected",
-  "WAITING_FOR_PAYMENT": "Waiting For Payment",
-  "PAYMENT_PASSED_FOR_ON_ON_DELIVERY": "Payment Passed for On Delivery",
-  "PAYMENT_DONE": "Payment Done",
-  "BOX_CHECK_FAILED": "Box Check Failed",
-  "BOX_CHECK_PASSED": "Box Check Passed",
-  "PACKET_TAKING_CODE_SENT": "Packet Taking Code Sent",
-  "ON_WAY": "On Way",
-  "PACKET_DELIVERY_CODE_SENT": "Packet Delivery Code Sent",
-  "FINISHED": "Finished",
+Map<String, MatchStatus> MATCH_STATUSES = {
+  "INITIATED": new MatchStatus(
+    status: 'Initiated',
+    senderText: 'Waiting Carrier Decision',
+    carrierText: 'Accept Offer',
+  ),
+  "CARRIER_APPROVED": new MatchStatus(
+    status: 'Carrier Approved',
+    senderText: 'Accept Offer',
+    carrierText: 'Waiting Sender Decision',
+  ),
+  "REJECTED": new MatchStatus(
+    status: 'Rejected',
+    senderText: 'Rejected',
+    carrierText: 'Rejected',
+  ),
+  "WAITING_FOR_PAYMENT": new MatchStatus(
+    status: 'Waiting For Payment',
+    senderText: 'Make Payment',
+    carrierText: 'Waiting Sender To Make Payment',
+  ),
+  "PAYMENT_PASSED_FOR_ON_ON_DELIVERY": new MatchStatus(
+      status: 'Payment Passed for On Delivery',
+      senderText: 'Waiting Carrier To Check Box',
+      carrierText: 'Accept Check Box'),
+  "PAYMENT_DONE": new MatchStatus(
+      status: 'Payment Done',
+      senderText: 'Waiting Carrier To Check Box',
+      carrierText: 'Accept Check Box'),
+  "BOX_CHECK_FAILED": new MatchStatus(
+      status: 'Box Check Failed',
+      senderText: 'Rejected',
+      carrierText: 'Rejected'),
+  "BOX_CHECK_PASSED": new MatchStatus(
+      status: 'Box Check Passed',
+      senderText: 'Waiting Carrier To Demand Safety Code',
+      carrierText: 'Demand Safety Code'),
+  "PACKET_TAKING_CODE_SENT": new MatchStatus(
+      status: 'Packet Taking Code Sent',
+      senderText: 'Share Safety Code In Your Mail',
+      carrierText: 'Enter Safety Code Given By Sender'),
+  "ON_WAY": new MatchStatus(
+      status: 'On Way',
+      senderText: 'Waiting Carrier To Demand Safety Code',
+      carrierText: 'Demand Safety Code'),
+  "PACKET_DELIVERY_CODE_SENT": new MatchStatus(
+      status: 'Packet Delivery Code Sent',
+      senderText: 'Share Safety Code In Your Mail',
+      carrierText: 'Enter Safety Code Given By Sender'),
+  "FINISHED": new MatchStatus(
+      status: 'Finished', senderText: 'Finished', carrierText: 'Finished'),
 };
