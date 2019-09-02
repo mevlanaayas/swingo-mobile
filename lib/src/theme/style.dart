@@ -294,6 +294,13 @@ const TextStyle dialogContentTextStyle = TextStyle(
   color: blackColor,
 );
 
+const TextStyle dialogInputTextStyle = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 16,
+  color: primaryColor,
+);
+
+
 Map<Part, Color> skillColor = {
   Part.send: const Color.fromRGBO(0, 179, 184, 1),
   Part.carry: const Color.fromRGBO(84, 114, 239, 1),

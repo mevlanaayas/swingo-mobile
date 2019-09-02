@@ -44,14 +44,28 @@ class SwDialog extends StatelessWidget {
         children: <Widget>[
           textContent,
           Container(
+            padding: EdgeInsets.only(
+              top: swPadding,
+            ),
             child: new TextField(
+              textAlign: TextAlign.center,
               controller: this.textEditingController,
               keyboardType: TextInputType.number,
               inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
+              decoration: new InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: disabledColor,
+                  ),
+                ),
               ),
-              style: new TextStyle(color: Colors.white, fontSize: 18),
+              cursorColor: primaryColor,
+              style: dialogInputTextStyle,
             ),
           )
         ],
@@ -88,13 +102,13 @@ class SwDialog extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(left: swPadding / 2),
               child: this.isAcceptButtonActive != null &&
-                  this.isAcceptButtonActive == true
+                      this.isAcceptButtonActive == true
                   ? SwButton(
-                color: primaryColor,
-                text: this.acceptButtonText,
-                onPressed: () => this.onAcceptTap(context),
-                noPadding: true,
-              )
+                      color: primaryColor,
+                      text: this.acceptButtonText,
+                      onPressed: () => this.onAcceptTap(context),
+                      noPadding: true,
+                    )
                   : SizedBox(),
             ),
           )

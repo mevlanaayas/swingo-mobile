@@ -82,7 +82,7 @@ class Detail extends StatelessWidget with SwScreen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomPadding: false,
       appBar: this.buildAppbar(
         context,
         // titleWidget: _buildTitle(context),
