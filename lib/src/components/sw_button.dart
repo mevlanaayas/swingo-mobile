@@ -17,19 +17,22 @@ class SwIconButton extends StatelessWidget {
 }
 
 class SwButton extends StatelessWidget {
-  const SwButton(
-      {@required this.onPressed,
-      @required this.text,
-      this.iconData,
-      this.fillParent,
-      this.color,
-      this.size});
+  const SwButton({
+    @required this.onPressed,
+    @required this.text,
+    this.iconData,
+    this.fillParent,
+    this.color,
+    this.size,
+    this.noPadding,
+  });
 
   final GestureTapCallback onPressed;
   final String text;
   final IconData iconData;
   final bool fillParent;
   final Color color;
+  final bool noPadding;
 
   // TODO: create new component as small button
   final double size;
@@ -52,11 +55,13 @@ class SwButton extends StatelessWidget {
         elevation: 1.0,
         // TODO: add color palette and theming. arrange fillColor, splashColor etc
         child: Padding(
-          padding: size == null
-              ? EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0)
-              : size <= 320
-                  ? EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0)
-                  : EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+          padding: this.noPadding != null && this.noPadding == true
+              ? EdgeInsets.all(0)
+              : (size == null
+                  ? EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0)
+                  : size <= 320
+                      ? EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0)
+                      : EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0)),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,

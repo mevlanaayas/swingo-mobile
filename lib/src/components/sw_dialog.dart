@@ -79,7 +79,7 @@ class SwDialog extends StatelessWidget {
                 onPressed: () => this.onDismissTap != null
                     ? this.onDismissTap(context)
                     : _onDismissTap(context),
-                // size: width,
+                noPadding: true,
               ),
             ),
           ),
@@ -93,7 +93,7 @@ class SwDialog extends StatelessWidget {
                 color: primaryColor,
                 text: this.acceptButtonText,
                 onPressed: () => this.onAcceptTap(context),
-                // size: width,
+                noPadding: true,
               )
                   : SizedBox(),
             ),
