@@ -137,17 +137,24 @@ class DetailScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              item.from_city,
-              style: itemDetailCityStyle,
+            Expanded(
+              flex: 1,
+              child: Text(
+                item.from_city,
+                style: itemDetailCityStyle,
+              ),
             ),
             const Icon(
               FontAwesomeIcons.chevronRight,
               color: Colors.grey,
             ),
-            Text(
-              item.to_city,
-              style: itemDetailCityStyle,
+            Expanded(
+              flex: 1,
+              child: Text(
+                item.to_city,
+                style: itemDetailCityStyle,
+                textAlign: TextAlign.right,
+              ),
             )
           ],
         ),

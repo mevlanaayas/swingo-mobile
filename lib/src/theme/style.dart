@@ -134,25 +134,25 @@ const TextStyle itemDetailHeadingStyle = TextStyle(
 
 const TextStyle blackItemDetailHeadingStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 22,
+  fontSize: 18,
   color: Colors.black,
 );
 
 const TextStyle itemDetailCityStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 21,
+  fontSize: 16,
   color: secondaryColor,
 );
 
 const TextStyle packageDetailStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 18,
+  fontSize: 16,
   color: secondaryColor,
 );
 
 const TextStyle packageDetailHeaderStyle = TextStyle(
   fontFamily: 'MontserratRegular',
-  fontSize: 18,
+  fontSize: 16,
   color: Colors.black54,
 );
 
