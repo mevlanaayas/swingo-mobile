@@ -7,11 +7,13 @@ import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/pages/cp/checkpoint.dart';
 import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/services/match.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
+import 'package:swingo/src/utils/sliders.dart';
 
 class Chat extends StatelessWidget with SwScreen {
   final ChatRoom chatRoom;
@@ -29,9 +31,16 @@ class Chat extends StatelessWidget with SwScreen {
       this.matchId,
       this.chattedUsername});
 
-  Widget _buildTitle() {
+  _navigateToCheckpoint(BuildContext context) {
+    Navigator.push(
+      context,
+      SlideRightRoute(page: CpScaff()),
+    );
+  }
+
+  Widget _buildTitle(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => _navigateToCheckpoint(context),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8),
         child: Column(
@@ -60,7 +69,7 @@ class Chat extends StatelessWidget with SwScreen {
         backgroundColor: Colors.transparent,
         appBar: this.buildAppbar(
           context,
-          titleWidget: _buildTitle(),
+          titleWidget: _buildTitle(context),
         ),
         body: ChatPage(
           chatRoom: this.chatRoom,
@@ -352,57 +361,57 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
     double screenWidth = MediaQuery.of(context).size.width;
 
     if (widget.userType == ORDER_OWNER_TYPES['SENDER']) {
-      if (widget.status == MATCH_STATUSES["INITIATED"]) {
+      if (widget.status == MATCH_STATUSES["INITIATED"].senderText) {
         //TODO: reject koymaya gerek var mı ?
-      } else if (widget.status == MATCH_STATUSES["CARRIER_APPROVED"]) {
+      } else if (widget.status == MATCH_STATUSES["CARRIER_APPROVED"].senderText) {
         row.add(
             _buildStatusActionButton(FontAwesomeIcons.times, _reject(context)));
         row.add(
             _buildStatusActionButton(FontAwesomeIcons.check, _accept(context)));
-      } else if (widget.status == MATCH_STATUSES["REJECTED"]) {
+      } else if (widget.status == MATCH_STATUSES["REJECTED"].senderText) {
         //TODO: chat kapatılmalı mı ?
-      } else if (widget.status == MATCH_STATUSES["WAITING_FOR_PAYMENT"]) {
+      } else if (widget.status == MATCH_STATUSES["WAITING_FOR_PAYMENT"].senderText) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _passPayment(context)));
       } else if (widget.status ==
-          MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_ON_DELIVERY"]) {
-      } else if (widget.status == MATCH_STATUSES["BOX_CHECK_PASSED"]) {
-      } else if (widget.status == MATCH_STATUSES["PACKET_TAKING_CODE_SENT"]) {
-      } else if (widget.status == MATCH_STATUSES["ON_WAY"]) {
-      } else if (widget.status == MATCH_STATUSES["PACKET_DELIVERY_CODE_SENT"]) {
-      } else if (widget.status == MATCH_STATUSES["FINISHED"]) {
+          MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_ON_DELIVERY"].senderText) {
+      } else if (widget.status == MATCH_STATUSES["BOX_CHECK_PASSED"].senderText) {
+      } else if (widget.status == MATCH_STATUSES["PACKET_TAKING_CODE_SENT"].senderText) {
+      } else if (widget.status == MATCH_STATUSES["ON_WAY"].senderText) {
+      } else if (widget.status == MATCH_STATUSES["PACKET_DELIVERY_CODE_SENT"].senderText) {
+      } else if (widget.status == MATCH_STATUSES["FINISHED"].senderText) {
         //TODO: chat kapatılsın mı
       }
     } else {
-      if (widget.status == MATCH_STATUSES["INITIATED"]) {
+      if (widget.status == MATCH_STATUSES["INITIATED"].carrierText) {
         row.add(
             _buildStatusActionButton(FontAwesomeIcons.times, _reject(context)));
         row.add(
             _buildStatusActionButton(FontAwesomeIcons.check, _accept(context)));
-      } else if (widget.status == MATCH_STATUSES["CARRIER_APPROVED"]) {
+      } else if (widget.status == MATCH_STATUSES["CARRIER_APPROVED"].carrierText) {
         //TODO: reject koymaya gerek var mı ?
-      } else if (widget.status == MATCH_STATUSES["REJECTED"]) {
+      } else if (widget.status == MATCH_STATUSES["REJECTED"].carrierText) {
         //TODO: chat kapatılmalı mı ?
-      } else if (widget.status == MATCH_STATUSES["WAITING_FOR_PAYMENT"]) {
+      } else if (widget.status == MATCH_STATUSES["WAITING_FOR_PAYMENT"].carrierText) {
       } else if (widget.status ==
-          MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_ON_DELIVERY"]) {
+          MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_ON_DELIVERY"].carrierText) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.times, _checkBoxFail(context)));
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _checkBoxDone(context)));
-      } else if (widget.status == MATCH_STATUSES["BOX_CHECK_PASSED"]) {
+      } else if (widget.status == MATCH_STATUSES["BOX_CHECK_PASSED"].carrierText) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _readyForTakingBox(context)));
-      } else if (widget.status == MATCH_STATUSES["PACKET_TAKING_CODE_SENT"]) {
+      } else if (widget.status == MATCH_STATUSES["PACKET_TAKING_CODE_SENT"].carrierText) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _confirmTakingCode(context)));
-      } else if (widget.status == MATCH_STATUSES["ON_WAY"]) {
+      } else if (widget.status == MATCH_STATUSES["ON_WAY"].carrierText) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _readyForDeliveringBox(context)));
-      } else if (widget.status == MATCH_STATUSES["PACKET_DELIVERY_CODE_SENT"]) {
+      } else if (widget.status == MATCH_STATUSES["PACKET_DELIVERY_CODE_SENT"].carrierText) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _confirmConfirmationCode(context)));
-      } else if (widget.status == MATCH_STATUSES["FINISHED"]) {
+      } else if (widget.status == MATCH_STATUSES["FINISHED"].carrierText) {
         //TODO: chat kapatılsın mı
       }
     }
