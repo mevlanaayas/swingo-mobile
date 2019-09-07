@@ -74,10 +74,9 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
       child: Align(
         alignment: Alignment.topCenter,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: SignInScreen._horizontalPadding),
+          padding: formPadding,
           child: Wrap(
-            runSpacing: 20,
+            runSpacing: formSpacing,
             //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
             children: [
               SwFormField(

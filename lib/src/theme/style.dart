@@ -365,6 +365,8 @@ const BorderRadiusGeometry cardBorderRadius = BorderRadius.all(
 
 const double swPadding = 15.0;
 
+const double formSpacing = 20;
+
 // Kartların kendi aralarındaki konumlandırılması
 const EdgeInsets cardMargin = EdgeInsets.only(
   left: swPadding,
@@ -384,3 +386,5 @@ const EdgeInsets cardPadding = EdgeInsets.all(swPadding);
 const EdgeInsets bodyMargin = EdgeInsets.all(swPadding);
 
 const EdgeInsets dividerPadding = EdgeInsets.symmetric(horizontal: swPadding);
+
+const EdgeInsets formPadding = EdgeInsets.all(swPadding);
