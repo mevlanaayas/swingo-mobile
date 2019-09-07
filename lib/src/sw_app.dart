@@ -19,6 +19,11 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   AnimationController _fabAnimationController;
   int _currentNavBarIndex = 0;
 
+  // Butonlar kapalıyken tıklanabilme bug ını engellemek için animasyonu dinleyip
+  // Ona göre butonları tamamen yok edeceğiz ya da renderlayacağız.
+  // TODO: overlay konusunu öğren ve create options yapısını daha düzgün oluştur
+  bool _destroyCreateButtons = true;
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +31,18 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
       duration: Duration(milliseconds: 1000),
       value: 0.0,
       vsync: this,
-    );
+    )..addListener(() {
+      print(_fabAnimationController.value);
+        if (_fabAnimationController.value == 0) {
+          setState(() {
+            _destroyCreateButtons = true;
+          });
+        } else if (_destroyCreateButtons = true && _fabAnimationController.value > 0) {
+          setState(() {
+            _destroyCreateButtons = false;
+          });
+        }
+      });
   }
 
   @override
@@ -98,25 +114,27 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
           EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 6.9),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Spacer(flex: 5),
-          FadeTransition(
-            opacity: animation,
-            child: SwButton(
-                color: secondaryColor,
-                onPressed: () => _navigateToCreateOrders(0),
-                text: 'Send'),
-          ),
-          Spacer(flex: 2),
-          FadeTransition(
-            opacity: animation,
-            child: SwButton(
-                color: secondaryColor,
-                onPressed: () => _navigateToCreateOrders(1),
-                text: 'Carry'),
-          ),
-          Spacer(flex: 5),
-        ],
+        children: this._destroyCreateButtons
+            ? []
+            : <Widget>[
+                Spacer(flex: 5),
+                FadeTransition(
+                  opacity: animation,
+                  child: SwButton(
+                      color: secondaryColor,
+                      onPressed: () => _navigateToCreateOrders(0),
+                      text: 'Send'),
+                ),
+                Spacer(flex: 2),
+                FadeTransition(
+                  opacity: animation,
+                  child: SwButton(
+                      color: secondaryColor,
+                      onPressed: () => _navigateToCreateOrders(1),
+                      text: 'Carry'),
+                ),
+                Spacer(flex: 5),
+              ],
       ),
     );
   }
