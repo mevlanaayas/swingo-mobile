@@ -14,6 +14,7 @@ import 'package:swingo/src/services/option.dart';
 import 'package:swingo/src/services/order.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
+import 'package:swingo/src/utils/helpers.dart';
 
 class CreateOrderForm {
   //todo: backenddeki fieldlar ile senkron olmalı.
@@ -97,12 +98,12 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
 
   void _onFromDateSelected(DateTime fromDate) {
     setState(() => _form.fromDate = fromDate);
-    fromDateController.text = fromDate.toString();
+    fromDateController.text = formatDate(fromDate);
   }
 
   void _onToDateSelected(DateTime toDate) {
     setState(() => _form.toDate = toDate);
-    toDateController.text = toDate.toString();
+    toDateController.text = formatDate(toDate);
   }
 
   void _onPacketSizeSelected(PacketSize size) {
