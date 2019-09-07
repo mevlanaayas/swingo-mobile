@@ -32,7 +32,6 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
       value: 0.0,
       vsync: this,
     )..addListener(() {
-      print(_fabAnimationController.value);
         if (_fabAnimationController.value == 0) {
           setState(() {
             _destroyCreateButtons = true;
@@ -64,6 +63,10 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   void _updateNavBarIndex(int index) async {
+    if(!_destroyCreateButtons && _fabAnimationController.value == 1){
+      _onCreateButtonPressed();
+    }
+
     if (_currentNavBarIndex == index) return;
 
     final userProvider = Provider.of<UserStatus>(context);
@@ -82,8 +85,11 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   void _navigateToCreateOrders(int index) async {
+    if(!_destroyCreateButtons && _fabAnimationController.value == 1){
+      _onCreateButtonPressed();
+    }
+
     final userProvider = Provider.of<UserStatus>(context);
-    print(!userProvider.isLoggedIn);
     int nextNavBarIndex = null;
     if (!userProvider.isLoggedIn) {
       Navigator.of(context).pushNamed('/route');
@@ -108,33 +114,44 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   Widget _buildCreateOptions(Animation animation) {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 6.9),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: this._destroyCreateButtons
-            ? []
-            : <Widget>[
-                Spacer(flex: 5),
-                FadeTransition(
-                  opacity: animation,
-                  child: SwButton(
-                      color: secondaryColor,
-                      onPressed: () => _navigateToCreateOrders(0),
-                      text: 'Send'),
-                ),
-                Spacer(flex: 2),
-                FadeTransition(
-                  opacity: animation,
-                  child: SwButton(
-                      color: secondaryColor,
-                      onPressed: () => _navigateToCreateOrders(1),
-                      text: 'Carry'),
-                ),
-                Spacer(flex: 5),
-              ],
+    return FadeTransition(
+      opacity: animation,
+      child: GestureDetector(
+        onTap: (){
+          if(!_destroyCreateButtons && _fabAnimationController.value == 1){
+            _onCreateButtonPressed();
+          }
+        },
+        child: Container(
+          color: _destroyCreateButtons ? null : Color.fromRGBO(0, 0, 0, 0.5),
+          alignment: Alignment.bottomCenter,
+          padding:
+          EdgeInsets.only(bottom: kBottomNavigationBarHeight + 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: this._destroyCreateButtons
+                ? []
+                : <Widget>[
+              Spacer(flex: 5),
+              FadeTransition(
+                opacity: animation,
+                child: SwButton(
+                    color: secondaryColor,
+                    onPressed: () => _navigateToCreateOrders(0),
+                    text: 'Send'),
+              ),
+              SizedBox(width: 40,),
+              FadeTransition(
+                opacity: animation,
+                child: SwButton(
+                    color: secondaryColor,
+                    onPressed: () => _navigateToCreateOrders(1),
+                    text: 'Carry'),
+              ),
+              Spacer(flex: 5),
+            ],
+          ),
+        ),
       ),
     );
   }
