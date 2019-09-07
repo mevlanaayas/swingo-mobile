@@ -1,11 +1,13 @@
 class MatchStatus {
-  String status;
-  String senderText;
-  String carrierText;
+  final String status;
+  final String senderText;
+  final String carrierText;
+  final int stepIndex;
 
   MatchStatus({
     this.status,
     this.senderText,
     this.carrierText,
+    this.stepIndex,
   });
 }

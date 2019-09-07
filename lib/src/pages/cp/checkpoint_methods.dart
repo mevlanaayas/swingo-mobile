@@ -6,7 +6,7 @@ import 'package:swingo/src/utils/constans.dart';
 abstract class CheckpointMethods {
   bool isOrderOwner;
 
-  List<Step> buildSteps(BuildContext context, int currentStepIndex);
+  List<Step> buildSteps(BuildContext context, MatchStatus currentMatchStatus);
 
   StepState setStateOfStep(int stepIndex, int currentStepIndex) {
     StepState stepState;
@@ -23,12 +23,13 @@ abstract class CheckpointMethods {
 
   Step buildStep({
     MatchStatus matchStatus,
-    int stepIndex,
     int currentStepIndex,
     String userType,
     List<Widget>
         actions, // TODO: checkpoint'ten yönetim yapılmak istendiğinde ekle.
   }) {
+
+    int stepIndex = matchStatus.stepIndex;
     String contentText = userType == ORDER_OWNER_TYPES["SENDER"]
         ? matchStatus.senderText
         : matchStatus.carrierText;
