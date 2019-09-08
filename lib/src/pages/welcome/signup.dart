@@ -7,8 +7,6 @@ import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class SignUpScreen extends StatefulWidget {
-  static const double _horizontalPadding = 25;
-
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }

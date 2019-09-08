@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/components/sw_navbar.dart';
 import 'package:swingo/src/components/sw_button.dart';
-import 'package:swingo/src/pages/profile/matches.dart';
+import 'package:swingo/src/pages/matches.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 
 class SwApp extends StatefulWidget {
   @override

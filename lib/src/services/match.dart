@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/app_config.dart';
 import 'package:swingo/src/classes/SwNetwork.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/models/match.dart';
 
 abstract class MatchService extends SwNetwork {

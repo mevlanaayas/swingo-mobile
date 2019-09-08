@@ -6,14 +6,6 @@ import 'package:swingo/src/pages/profile/signout.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/sliders.dart';
 
-class ProfileListItem {
-  final IconData leadingIcon;
-  final String title;
-  final dynamic onPressed;
-
-  ProfileListItem({this.leadingIcon, this.title, this.onPressed});
-}
-
 class ProfileScreen extends StatelessWidget with SwScreen {
   final dynamic updateNavBarIndex;
 
@@ -100,4 +92,12 @@ class ProfileScreen extends StatelessWidget with SwScreen {
       ),
     );
   }
+}
+
+class ProfileListItem {
+  final IconData leadingIcon;
+  final String title;
+  final dynamic onPressed;
+
+  ProfileListItem({this.leadingIcon, this.title, this.onPressed});
 }

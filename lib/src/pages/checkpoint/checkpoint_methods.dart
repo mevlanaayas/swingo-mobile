@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:swingo/src/models/match_status.dart';
 import 'package:swingo/src/utils/constans.dart';
 

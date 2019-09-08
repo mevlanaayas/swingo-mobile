@@ -7,6 +7,7 @@ import 'package:swingo/src/services/checkpoint.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 
+//TODO: sayfayı incele kullan ya da sil
 class RateScreen extends StatefulWidget {
   final int matchId;
 

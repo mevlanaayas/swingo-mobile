@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';

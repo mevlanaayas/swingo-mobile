@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/models/match_status.dart';
-import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
 
 import 'checkpoint_methods.dart';
 
-class SenderCheckpoint extends CheckpointMethods {
+class CarrierCheckpoint extends CheckpointMethods {
   String status;
 
-  SenderCheckpoint({
+  CarrierCheckpoint({
     this.status,
   });
 
   List<Step> buildSteps(BuildContext context, MatchStatus currentMatchStatus) {
     int currentStepIndex = currentMatchStatus.stepIndex;
-    String userType = ORDER_OWNER_TYPES['SENDER'];
+    String userType = ORDER_OWNER_TYPES['CARRIER'];
     return [
       this.buildStep(
         matchStatus: MATCH_STATUSES['INITIATED'],

@@ -16,17 +16,6 @@ import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
 import 'package:swingo/src/utils/helpers.dart';
 
-class CreateOrderForm {
-  //todo: backenddeki fieldlar ile senkron olmalı.
-  City fromCity;
-  City toCity;
-  DateTime fromDate;
-  DateTime toDate;
-  int weight;
-  PacketSize size;
-  String comments;
-}
-
 class CreateOrders extends StatelessWidget with SwScreen {
   final String type;
 
@@ -348,4 +337,15 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
       ),
     );
   }
+}
+
+class CreateOrderForm {
+  //todo: backenddeki fieldlar ile senkron olmalı.
+  City fromCity;
+  City toCity;
+  DateTime fromDate;
+  DateTime toDate;
+  int weight;
+  PacketSize size;
+  String comments;
 }

@@ -7,7 +7,7 @@ import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/models.dart';
-import 'package:swingo/src/pages/cp/checkpoint.dart';
+import 'package:swingo/src/pages/checkpoint//checkpoint.dart';
 import 'package:swingo/src/services/chat.dart';
 import 'package:swingo/src/services/match.dart';
 import 'package:swingo/src/theme/decoration.dart';
@@ -36,10 +36,11 @@ class Chat extends StatelessWidget with SwScreen {
     Navigator.push(
       context,
       SlideRightRoute(
-          page: CpScaff(
-        status: this.status,
-        userType: this.userType,
-      )),
+        page: CheckpointScreen(
+          status: this.status,
+          userType: this.userType,
+        ),
+      ),
     );
   }
 
@@ -94,8 +95,7 @@ class ChatPage extends StatefulWidget {
   final String status;
   final String userType;
   final int matchId;
-
-  List<Message> toPrint = [];
+  
 
   ChatPage(
       {this.chatRoom, this.username, this.status, this.userType, this.matchId});
@@ -104,6 +104,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> with SwScreen {
+  List<Message> toPrint = [];
   TextEditingController _controller = TextEditingController();
   SocketIOManager manager;
   SocketIO socket;
@@ -182,7 +183,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
   pprint(data) {
     setState(() {
       print(data);
-      widget.toPrint.insert(
+      this.toPrint.insert(
           0,
           Message(
               id: data['_id'],
@@ -219,7 +220,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
   }
 
   Widget _buildListItem(BuildContext context, int index) {
-    Message message = widget.toPrint[index];
+    Message message = this.toPrint[index];
     Widget messageRow;
     if (widget.username == message.createdBy) {
       messageRow = _buildMessageBox(
@@ -243,11 +244,11 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
     return (responseData) async {
       final messageArray = responseData['messages'];
       setState(() {
-        widget.toPrint = messageArray != null
+        this.toPrint = messageArray != null
             ? List<Message>.from(messageArray
                 .map((messageJson) => Message.fromJson(messageJson)))
             : [];
-        widget.toPrint = widget.toPrint.reversed.toList();
+        this.toPrint = this.toPrint.reversed.toList();
       });
     };
   }
@@ -450,7 +451,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
       child: ListView.builder(
         padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
         reverse: true,
-        itemCount: widget.toPrint.length,
+        itemCount: this.toPrint.length,
         itemBuilder: _buildListItem,
       ),
     );
