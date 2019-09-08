@@ -51,7 +51,7 @@ class ProfileScreen extends StatelessWidget with SwScreen {
   Widget build(BuildContext context) {
     final profileListItems = _initProfileListItems();
     return Scaffold(
-      backgroundColor: primaryColor50,
+      backgroundColor: pageBackgroundColor,
       appBar: this.buildAppbar(
         context,
         hideBackButton: true,

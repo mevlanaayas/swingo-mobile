@@ -74,7 +74,7 @@ class _MatchesState extends State<Matches> {
     return Container(
       padding: cardListMargin,
       constraints: const BoxConstraints(minWidth: double.infinity),
-      color: primaryColor50,
+      color: pageBackgroundColor,
       child: Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).padding.bottom,

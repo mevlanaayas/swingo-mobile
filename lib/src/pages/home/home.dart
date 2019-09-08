@@ -38,12 +38,12 @@ class _HomeScreenState extends State<HomeScreen>
           titlePadding: EdgeInsets.all(0),
           title: SafeArea(
             child: Container(
-              color: Colors.white,
+              color: appBarColor,
               alignment: Alignment.center,
               child: TabBar(
-                labelColor: primaryColor,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: primaryColor,
+                labelColor: appBarTextColor,
+                unselectedLabelColor: primaryColorDark,
+                indicatorColor: appBarTextColor,
                 indicatorPadding: EdgeInsets.symmetric(vertical: 0),
                 controller: _tabController,
                 tabs: [

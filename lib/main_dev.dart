@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
           return userStatus;
         },
         child: MaterialApp(
-          theme: ThemeData.light().copyWith(splashColor: primaryColor50),
+          theme: ThemeData.light().copyWith(splashColor: pageBackgroundColor),
           debugShowCheckedModeBanner: false,
           home: SwApp(),
           routes: {

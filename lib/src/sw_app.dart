@@ -36,7 +36,8 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
           setState(() {
             _destroyCreateButtons = true;
           });
-        } else if (_destroyCreateButtons = true && _fabAnimationController.value > 0) {
+        } else if (_destroyCreateButtons =
+            true && _fabAnimationController.value > 0) {
           setState(() {
             _destroyCreateButtons = false;
           });
@@ -63,7 +64,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   void _updateNavBarIndex(int index) async {
-    if(!_destroyCreateButtons && _fabAnimationController.value == 1){
+    if (!_destroyCreateButtons && _fabAnimationController.value == 1) {
       _onCreateButtonPressed();
     }
 
@@ -85,7 +86,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   void _navigateToCreateOrders(int index) async {
-    if(!_destroyCreateButtons && _fabAnimationController.value == 1){
+    if (!_destroyCreateButtons && _fabAnimationController.value == 1) {
       _onCreateButtonPressed();
     }
 
@@ -117,39 +118,40 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
     return FadeTransition(
       opacity: animation,
       child: GestureDetector(
-        onTap: (){
-          if(!_destroyCreateButtons && _fabAnimationController.value == 1){
+        onTap: () {
+          if (!_destroyCreateButtons && _fabAnimationController.value == 1) {
             _onCreateButtonPressed();
           }
         },
         child: Container(
           color: _destroyCreateButtons ? null : Color.fromRGBO(0, 0, 0, 0.5),
           alignment: Alignment.bottomCenter,
-          padding:
-          EdgeInsets.only(bottom: kBottomNavigationBarHeight + 15),
+          padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight + 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: this._destroyCreateButtons
                 ? []
                 : <Widget>[
-              Spacer(flex: 5),
-              FadeTransition(
-                opacity: animation,
-                child: SwButton(
-                    color: secondaryColor,
-                    onPressed: () => _navigateToCreateOrders(0),
-                    text: 'Send'),
-              ),
-              SizedBox(width: 40,),
-              FadeTransition(
-                opacity: animation,
-                child: SwButton(
-                    color: secondaryColor,
-                    onPressed: () => _navigateToCreateOrders(1),
-                    text: 'Carry'),
-              ),
-              Spacer(flex: 5),
-            ],
+                    Spacer(flex: 5),
+                    FadeTransition(
+                      opacity: animation,
+                      child: SwButton(
+                          color: secondaryColor,
+                          onPressed: () => _navigateToCreateOrders(0),
+                          text: 'Send'),
+                    ),
+                    SizedBox(
+                      width: 40,
+                    ),
+                    FadeTransition(
+                      opacity: animation,
+                      child: SwButton(
+                          color: secondaryColor,
+                          onPressed: () => _navigateToCreateOrders(1),
+                          text: 'Carry'),
+                    ),
+                    Spacer(flex: 5),
+                  ],
           ),
         ),
       ),
@@ -242,9 +244,12 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
       begin: 0.0,
       end: 1.0,
     ).animate(_fabAnimationController);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: primaryColor, // status bar color
-        statusBarIconBrightness: Brightness.light));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: primaryColorDark, // status bar color
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
 
     return Scaffold(
       extendBody: true,

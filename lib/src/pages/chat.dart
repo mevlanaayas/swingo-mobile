@@ -70,7 +70,7 @@ class Chat extends StatelessWidget with SwScreen {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: primaryColor50,
+      color: pageBackgroundColor,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: this.buildAppbar(
