@@ -246,7 +246,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
     ).animate(_fabAnimationController);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: primaryColorDark, // status bar color
+        statusBarColor: statusBarColor, // status bar color
         statusBarIconBrightness: Brightness.light,
       ),
     );
