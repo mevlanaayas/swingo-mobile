@@ -108,7 +108,6 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
   SocketIOManager manager;
   SocketIO socket;
   String status;
-  int matchId = 4; //TODO: dışarıdan alınması gerek
   TextEditingController _confirmTakingCodeTextEditingController =
       new TextEditingController();
   TextEditingController _confirmDeliveryCodeTextEditingController =
@@ -143,13 +142,14 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
 
     socket.on("UPDATE_MATCH", (data) {
       print("update match geldi");
-      if(data['roomId'] != null && data['roomId'] == widget.chatRoom.id){
+      print(data);
+      //if(data['roomId'] != null && data['roomId'] == widget.chatRoom.id){
         MatchService.get(
           context,
           matchId: widget.matchId,
           onSuccess: _updateMatchStatus(context),
         );
-      }
+      //}
     });
 
     socket.connect();
@@ -182,7 +182,6 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
       setState(() {
         this.status = responseData['status'];
       });
-      notifyMatchStatus();
     };
   }
 
@@ -314,6 +313,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
   _onAcceptSuccess(BuildContext context) {
     return (responseData) {
       _getMatchStatus(context);
+      notifyMatchStatus();
     };
   }
 
@@ -397,6 +397,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
     print(this.status);
     print(widget.userType);
     print(widget.matchId);
+    print(widget.chatRoom.id);
     String status = getStatusKey(this.status);
     List<Widget> row = [];
     double screenWidth = MediaQuery.of(context).size.width;
