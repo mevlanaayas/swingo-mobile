@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:swingo/src/models/enum.dart';
 
 const Color primaryColor = Color.fromRGBO(141, 219, 209, 1);
+const Color _primaryColor = Color.fromRGBO(141, 219, 209, 1);
 
 const Color _primaryColorDark = Color(0xFF70AFA8);
 
@@ -9,25 +10,31 @@ const Color primaryColor100 = const Color(0xFFBAE9E3);
 
 const Color _primaryColor50 = const Color(0xFFE3F6F4);
 
-// Page Colors
-const Color statusBarColor = _primaryColorDark;
-const Color appBarColor = primaryColor;
-const Color appBarTextColor = Colors.white;
-const Color pageBackgroundColor = _primaryColor50;
-
-// Tab Bar Colors
-const Color indicatorColor = Colors.white;
-const Color tabBarTextColor = Colors.white;
-const Color tabBarUnselectedTextColor = _primaryColorDark;
-
-// Component Colors
-const Color buttonColor = primaryColor;
-
 const Color secondaryColor = Color(0xFFFADA5E);
 
 const Color secondaryColor50 = Color(0xFFFEF9E3);
 
 const Color secondaryColor100 = Color(0xFFFCEEB8);
+
+const Color tertiaryColor = const Color(0xFFFFFFFF);
+const Color _tertiaryColor = const Color(0xFFFFFFFF);
+
+// Page Colors
+const Color statusBarColor = _primaryColorDark;
+const Color appBarColor = _primaryColor;
+const Color appBarTextColor = _tertiaryColor;
+const Color pageBackgroundColor = _primaryColor50;
+
+// Tab Bar Colors
+const Color indicatorColor = _tertiaryColor;
+const Color tabBarTextColor = _tertiaryColor;
+const Color tabBarUnselectedTextColor = _primaryColorDark;
+
+// Component Colors
+const Color buttonColor = _primaryColor;
+const Color searchTextFieldColor = _tertiaryColor;
+const Color searchTextColor = _primaryColor;
+
 
 const Color textColor = Color.fromRGBO(111, 111, 118, 1);
 

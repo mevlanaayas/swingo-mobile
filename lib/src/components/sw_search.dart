@@ -39,22 +39,26 @@ class _SwSearchState extends State<SwSearch> with SwScreen {
     return Container(
       child: Center(
         child: TextField(
-          style: secondaryColorTextStyle,
-          cursorColor: primaryColor,
+          style: secondaryColorTextStyle16,
+          cursorColor: secondaryColor,
           decoration: SmallFormFieldDecoration(
-              null,
-              null,
-              FontAwesomeIcons.search,
-              _textEditingController.text != ''
-                  ? IconButton(
+            null,
+            null,
+            FontAwesomeIcons.search,
+            _textEditingController.text != ''
+                ? IconButton(
+                    color: secondaryColor,
+                    splashColor: Colors.transparent,
+                    icon: Icon(
+                      FontAwesomeIcons.timesCircle,
                       color: secondaryColor,
-                      splashColor: Colors.transparent,
-                      icon: Icon(
-                        FontAwesomeIcons.timesCircle,
-                        color: secondaryColor,
-                      ),
-                      onPressed: _cleanTextEditing)
-                  : null),
+                    ),
+                    onPressed: _cleanTextEditing,
+                  )
+                : null,
+            primaryColor: tertiaryColor,
+            secondaryColor: primaryColor,
+          ),
           controller: _textEditingController,
           onChanged: (newText) => _onTextChanged(context, newText),
         ),

@@ -108,11 +108,8 @@ InputDecoration FormFieldDecoration(
 }
 
 InputDecoration SmallFormFieldDecoration(
-  String labelText,
-  String hintText,
-  IconData prefixIcon,
-  dynamic suffixIcon,
-) {
+    String labelText, String hintText, IconData prefixIcon, dynamic suffixIcon,
+    {primaryColor = primaryColor, secondaryColor = secondaryColor, fillColor}) {
   double iconSize = 20.0;
   return hintText == null
       ? InputDecoration(
