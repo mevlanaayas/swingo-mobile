@@ -4,7 +4,6 @@ import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/order.dart';
-import 'package:swingo/src/pages/profile/base.dart';
 import 'package:swingo/src/pages/chat.dart';
 import 'package:swingo/src/services/match.dart';
 import 'package:swingo/src/utils/constans.dart';
@@ -65,29 +64,43 @@ class _MakeABidState extends State<MakeABid> {
 
   _onMakeABidRequestSuccess(BuildContext context) {
     return (responseData) async {
-      final userProvider = Provider.of<UserStatus>(context);
       String chatRoomId = responseData['chat_room_id'];
-      int bidId = responseData['bid_id'];
+      int matchId = responseData['match_id'];
       final chatRoom = ChatRoom(
+        // TODO: chatroom mantığı değişti modeli fixlemek gerek
         id: chatRoomId,
-        firstUser: widget.order.created_by,
-        secondUser: userProvider.currentUser.username,
-        bidId: bidId,
+        firstUser: '',
+        secondUser: '',
+        bidId: null,
       );
-      _redirectToChat(context, chatRoom);
+      print(this.widget.orderOwnerType);
+      String offererUserType =
+          this.widget.orderOwnerType == ORDER_OWNER_TYPES["CARRIER"]
+              ? ORDER_OWNER_TYPES["SENDER"]
+              : ORDER_OWNER_TYPES["CARRIER"];
+
+      await Navigator.of(context).pop();
+      await Navigator.of(context).pop();
+
+      _redirectToChat(context, chatRoom, MATCH_STATUSES['INITIATED'].status,
+          offererUserType, matchId, widget.order.created_by);
     };
   }
 
-  _redirectToChat(BuildContext context, ChatRoom chatRoom) {
-    Navigator.of(context).pushReplacement(
-      SlideTopRoute(
-        page: BaseProfile(
-            child: Chat(
-              chatRoom: chatRoom,
-              username: chatRoom.secondUser,
-            ),
-            // TODO: write username who user is talking
-            type: chatRoom.firstUser),
+  _redirectToChat(BuildContext context, ChatRoom chatRoom, String status,
+      String userType, int matchId, String chattedUsername) {
+    final userProvider = Provider.of<UserStatus>(context);
+
+    Navigator.of(context).push(
+      SlideRightRoute(
+        page: Chat(
+          chatRoom: chatRoom,
+          username: userProvider.currentUser.username,
+          status: status,
+          userType: userType,
+          matchId: matchId,
+          chattedUsername: chattedUsername,
+        ),
       ),
     );
   }

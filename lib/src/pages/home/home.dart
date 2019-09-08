@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen>
                 tabs: [
                   Tab(
                     child: Text(
-                      'Send',
+                      'Senders',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   Tab(
                     child: Text(
-                      'Carry',
+                      'Carriers',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,
