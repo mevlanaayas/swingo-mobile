@@ -55,11 +55,11 @@ class Chat extends StatelessWidget with SwScreen {
           children: <Widget>[
             Text(
               this.chattedUsername,
-              style: messageBlackTextStyle,
+              style: messageWhiteTextStyle,
             ),
             Text(
               'Please click to see details.',
-              style: blackTextStyle,
+              style: messageWhiteTextStyle12,
             )
           ],
         ),
@@ -285,7 +285,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
       text,
       style: TextStyle(
         fontWeight: FontWeight.w700,
-        color: Colors.white,
+        color: chatMatchStatusBarTextColor,
         fontSize: 22,
       ),
     );
@@ -472,7 +472,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
           bottomLeft: Radius.circular(20.0),
           bottomRight: Radius.circular(20.0),
         ),
-        color: primaryColor,
+        color: chatMatchStatusBarColor,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

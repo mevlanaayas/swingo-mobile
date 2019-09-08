@@ -16,7 +16,6 @@ const Color secondaryColor50 = Color(0xFFFEF9E3);
 
 const Color secondaryColor100 = Color(0xFFFCEEB8);
 
-const Color tertiaryColor = const Color(0xFFFFFFFF);
 const Color _tertiaryColor = const Color(0xFFFFFFFF);
 
 // Page Colors
@@ -32,9 +31,9 @@ const Color tabBarUnselectedTextColor = _primaryColorDark;
 
 // Component Colors
 const Color buttonColor = _primaryColor;
-const Color searchTextFieldColor = _tertiaryColor;
-const Color searchTextColor = _primaryColor;
-
+const Color searchFieldColor = _tertiaryColor;
+const Color chatMatchStatusBarColor = _tertiaryColor;
+const Color chatMatchStatusBarTextColor = _primaryColor;
 
 const Color textColor = Color.fromRGBO(111, 111, 118, 1);
 
@@ -271,6 +270,12 @@ const TextStyle smallTextStyle = TextStyle(
   fontFamily: 'MontserratRegular',
   fontSize: 16,
   color: primaryColor,
+);
+
+const TextStyle messageWhiteTextStyle12 = TextStyle(
+  fontFamily: 'MontserratRegular',
+  fontSize: 12,
+  color: whiteColor,
 );
 
 const TextStyle messageWhiteTextStyle = TextStyle(
