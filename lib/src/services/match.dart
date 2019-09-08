@@ -25,6 +25,24 @@ abstract class MatchService extends SwNetwork {
         onError: onError, onSuccess: onSuccess);
   }
 
+  static get(BuildContext context,
+      {matchId, onError, onSuccess}) async {
+    final userProvider = Provider.of<UserStatus>(context);
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final response = await SwNetwork.sendRequest(
+        context,
+            () => http.get(
+          '$swBaseUrl/match/$matchId',
+          headers: {
+            "Content-type": "application/json",
+            "Authorization": 'Token ${userProvider.token}',
+          },
+        ));
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
+
   static createToSend(BuildContext context,
       {price, transporter, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);

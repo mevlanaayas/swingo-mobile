@@ -95,7 +95,6 @@ class ChatPage extends StatefulWidget {
   final String status;
   final String userType;
   final int matchId;
-  
 
   ChatPage(
       {this.chatRoom, this.username, this.status, this.userType, this.matchId});
@@ -108,6 +107,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
   TextEditingController _controller = TextEditingController();
   SocketIOManager manager;
   SocketIO socket;
+  String status;
   int matchId = 4; //TODO: dışarıdan alınması gerek
   TextEditingController _confirmTakingCodeTextEditingController =
       new TextEditingController();
@@ -118,6 +118,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
   void initState() {
     super.initState();
     manager = SocketIOManager();
+    status = widget.status;
     SchedulerBinding.instance.addPostFrameCallback((_) {
       initSocket();
       _listMessages(context);
@@ -139,6 +140,18 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
     socket.on("SEND_MESSAGE", (data) {
       pprint(data);
     });
+
+    socket.on("UPDATE_MATCH", (data) {
+      print("update match geldi");
+      if(data['roomId'] != null && data['roomId'] == widget.chatRoom.id){
+        MatchService.get(
+          context,
+          matchId: widget.matchId,
+          onSuccess: _updateMatchStatus(context),
+        );
+      }
+    });
+
     socket.connect();
   }
 
@@ -156,6 +169,21 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
     socket.emit("LEAVE_ROOM", [
       {"username": widget.username, "roomId": widget.chatRoom.id}
     ]);
+  }
+
+  notifyMatchStatus() {
+    socket.emit("UPDATE_MATCH", [
+      {"roomId": widget.chatRoom.id}
+    ]);
+  }
+
+  _updateMatchStatus(BuildContext context) {
+    return (responseData) {
+      setState(() {
+        this.status = responseData['status'];
+      });
+      notifyMatchStatus();
+    };
   }
 
   @override
@@ -275,9 +303,17 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
     );
   }
 
+  _getMatchStatus(BuildContext context){
+    MatchService.get(
+      context,
+      matchId: widget.matchId,
+      onSuccess: _updateMatchStatus(context),
+    );
+  }
+
   _onAcceptSuccess(BuildContext context) {
     return (responseData) {
-      print(responseData);
+      _getMatchStatus(context);
     };
   }
 
@@ -358,73 +394,71 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
 
   Widget _buildStatusBar(BuildContext context) {
     print("***");
-    print(widget.status);
+    print(this.status);
     print(widget.userType);
     print(widget.matchId);
-    String status = getStatusKey(widget.status);
+    String status = getStatusKey(this.status);
     List<Widget> row = [];
     double screenWidth = MediaQuery.of(context).size.width;
 
     if (widget.userType == ORDER_OWNER_TYPES['SENDER']) {
       row = [_buildStatusText(MATCH_STATUSES[status].senderText)];
-      if (widget.status == MATCH_STATUSES["INITIATED"].status) {
+      if (this.status == MATCH_STATUSES["INITIATED"].status) {
         //TODO: reject koymaya gerek var mı ?
-      } else if (widget.status == MATCH_STATUSES["CARRIER_APPROVED"].status) {
+      } else if (this.status == MATCH_STATUSES["CARRIER_APPROVED"].status) {
         row.add(
             _buildStatusActionButton(FontAwesomeIcons.times, _reject(context)));
         row.add(
             _buildStatusActionButton(FontAwesomeIcons.check, _accept(context)));
-      } else if (widget.status == MATCH_STATUSES["REJECTED"].status) {
+      } else if (this.status == MATCH_STATUSES["REJECTED"].status) {
         //TODO: chat kapatılmalı mı ?
-      } else if (widget.status ==
-          MATCH_STATUSES["WAITING_FOR_PAYMENT"].status) {
+      } else if (this.status == MATCH_STATUSES["WAITING_FOR_PAYMENT"].status) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _passPayment(context)));
-      } else if (widget.status ==
+      } else if (this.status ==
           MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_ON_DELIVERY"].status) {
-      } else if (widget.status == MATCH_STATUSES["BOX_CHECK_PASSED"].status) {
-      } else if (widget.status ==
+      } else if (this.status == MATCH_STATUSES["BOX_CHECK_PASSED"].status) {
+      } else if (this.status ==
           MATCH_STATUSES["PACKET_TAKING_CODE_SENT"].status) {
-      } else if (widget.status == MATCH_STATUSES["ON_WAY"].status) {
-      } else if (widget.status ==
+      } else if (this.status == MATCH_STATUSES["ON_WAY"].status) {
+      } else if (this.status ==
           MATCH_STATUSES["PACKET_DELIVERY_CODE_SENT"].status) {
-      } else if (widget.status == MATCH_STATUSES["FINISHED"].status) {
+      } else if (this.status == MATCH_STATUSES["FINISHED"].status) {
         //TODO: chat kapatılsın mı
       }
     } else {
       row = [_buildStatusText(MATCH_STATUSES[status].carrierText)];
-      if (widget.status == MATCH_STATUSES["INITIATED"].status) {
+      if (this.status == MATCH_STATUSES["INITIATED"].status) {
         row.add(
             _buildStatusActionButton(FontAwesomeIcons.times, _reject(context)));
         row.add(
             _buildStatusActionButton(FontAwesomeIcons.check, _accept(context)));
-      } else if (widget.status == MATCH_STATUSES["CARRIER_APPROVED"].status) {
+      } else if (this.status == MATCH_STATUSES["CARRIER_APPROVED"].status) {
         //TODO: reject koymaya gerek var mı ?
-      } else if (widget.status == MATCH_STATUSES["REJECTED"].status) {
+      } else if (this.status == MATCH_STATUSES["REJECTED"].status) {
         //TODO: chat kapatılmalı mı ?
-      } else if (widget.status ==
-          MATCH_STATUSES["WAITING_FOR_PAYMENT"].status) {
-      } else if (widget.status ==
+      } else if (this.status == MATCH_STATUSES["WAITING_FOR_PAYMENT"].status) {
+      } else if (this.status ==
           MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_ON_DELIVERY"].status) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.times, _checkBoxFail(context)));
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _checkBoxDone(context)));
-      } else if (widget.status == MATCH_STATUSES["BOX_CHECK_PASSED"].status) {
+      } else if (this.status == MATCH_STATUSES["BOX_CHECK_PASSED"].status) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _readyForTakingBox(context)));
-      } else if (widget.status ==
+      } else if (this.status ==
           MATCH_STATUSES["PACKET_TAKING_CODE_SENT"].status) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _confirmTakingCode(context)));
-      } else if (widget.status == MATCH_STATUSES["ON_WAY"].status) {
+      } else if (this.status == MATCH_STATUSES["ON_WAY"].status) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _readyForDeliveringBox(context)));
-      } else if (widget.status ==
+      } else if (this.status ==
           MATCH_STATUSES["PACKET_DELIVERY_CODE_SENT"].status) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _confirmConfirmationCode(context)));
-      } else if (widget.status == MATCH_STATUSES["FINISHED"].status) {
+      } else if (this.status == MATCH_STATUSES["FINISHED"].status) {
         //TODO: chat kapatılsın mı
       }
     }
