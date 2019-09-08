@@ -131,7 +131,7 @@ class DetailScreen extends StatelessWidget {
     };
   }
 
-  Widget _buildTravelDetails() {
+  Widget _buildTripDetails() {
     return Column(
       children: <Widget>[
         Row(
@@ -323,7 +323,7 @@ class DetailScreen extends StatelessWidget {
         ),
         child: Column(
           children: <Widget>[
-            _buildCard("TRAVEL DETAILS", _buildTravelDetails()),
+            _buildCard("TRIP DETAILS", _buildTripDetails()),
             _buildCard("PACKET DETAILS", _buildPackageDetails(context)),
             _buildMakeABidButton(context)
           ],

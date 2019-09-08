@@ -37,7 +37,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 width: width / 4 * 3,
               ),
               SwButton(
-                color: primaryColor,
                 text: 'SIGN IN',
                 onPressed: _onPressedSignIn,
                 fillParent: true,
@@ -46,7 +45,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 10,
               ),
               SwButton(
-                color: primaryColor,
                 text: 'NEW USER',
                 onPressed: _onPressedSignUp,
                 fillParent: true,

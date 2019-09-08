@@ -49,7 +49,7 @@ class SwButton extends StatelessWidget {
     return SizedBox(
       width: _setWidth(context),
       child: RaisedButton(
-        color: color,
+        color: color != null ? color : buttonColor,
         splashColor: primaryColor,
         disabledColor: secondaryColor,
         elevation: 1.0,

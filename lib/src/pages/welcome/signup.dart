@@ -81,7 +81,6 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
                 controller: _confirmPasswordController,
               ),
               SwButton(
-                color: primaryColor,
                 text: 'SIGN UP',
                 onPressed: () => _submit(context),
                 fillParent: true,

@@ -316,13 +316,11 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
                   children: <Widget>[
                     this.currentStepIndex > 0
                         ? SwButton(
-                            color: primaryColor,
                             text: 'Back',
                             onPressed: onStepCancel,
                           )
                         : SizedBox(),
                     SwButton(
-                      color: primaryColor,
                       text: this.currentStepIndex == stepperLength - 1
                           ? 'Submit'
                           : 'Next',

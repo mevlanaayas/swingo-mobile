@@ -5,7 +5,7 @@ const Color primaryColor = Color.fromRGBO(141, 219, 209, 1);
 
 const Color _primaryColorDark = Color(0xFF70AFA8);
 
-const Color _primaryColor100 = const Color(0xFFBAE9E3);
+const Color primaryColor100 = const Color(0xFFBAE9E3);
 
 const Color _primaryColor50 = const Color(0xFFE3F6F4);
 
@@ -19,6 +19,9 @@ const Color pageBackgroundColor = _primaryColor50;
 const Color indicatorColor = Colors.white;
 const Color tabBarTextColor = Colors.white;
 const Color tabBarUnselectedTextColor = _primaryColorDark;
+
+// Component Colors
+const Color buttonColor = primaryColor;
 
 const Color secondaryColor = Color(0xFFFADA5E);
 

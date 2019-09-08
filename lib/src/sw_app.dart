@@ -193,6 +193,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
           progress: _fabAnimationController.view),
       onPressed: _onCreateButtonPressed,
     );
+
   }
 
   Widget _buildStackContents(

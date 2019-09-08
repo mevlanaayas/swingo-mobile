@@ -93,7 +93,6 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
                 controller: _passwordController,
               ),
               SwButton(
-                color: primaryColor,
                 text: 'SIGN IN',
                 onPressed: () => _submit(scaffoldContext),
                 fillParent: true,

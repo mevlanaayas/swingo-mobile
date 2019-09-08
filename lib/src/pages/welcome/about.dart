@@ -12,7 +12,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         constraints: const BoxConstraints(minWidth: double.infinity),
-        color: primaryColor,
+        color: pageBackgroundColor,
         child: Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,
