@@ -13,7 +13,7 @@ class BaseProfile extends StatelessWidget {
     return Scaffold(
       body: Container(
         constraints: const BoxConstraints(minWidth: double.infinity),
-        color: primaryColor50,
+        color: pageBackgroundColor,
         child: Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,

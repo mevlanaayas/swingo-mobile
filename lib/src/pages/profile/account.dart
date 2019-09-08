@@ -87,7 +87,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor50,
+      backgroundColor: pageBackgroundColor,
       appBar: widget.buildAppbar(context, title: 'Account'),
       body: Padding(
         padding: cardListMargin,

@@ -1,64 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/models/enum.dart';
 
-final Color _primaryColor = Color(0xFF8DDBD1);
 const Color primaryColor = Color.fromRGBO(141, 219, 209, 1);
 
-final Color _primaryColor100 = Color(0xFFBAE9E3);
-const Color primaryColor100 = const Color(0xFFBAE9E3);
+const Color _primaryColorDark = Color(0xFF70AFA8);
 
-final Color _primaryColor50 = Color(0xFFE3F6F4);
-const Color primaryColor50 = const Color(0xFFE3F6F4);
+const Color _primaryColor100 = const Color(0xFFBAE9E3);
 
-final Color _secondaryColor = Color(0xFFFADA5E);
+const Color _primaryColor50 = const Color(0xFFE3F6F4);
+
+// Page Colors
+const Color statusBarColor = _primaryColorDark;
+const Color appBarColor = primaryColor;
+const Color appBarTextColor = Colors.white;
+const Color pageBackgroundColor = _primaryColor50;
+
+// Tab Bar Colors
+const Color indicatorColor = Colors.white;
+const Color tabBarTextColor = Colors.white;
+const Color tabBarUnselectedTextColor = _primaryColorDark;
+
 const Color secondaryColor = Color(0xFFFADA5E);
 
-final Color _secondaryColor50 = Color(0xFFFEF9E3);
 const Color secondaryColor50 = Color(0xFFFEF9E3);
 
-final Color _secondaryColor100 = Color(0xFFFCEEB8);
 const Color secondaryColor100 = Color(0xFFFCEEB8);
 
-final Color _textColor = Color(0xFF6F6F76);
 const Color textColor = Color.fromRGBO(111, 111, 118, 1);
 
-final Color _color1 = Color(0xFF26262F);
 const Color contentColorDark = Color.fromRGBO(38, 38, 47, 1);
 
-final Color _whiteColor = Color(0xFFFFFFFF);
 const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
 
-final Color _blackColor = Color(0xFF000000);
 const Color blackColor = Color(0xFF000000);
 
-final Color _blackColor600 = Color(0xFF555555);
 const Color blackColor600 = Color(0xFF555555);
 
-final Color _blackColor400 = Color(0xFF9D9D9D);
 const Color blackColor400 = Color(0xFF9D9D9D);
 
-final Color _color3 = Color(0xFFF1F1F1);
 const Color modalBackgroundColor = Color.fromRGBO(241, 241, 241, 1);
 
-final Color _color4 = Color(0xFF6F6F76);
 const Color secondaryContentColor = Color.fromRGBO(111, 111, 118, 1);
 
-final Color _color5 = Color(0xFF053B49);
 const Color skillTextColor = Color.fromRGBO(5, 59, 73, 1);
 
-final Color _color6 = Color(0xFF0098FF);
 const Color attentionColor = Color.fromRGBO(0, 152, 255, 1);
 
-final Color _color7 = Color(0xFF74747E);
 const Color disabledColor = Color.fromRGBO(116, 116, 126, 1);
 
-final Color _color8 = Color(0x7726262F);
 const Color disabledTaskColor = Color.fromRGBO(38, 38, 47, 0.25);
 
-final Color _color9 = Color(0xFFD7D7D7);
 const Color treeLineColor = Color.fromRGBO(215, 215, 215, 1);
 
-final Color _color11 = Color(0xFF393947);
 const Color statsSeparatorColor = Color.fromRGBO(57, 57, 71, 1);
 
 /// Maximum logical pixel width for a modal window.

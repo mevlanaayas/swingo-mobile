@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/models/models.dart';
-import 'package:swingo/src/pages/profile/base.dart';
-import 'package:swingo/src/pages/profile/chat.dart';
-import 'package:swingo/src/pages/profile/match_details.dart';
+import 'package:swingo/src/pages/chat.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
@@ -121,13 +119,6 @@ class _MatchItemState extends State<MatchItem> {
   }
 
   bool isExpanded = false;
-
-  Future<void> _handleTap(BuildContext context, SwMatch item) async {
-    Navigator.push(
-      context,
-      SlideTopRoute(page: MatchDetailScreen(item: item)),
-    );
-  }
 
   _redirectToChat(BuildContext context, ChatRoom chatRoom, String status,
       String userType, int matchId, String chattedUsername) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
@@ -90,7 +89,7 @@ class _ListScreenState extends State<ListScreen> {
         : _buildSection(slivers, scale, this.carriers);
     return Container(
       constraints: const BoxConstraints(minWidth: double.infinity),
-      color: primaryColor50,
+      color: pageBackgroundColor,
       child: Padding(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top,

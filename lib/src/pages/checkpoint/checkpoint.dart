@@ -1,154 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:swingo/src/models/models.dart';
-import 'package:swingo/src/pages/checkpoint/default.dart';
-import 'package:swingo/src/pages/checkpoint/param_required.dart';
-import 'package:swingo/src/services/checkpoint.dart';
+import 'package:swingo/src/classes/SwScreen.dart';
+import 'package:swingo/src/components/sw_page.dart';
+import 'package:swingo/src/models/match_status.dart';
+import 'package:swingo/src/pages/checkpoint/checkpoint_methods.dart';
+import 'package:swingo/src/pages/checkpoint/sender_checkpoint.dart';
+import 'package:swingo/src/pages/checkpoint/carrier_checkpoint.dart';
+import 'package:swingo/src/utils/constans.dart';
+import 'package:swingo/src/utils/helpers.dart';
 
-class CheckpointScreen extends StatefulWidget {
-  SwMatch match;
+class CheckpointScreen extends StatelessWidget with SwScreen {
+  final String status;
+  final String userType;
 
-  CheckpointScreen({this.match});
+  CheckpointScreen({
+    this.status,
+    this.userType,
+  });
 
   @override
-  _CheckpointScreenState createState() => _CheckpointScreenState();
+  Widget build(BuildContext context) {
+    return SwPage(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: this.buildAppbar(
+          context,
+          title: "Checkpoint",
+        ),
+        body: SafeArea(
+          child: Checkpoint(
+            status: this.status,
+            userType: this.userType,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-class _CheckpointScreenState extends State<CheckpointScreen> {
-  final List<CheckpointStep> steps = [
-    const CheckpointStep(
-      id: 1,
-      title: 'Waiting for Payment',
-      carrierDescription: 'Waiting for Payment',
-      senderDescription: 'Waiting for Payment',
-      activatedCondition: 'None',
-      carrier: false,
-      illustration: '',
-      url: 'pass_payment',
-      requiresParam: false,
-    ),
-    const CheckpointStep(
-      id: 2,
-      title: 'Waiting for Carrier to Check an Item',
-      carrierDescription: 'Please check the item carefully.',
-      senderDescription: 'Carrier is checking an item.',
-      activatedCondition: 'Payment Passed for On Delivery',
-      carrier: true,
-      illustration: '',
-      url: 'check_box_done',
-      requiresParam: false,
-    ),
-    const CheckpointStep(
-      id: 3,
-      title: 'Waiting for Carrier to take an item.',
-      carrierDescription:
-          'Progress, When you ready to take an item, We will send confirmation code to Sender.',
-      senderDescription:
-          'When Carrier ready to take an item, We will send confirmation code to you.',
-      activatedCondition: 'Box Check Passed',
-      carrier: true,
-      illustration: '',
-      url: 'ready_for_taking_box',
-      requiresParam: false,
-    ),
-    const CheckpointStep(
-      id: 4,
-      title: 'Confirm Code',
-      carrierDescription: 'Waiting for Item taking confirmation.',
-      senderDescription: 'Waiting for Item taking confirmation.',
-      activatedCondition: 'Packet Taking Code Sent',
-      carrier: true,
-      illustration: '',
-      url: 'ready_to_travel',
-      requiresParam: true,
-    ),
-    const CheckpointStep(
-      id: 5,
-      title: 'Request Delivery',
-      carrierDescription: 'Progress, When you ready to deliver an item, We will send confirmation code to Receiver.',
-      senderDescription: 'We sent confirm code to Receiver.',
-      activatedCondition: 'On Way',
-      carrier: true,
-      illustration: '',
-      url: 'ready_for_code_confirm',
-      requiresParam: false,
-    ),
-    const CheckpointStep(
-      id: 6,
-      title: 'Confirm Code',
-      carrierDescription:
-          'Confirm Code',
-      senderDescription: 'Carrier Confirming Code',
-      activatedCondition: 'Confirm Code Sent',
-      carrier: true,
-      illustration: '',
-      url: 'confirm_confirmation_code',
-      requiresParam: true,
-    ),
-    const CheckpointStep(
-      id: 7,
-      title: 'Finished',
-      carrierDescription:
-          'We are happy to see yu finished a deal. Always a pleasure to serve you.',
-      senderDescription:
-          'We are happy to see yu finished a deal. Always a pleasure to serve you.',
-      activatedCondition: 'Finished',
-      carrier: false,
-      illustration: '',
-      url: '',
-      requiresParam: false,
-    ),
-  ];
+class Checkpoint extends StatefulWidget {
+  final String status;
+  final String userType;
 
-  Widget _buildScreen() {
-    Widget result = Text("none");
-    steps.forEach((step) {
-      if (step.activatedCondition == widget.match.status) {
-        result = step.requiresParam == true
-            ? ParamStepScreen(
-                step: step,
-                matchId: widget.match.id,
-                carrierId: widget.match.carrier.id,
-              )
-            : DefaultStepScreen(
-                step: step,
-                matchId: widget.match.id,
-                carrierId: widget.match.carrier.id,
-              );
-      }
-    });
-    return result;
-  }
+  Checkpoint({
+    this.status,
+    this.userType,
+  });
+
+  @override
+  _CheckpointState createState() => _CheckpointState();
+}
+
+class _CheckpointState extends State<Checkpoint> {
+  MatchStatus _currentMatchStatus;
+  CheckpointMethods checkpointMethods;
 
   @override
   void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _getCheckpoint(context);
-    });
+    String statusKey = getStatusKey(widget.status);
+    _currentMatchStatus = MATCH_STATUSES[statusKey];
+    if (isSender(widget.userType)) {
+      checkpointMethods = SenderCheckpoint(status: widget.status);
+    } else {
+      checkpointMethods = CarrierCheckpoint(status: widget.status);
+    }
     super.initState();
   }
 
-  void _getCheckpoint(BuildContext context) async {
-    CheckpointService.get(
-      context,
-      onSuccess: _onRequestSuccess(context),
-      matchId: widget.match.id,
-    );
-  }
-
-  _onRequestSuccess(BuildContext context) {
-    return (responseData) async {
-      final matchJsonArray = responseData['matches'];
-      setState(() {
-        widget.match = matchJsonArray;
-      });
-    };
+  List<Step> _buildSteps(BuildContext context) {
+    return checkpointMethods.buildSteps(context, _currentMatchStatus);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildScreen(),
+    print("*****");
+    print(_currentMatchStatus.stepIndex);
+    return Stepper(
+      steps: _buildSteps(context),
+      type: StepperType.vertical,
+      currentStep: _currentMatchStatus.stepIndex,
+      controlsBuilder: (BuildContext context,
+          {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+        return Row();
+      },
     );
   }
 }

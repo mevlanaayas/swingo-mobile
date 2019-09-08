@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/components/sw_dialog.dart';
 import 'package:swingo/src/models/chat_room.dart';
 import 'package:swingo/src/models/order.dart';
 import 'package:swingo/src/pages/profile/base.dart';
-import 'package:swingo/src/pages/profile/chat.dart';
+import 'package:swingo/src/pages/chat.dart';
 import 'package:swingo/src/services/match.dart';
 import 'package:swingo/src/utils/constans.dart';
 import 'package:swingo/src/utils/sliders.dart';

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swingo/app_config.dart';
-import 'package:swingo/src/ankara/general.dart';
-import 'package:swingo/src/pages/profile/base.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/sw_app.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/pages/welcome/welcome.dart';
@@ -25,7 +24,7 @@ class MainApp extends StatelessWidget {
           return userStatus;
         },
         child: MaterialApp(
-          theme: ThemeData.light().copyWith(splashColor: primaryColor50),
+          theme: ThemeData.light().copyWith(splashColor: pageBackgroundColor),
           debugShowCheckedModeBanner: false,
           home: SwApp(),
           routes: {
