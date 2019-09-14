@@ -52,19 +52,13 @@ class _HomeScreenState extends State<HomeScreen>
                   Tab(
                     child: Text(
                       'Senders',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
+                      style: tabBarTextStyle,
                     ),
                   ),
                   Tab(
                     child: Text(
                       'Carriers',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
+                      style: tabBarTextStyle,
                     ),
                   ),
                 ],

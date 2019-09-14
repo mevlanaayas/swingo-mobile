@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/models/enum.dart';
 
-const Color primaryColor = Color.fromRGBO(141, 219, 209, 1);
-const Color _primaryColor = Color.fromRGBO(141, 219, 209, 1);
-
-const Color _primaryColorDark = Color(0xFF70AFA8);
-
+const Color primaryColor = Color(0xFF6FC4C5);
+const Color _primaryColor = Color(0xFF6FC4C5);
+const Color _primaryColorDark = Color(0xFF3BB7B1);
+const Color _primaryColorDarkest = Color(0xFF078F8F);
+const Color _primaryColor50 = const Color(0xFFC6E4E1);
 const Color primaryColor100 = const Color(0xFFBAE9E3);
 
-const Color _primaryColor50 = const Color(0xFFE3F6F4);
-
-const Color secondaryColor = Color(0xFFFADA5E);
-
+const Color secondaryColor = Color(0xFFF9B232);
+// TODO: alttakiler değiştirilecek
 const Color secondaryColor50 = Color(0xFFFEF9E3);
-
 const Color secondaryColor100 = Color(0xFFFCEEB8);
 
 const Color _tertiaryColor = const Color(0xFFFFFFFF);
+
+const Color _quaternaryColor = const Color(0xFFEE7B9D);
 
 // Page Colors
 const Color statusBarColor = _primaryColorDark;
@@ -24,10 +23,12 @@ const Color appBarColor = _primaryColor;
 const Color appBarTextColor = _tertiaryColor;
 const Color pageBackgroundColor = _primaryColor50;
 
+const tempColor = const Color(0xFFE3E5E4);
+
 // Tab Bar Colors
 const Color indicatorColor = _tertiaryColor;
 const Color tabBarTextColor = _tertiaryColor;
-const Color tabBarUnselectedTextColor = _primaryColorDark;
+const Color tabBarUnselectedTextColor = _primaryColorDarkest;
 
 // Component Colors
 const Color buttonColor = _primaryColor;
@@ -86,106 +87,110 @@ const double idealCharacterWidth = 165;
 /// multiplied by the actual character width displayed.
 const double idealParticleSize = 10;
 
+const String primaryFont = 'Muli-Regular';
+const String primaryFontBold = 'Muli-Bold';
+
 const TextStyle contentSmallStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 14,
   color: secondaryContentColor,
 );
 
 const TextStyle blackContentStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: Colors.black,
 );
 
 const TextStyle itemUsernameContentStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 15,
   color: Colors.black,
 );
 
 const TextStyle itemPriceContentStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
-  fontSize: 20,
-  color: Colors.deepOrange,
+  fontFamily: primaryFont,
+  fontSize: 21,
+  fontWeight: FontWeight.bold,
+  color: _quaternaryColor,
 );
 
 const TextStyle itemBodyTextContentStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: Colors.black,
 );
 
 const TextStyle itemBodyDateContentStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 14,
   color: Colors.black26,
 );
 
 const TextStyle itemBodyDetailContentStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 15,
   color: Colors.black26,
 );
 
 const TextStyle itemDetailHeadingStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 22,
   color: secondaryColor,
 );
 
 const TextStyle blackItemDetailHeadingStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 18,
   color: Colors.black,
 );
 
 const TextStyle itemDetailCityStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: secondaryColor,
 );
 
 const TextStyle packageDetailStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: secondaryColor,
 );
 
 const TextStyle packageDetailHeaderStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: Colors.black54,
 );
 
 const TextStyle accountDetailHeaderStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: Colors.black,
   fontWeight: FontWeight.bold,
 );
 
 const TextStyle accountNonEditableDetailStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: Colors.black54,
 );
 
 const TextStyle profileListItemStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: Colors.black,
 );
 
 const TextStyle itemMenuTabStyle = TextStyle(
-    fontFamily: 'MontserratRegular',
+    fontFamily: primaryFont,
     fontSize: 15,
     color: secondaryColor,
     // color: Color(0xFFFF00FF),
     fontWeight: FontWeight.w900);
 
 const TextStyle itemFrontLayerTitleStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 14,
   color: secondaryColor,
   // color: Color(0xFFFF00FF),
@@ -193,7 +198,7 @@ const TextStyle itemFrontLayerTitleStyle = TextStyle(
 );
 
 const TextStyle profileCardTextStyle = TextStyle(
-    fontFamily: 'MontserratRegular',
+    fontFamily: primaryFont,
     fontSize: 14,
     color: skillTextColor,
     // color: Color(0xFFFF00FF),
@@ -201,13 +206,13 @@ const TextStyle profileCardTextStyle = TextStyle(
     letterSpacing: 1.5);
 
 const TextStyle contentStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: whiteColor,
 );
 
 const TextStyle contentLargeStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 24,
   color: whiteColor,
 );
@@ -219,95 +224,106 @@ const TextStyle buttonTextStyle = TextStyle(
     fontWeight: FontWeight.w100);
 
 const TextStyle inputFieldStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: secondaryColor,
 );
 
 const TextStyle labelStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 15,
   color: primaryColor,
 );
 
 const TextStyle homeItemTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: blackColor,
 );
 
 const TextStyle whiteTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: whiteColor,
 );
 
 const TextStyle blackTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: blackColor,
 );
 
 const TextStyle secondaryColorTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: secondaryColor,
 );
 
 const TextStyle secondaryColorTextStyle16 = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: secondaryColor,
 );
 
+const TextStyle quaternaryColorTextStyle16 = TextStyle(
+  fontFamily: primaryFont,
+  fontSize: 16,
+  color: _quaternaryColor,
+);
+
 const TextStyle primaryColorTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: primaryColor,
 );
 
 const TextStyle smallTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: primaryColor,
 );
 
 const TextStyle messageWhiteTextStyle12 = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: whiteColor,
 );
 
 const TextStyle messageWhiteTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: whiteColor,
 );
 
 const TextStyle messageBlackTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: blackColor,
 );
 
 const TextStyle disabledColorTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: disabledColor,
 );
 
 const TextStyle dialogContentTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: blackColor,
 );
 
 const TextStyle dialogInputTextStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: primaryColor,
 );
 
+const TextStyle tabBarTextStyle = TextStyle(
+  fontFamily: primaryFont,
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+);
 
 Map<Part, Color> skillColor = {
   Part.send: const Color.fromRGBO(0, 179, 184, 1),
@@ -326,43 +342,43 @@ Map<Part, String> skillFlareIcon = {
 * prefix is dp
 * */
 const TextStyle dpDayStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 20,
   color: whiteColor,
 );
 
 const TextStyle dpYearStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 16,
   color: blackColor,
 );
 
 const TextStyle dpDayHeadersStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 24,
   color: primaryColor,
 );
 
 const TextStyle dpItemStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: blackColor,
 );
 
 const TextStyle dpSelectedItemStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: whiteColor,
 );
 
 const TextStyle dpTodayItemStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: primaryColor,
 );
 
 const TextStyle dpDisabledItemStyle = TextStyle(
-  fontFamily: 'MontserratRegular',
+  fontFamily: primaryFont,
   fontSize: 12,
   color: blackColor400,
 );

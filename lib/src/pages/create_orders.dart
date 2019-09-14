@@ -28,10 +28,8 @@ class CreateOrders extends StatelessWidget with SwScreen {
         context,
         title: this.type,
       ),
-      body: SwPage(
-        child: CreateOrdersScreen(
-          type: this.type,
-        ),
+      body: CreateOrdersScreen(
+        type: this.type,
       ),
     );
   }
@@ -316,11 +314,13 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
                   children: <Widget>[
                     this.currentStepIndex > 0
                         ? SwButton(
+                      color: secondaryColor,
                             text: 'Back',
                             onPressed: onStepCancel,
                           )
                         : SizedBox(),
                     SwButton(
+                      color: secondaryColor,
                       text: this.currentStepIndex == stepperLength - 1
                           ? 'Submit'
                           : 'Next',

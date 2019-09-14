@@ -109,8 +109,11 @@ class _SwSearchState extends State<SwSearch> with SwScreen {
                 children: [
                   Row(
                     children: <Widget>[
-                      Icon(FontAwesomeIcons.city,
-                          color: primaryColor, size: 20.0),
+                      Icon(
+                        FontAwesomeIcons.solidBuilding,
+                        color: primaryColor,
+                        size: 20.0,
+                      ),
                       SizedBox(
                         width: 12.0,
                       ),
