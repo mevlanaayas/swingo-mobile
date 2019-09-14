@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swingo/src/theme/style.dart';
 
+//TODO: ne olduğunu anla ona göre kullan ya da sil
 class CurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

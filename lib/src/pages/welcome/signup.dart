@@ -7,8 +7,6 @@ import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class SignUpScreen extends StatefulWidget {
-  static const double _horizontalPadding = 25;
-
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -43,10 +41,9 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
       child: Align(
         alignment: Alignment.topCenter,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: SignUpScreen._horizontalPadding),
+          padding: formPadding,
           child: Wrap(
-            runSpacing: 20,
+            runSpacing: formSpacing,
             //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
             children: [
               SwFormField(
@@ -84,7 +81,6 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
                 controller: _confirmPasswordController,
               ),
               SwButton(
-                color: primaryColor,
                 text: 'SIGN UP',
                 onPressed: () => _submit(context),
                 fillParent: true,
@@ -101,7 +97,10 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
     return SwPage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: this.buildAppbar(context),
+        appBar: this.buildAppbar(
+          context,
+          title: 'Register',
+        ),
         body: new Builder(
             builder: (BuildContext scaffoldContext) => _buildBody(
                   scaffoldContext,

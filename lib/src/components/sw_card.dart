@@ -59,44 +59,44 @@ class _ListItemState extends State<ListItem> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    widget.item.from_city.substring(0, 3).toUpperCase(),
-                    style: itemBodyTextContentStyle,
-                  ),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Text(
-                    dateVerboseFormatter.format(widget.item.from_date),
-                    style: itemBodyDateContentStyle,
-                  )
-                ],
+            Expanded(
+              flex: 1,
+              child: Text(
+                widget.item.from_city,
+                style: itemDetailCityStyle,
               ),
             ),
-            Icon(
+            const Icon(
               FontAwesomeIcons.chevronRight,
-              color: Colors.black38,
-              size: 15.0,
+              color: Colors.grey,
             ),
-            Container(
-                child: Row(
-              children: <Widget>[
-                Text(
-                  widget.item.to_city.substring(0, 3).toUpperCase(),
-                  style: itemBodyTextContentStyle,
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                Text(
-                  dateVerboseFormatter.format(widget.item.to_date),
-                  style: itemBodyDateContentStyle,
-                )
-              ],
-            )),
+            Expanded(
+              flex: 1,
+              child: Text(
+                widget.item.to_city,
+                style: itemDetailCityStyle,
+                textAlign: TextAlign.right,
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          height: 12,
+        ),
+        Row(
+          children: <Widget>[
+            Text(
+              dateVerboseFormatter.format(widget.item.from_date),
+              style: itemBodyDateContentStyle,
+            ),
+            Text(
+              " ~ ",
+              style: itemBodyDateContentStyle,
+            ),
+            Text(
+              dateVerboseFormatter.format(widget.item.to_date),
+              style: itemBodyDateContentStyle,
+            ),
           ],
         ),
         const SizedBox(height: 12),
@@ -133,19 +133,19 @@ class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 2.5, top: 2.5),
+      padding: cardMargin,
       child: Container(
         decoration: CardItemDecoration(),
         child: Material(
           elevation: 0.0,
           type: MaterialType.transparency,
-          borderRadius: const BorderRadius.all(Radius.circular(9)),
+          borderRadius: cardBorderRadius,
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
             onTap: () => _handleTap(context, widget.item),
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: cardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -154,59 +154,6 @@ class _ListItemState extends State<ListItem> {
                   _buildBody()
                 ],
               ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MenuItem extends StatefulWidget {
-  final String toRoute;
-  final IconData icon;
-  final String text;
-
-  MenuItem({this.toRoute, this.icon, this.text});
-
-  @override
-  _MenuItemState createState() => _MenuItemState();
-}
-
-class _MenuItemState extends State<MenuItem> {
-  Future<void> _handleTap(BuildContext context, String toRoute) async {
-    Navigator.of(context).pushNamed(toRoute);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: CardItemDecoration(),
-      child: Material(
-        elevation: 0.0,
-        type: MaterialType.transparency,
-        borderRadius: const BorderRadius.all(Radius.circular(9)),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          splashColor: Colors.transparent,
-          onTap: () => _handleTap(context, widget.toRoute),
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  widget.icon,
-                  color: secondaryColor,
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  widget.text,
-                  style: profileCardTextStyle,
-                )
-              ],
             ),
           ),
         ),

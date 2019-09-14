@@ -4,13 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/services/authentication.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/services/client.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class SignInScreen extends StatefulWidget {
-  static const double _horizontalPadding = 33;
-
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
@@ -74,10 +72,9 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
       child: Align(
         alignment: Alignment.topCenter,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: SignInScreen._horizontalPadding),
+          padding: formPadding,
           child: Wrap(
-            runSpacing: 20,
+            runSpacing: formSpacing,
             //todo: signin, signup, create order genel bi form yapısı içine taşıyabiliriz
             children: [
               SwFormField(
@@ -96,7 +93,6 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
                 controller: _passwordController,
               ),
               SwButton(
-                color: primaryColor,
                 text: 'SIGN IN',
                 onPressed: () => _submit(scaffoldContext),
                 fillParent: true,
@@ -113,7 +109,10 @@ class _SignInScreenState extends State<SignInScreen> with SwScreen {
     return SwPage(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: this.buildAppbar(context),
+        appBar: this.buildAppbar(
+          context,
+          title: 'Sign In',
+        ),
         body: new Builder(
             builder: (BuildContext scaffoldContext) => _buildBody(
                   scaffoldContext,

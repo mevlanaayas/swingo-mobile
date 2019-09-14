@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/services/client.dart';
+import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 
 class AccountListItem {
@@ -86,36 +87,37 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: pageBackgroundColor,
       appBar: widget.buildAppbar(context, title: 'Account'),
-      body: ListView.separated(
-        itemCount: accountListItems.length,
-        itemBuilder: (BuildContext context, int index) {
-          AccountListItem accountListItem = this.accountListItems[index];
-          return ListTile(
-            title: Container(
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    accountListItem.leadingTitle,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+      body: Padding(
+        padding: cardListMargin,
+        child: ListView.builder(
+          itemCount: accountListItems.length,
+          itemBuilder: (BuildContext context, int index) {
+            AccountListItem accountListItem = this.accountListItems[index];
+            return ListTile(
+              title: Container(
+                padding: cardPadding,
+                decoration: CardItemDecoration(),
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      accountListItem.leadingTitle,
+                      style: accountDetailHeaderStyle,
                     ),
-                  ),
-                  Text(accountListItem.title),
-                ],
+                    Text(
+                      accountListItem.title,
+                      style: accountNonEditableDetailStyle,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            // onTap: () => accountListItem.onPressed(context), //TODO: profil edit geldiğinde onpressed ler yazılacacak.
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => Container(
-              height: 0,
-              child: Divider(
-                color: primaryColor,
-              ),
-            ),
+              // onTap: () => accountListItem.onPressed(context), //TODO: profil edit geldiğinde onpressed ler yazılacacak.
+            );
+          },
+        ),
       ),
     );
   }

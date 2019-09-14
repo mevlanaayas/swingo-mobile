@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swingo/src/components/sw_custom_tab_indicator.dart';
 import 'package:swingo/src/models/filter.dart';
 import 'package:swingo/src/pages/home/carrier_orders.dart';
 import 'package:swingo/src/pages/home/sender_orders.dart';
@@ -38,31 +39,26 @@ class _HomeScreenState extends State<HomeScreen>
           titlePadding: EdgeInsets.all(0),
           title: SafeArea(
             child: Container(
-              color: Colors.white,
+              color: appBarColor,
               alignment: Alignment.center,
               child: TabBar(
-                labelColor: primaryColor,
-                unselectedLabelColor: Colors.grey,
-                indicatorColor: primaryColor,
+                //indicator: CustomTabIndicator(),
+                labelColor: tabBarTextColor,
+                unselectedLabelColor: tabBarUnselectedTextColor,
+                indicatorColor: appBarTextColor,
                 indicatorPadding: EdgeInsets.symmetric(vertical: 0),
                 controller: _tabController,
                 tabs: [
                   Tab(
                     child: Text(
-                      'Send',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
+                      'Senders',
+                      style: tabBarTextStyle,
                     ),
                   ),
                   Tab(
                     child: Text(
-                      'Carry',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
+                      'Carriers',
+                      style: tabBarTextStyle,
                     ),
                   ),
                 ],

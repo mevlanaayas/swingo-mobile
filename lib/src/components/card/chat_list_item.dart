@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/profile/base.dart';
-import 'package:swingo/src/pages/profile/chat.dart';
+import 'package:swingo/src/pages/chat.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';

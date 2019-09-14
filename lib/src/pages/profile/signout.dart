@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/components/sw_dialog.dart';
 
 class SignOutDialog extends StatelessWidget {

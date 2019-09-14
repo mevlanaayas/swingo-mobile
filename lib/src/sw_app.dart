@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/components/sw_navbar.dart';
 import 'package:swingo/src/components/sw_button.dart';
-import 'package:swingo/src/pages/profile/matches.dart';
+import 'package:swingo/src/pages/matches.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 
 class SwApp extends StatefulWidget {
   @override
@@ -19,6 +19,11 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   AnimationController _fabAnimationController;
   int _currentNavBarIndex = 0;
 
+  // Butonlar kapalıyken tıklanabilme bug ını engellemek için animasyonu dinleyip
+  // Ona göre butonları tamamen yok edeceğiz ya da renderlayacağız.
+  // TODO: overlay konusunu öğren ve create options yapısını daha düzgün oluştur
+  bool _destroyCreateButtons = true;
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +31,18 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
       duration: Duration(milliseconds: 1000),
       value: 0.0,
       vsync: this,
-    );
+    )..addListener(() {
+        if (_fabAnimationController.value == 0) {
+          setState(() {
+            _destroyCreateButtons = true;
+          });
+        } else if (_destroyCreateButtons =
+            true && _fabAnimationController.value > 0) {
+          setState(() {
+            _destroyCreateButtons = false;
+          });
+        }
+      });
   }
 
   @override
@@ -48,6 +64,10 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   void _updateNavBarIndex(int index) async {
+    if (!_destroyCreateButtons && _fabAnimationController.value == 1) {
+      _onCreateButtonPressed();
+    }
+
     if (_currentNavBarIndex == index) return;
 
     final userProvider = Provider.of<UserStatus>(context);
@@ -66,8 +86,11 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   void _navigateToCreateOrders(int index) async {
+    if (!_destroyCreateButtons && _fabAnimationController.value == 1) {
+      _onCreateButtonPressed();
+    }
+
     final userProvider = Provider.of<UserStatus>(context);
-    print(!userProvider.isLoggedIn);
     int nextNavBarIndex = null;
     if (!userProvider.isLoggedIn) {
       Navigator.of(context).pushNamed('/route');
@@ -92,31 +115,45 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
   }
 
   Widget _buildCreateOptions(Animation animation) {
-    return Container(
-      alignment: Alignment.bottomCenter,
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 6.9),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Spacer(flex: 5),
-          FadeTransition(
-            opacity: animation,
-            child: SwButton(
-                color: secondaryColor,
-                onPressed: () => _navigateToCreateOrders(0),
-                text: 'Send'),
+    return FadeTransition(
+      opacity: animation,
+      child: GestureDetector(
+        onTap: () {
+          if (!_destroyCreateButtons && _fabAnimationController.value == 1) {
+            _onCreateButtonPressed();
+          }
+        },
+        child: Container(
+          color: _destroyCreateButtons ? null : Color.fromRGBO(0, 0, 0, 0.5),
+          alignment: Alignment.bottomCenter,
+          padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight + 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: this._destroyCreateButtons
+                ? []
+                : <Widget>[
+                    Spacer(flex: 5),
+                    FadeTransition(
+                      opacity: animation,
+                      child: SwButton(
+                          color: secondaryColor,
+                          onPressed: () => _navigateToCreateOrders(0),
+                          text: 'Send'),
+                    ),
+                    SizedBox(
+                      width: 40,
+                    ),
+                    FadeTransition(
+                      opacity: animation,
+                      child: SwButton(
+                          color: secondaryColor,
+                          onPressed: () => _navigateToCreateOrders(1),
+                          text: 'Carry'),
+                    ),
+                    Spacer(flex: 5),
+                  ],
           ),
-          Spacer(flex: 2),
-          FadeTransition(
-            opacity: animation,
-            child: SwButton(
-                color: secondaryColor,
-                onPressed: () => _navigateToCreateOrders(1),
-                text: 'Carry'),
-          ),
-          Spacer(flex: 5),
-        ],
+        ),
       ),
     );
   }
@@ -156,6 +193,7 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
           progress: _fabAnimationController.view),
       onPressed: _onCreateButtonPressed,
     );
+
   }
 
   Widget _buildStackContents(
@@ -207,9 +245,12 @@ class _SwAppState extends State<SwApp> with TickerProviderStateMixin {
       begin: 0.0,
       end: 1.0,
     ).animate(_fabAnimationController);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: primaryColor, // status bar color
-        statusBarIconBrightness: Brightness.light));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: statusBarColor, // status bar color
+        statusBarIconBrightness: Brightness.light,
+      ),
+    );
 
     return Scaffold(
       extendBody: true,

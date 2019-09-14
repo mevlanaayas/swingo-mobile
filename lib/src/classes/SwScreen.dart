@@ -10,8 +10,8 @@ abstract class SwScreen {
     Widget titleWidget,
   }) {
     return AppBar(
-      elevation: 0,
-      backgroundColor: Colors.white,
+      elevation: 1,
+      backgroundColor: appBarColor,
       leading: hideBackButton
           ? null
           : FlatButton(
@@ -21,15 +21,16 @@ abstract class SwScreen {
               child: const Icon(
                 FontAwesomeIcons.angleLeft,
                 size: 30,
-                color: primaryColor,
+                color: appBarTextColor,
               ),
             ),
+      centerTitle: titleWidget == null ? true : false,
       title: titleWidget != null
           ? titleWidget
           : Text(
               title ?? '',
               style: TextStyle(
-                color: primaryColor,
+                color: appBarTextColor,
               ),
             ),
     );

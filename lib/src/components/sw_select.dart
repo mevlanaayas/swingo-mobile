@@ -47,7 +47,7 @@ class SwSelect extends StatelessWidget {
     return SwFormField(
       labelText: this.labelText,
       prefixIcon: this.prefixIcon,
-      suffixIcon: Icons.arrow_drop_down,
+      // suffixIcon: Icons.arrow_drop_down,
       onFocused: _onFocused,
       isRequired: isRequired,
       controller: textEditingController,

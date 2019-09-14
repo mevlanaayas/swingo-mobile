@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/models/models.dart';
-import 'package:swingo/src/pages/profile/base.dart';
-import 'package:swingo/src/pages/profile/chat.dart';
-import 'package:swingo/src/pages/profile/match_details.dart';
+import 'package:swingo/src/pages/chat.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
@@ -122,13 +120,6 @@ class _MatchItemState extends State<MatchItem> {
 
   bool isExpanded = false;
 
-  Future<void> _handleTap(BuildContext context, SwMatch item) async {
-    Navigator.push(
-      context,
-      SlideTopRoute(page: MatchDetailScreen(item: item)),
-    );
-  }
-
   _redirectToChat(BuildContext context, ChatRoom chatRoom, String status,
       String userType, int matchId, String chattedUsername) {
     final userProvider = Provider.of<UserStatus>(context);
@@ -168,20 +159,20 @@ class _MatchItemState extends State<MatchItem> {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(left: 3, right: 3, bottom: 2.5, top: 2.5),
+      padding: cardMargin,
       child: Container(
         decoration: CardItemDecoration(),
         child: Material(
           elevation: 0.0,
           type: MaterialType.transparency,
-          borderRadius: const BorderRadius.all(Radius.circular(9)),
+          borderRadius: cardBorderRadius,
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
             onTap: () => _redirectToChat(context, chatRoom, widget.item.status,
                 userType, matchId, chattedUsername),
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: cardPadding,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

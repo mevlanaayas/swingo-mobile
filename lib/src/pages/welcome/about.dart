@@ -2,6 +2,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:flutter/material.dart';
 
+
+// TODO: sayfayı incele ona göre sil ya da kalsın
 class AboutScreen extends StatelessWidget {
   static const double _horizontalPadding = 33;
 
@@ -10,7 +12,7 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         constraints: const BoxConstraints(minWidth: double.infinity),
-        color: primaryColor,
+        color: pageBackgroundColor,
         child: Padding(
           padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top,

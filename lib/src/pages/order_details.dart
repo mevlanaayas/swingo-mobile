@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:swingo/src/ankara/general.dart';
+import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/classes/SwScreen.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/formatters.dart';
 import 'package:swingo/src/pages/make_a_bid.dart';
@@ -81,10 +82,11 @@ class Detail extends StatelessWidget with SwScreen {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomPadding: false,
       appBar: this.buildAppbar(
         context,
-        titleWidget: _buildTitle(context),
+        // titleWidget: _buildTitle(context),
+        title: 'Order Details',
       ),
       body: DetailScreen(
         item: this.item,
@@ -129,20 +131,30 @@ class DetailScreen extends StatelessWidget {
     };
   }
 
-  Widget _buildTravelDetails() {
+  Widget _buildTripDetails() {
     return Column(
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              item.from_city,
-              style: itemDetailCityStyle,
+            Expanded(
+              flex: 1,
+              child: Text(
+                item.from_city,
+                style: itemDetailCityStyle,
+              ),
             ),
-            const Icon(FontAwesomeIcons.chevronRight),
-            Text(
-              item.to_city,
-              style: itemDetailCityStyle,
+            const Icon(
+              FontAwesomeIcons.chevronRight,
+              color: Colors.grey,
+            ),
+            Expanded(
+              flex: 1,
+              child: Text(
+                item.to_city,
+                style: itemDetailCityStyle,
+                textAlign: TextAlign.right,
+              ),
             )
           ],
         ),
@@ -150,18 +162,6 @@ class DetailScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "Dates",
-                      style: itemBodyDateContentStyle,
-                    ),
-                  ],
-                )
-              ],
-            ),
             Column(
               children: <Widget>[
                 Row(
@@ -198,10 +198,11 @@ class DetailScreen extends StatelessWidget {
     return Column(
       children: <Widget>[
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
               "Weight",
-              style: packageDetailStyle,
+              style: packageDetailHeaderStyle,
             ),
             const SizedBox(
               width: 12.0,
@@ -214,44 +215,45 @@ class DetailScreen extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
               "Size",
-              style: packageDetailStyle,
+              style: packageDetailHeaderStyle,
             ),
             const SizedBox(
               width: 12.0,
             ),
             Text(
               item.size,
-              style: itemBodyDateContentStyle,
+              style: packageDetailStyle,
             ),
           ],
         ),
         const SizedBox(height: 15),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
               "Price",
-              style: packageDetailStyle,
+              style: packageDetailHeaderStyle,
             ),
             const SizedBox(
               width: 12.0,
             ),
             Text(
               item.price != null ? "₺" + item.price.toString() : ' YOU DECIDE!',
-              style: itemBodyDateContentStyle,
+              style: packageDetailStyle,
             ),
           ],
         ),
         const SizedBox(height: 15),
         Row(
           children: <Widget>[
-            Container(
-              width: MediaQuery.of(context).size.width * 0.9,
+            Expanded(
               child: Text(
                 item.comments,
-                style: itemBodyDateContentStyle,
+                style: packageDetailStyle,
               ),
             ),
           ],
@@ -260,87 +262,70 @@ class DetailScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildCard(String title, Widget content) {
+    return Padding(
+      padding: cardListMargin,
+      child: Container(
+        decoration: CardItemDecoration(),
+        margin: cardMargin,
+        child: Padding(
+          padding: cardPadding,
+          child: Column(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  title,
+                  style: blackItemDetailHeadingStyle,
+                ),
+              ),
+              Divider(),
+              content
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  _buildMakeABidButton(BuildContext context) {
+    final userProvider = Provider.of<UserStatus>(context);
+    if (userProvider.currentUser.username == item.created_by) {
+      return Row();
+    }
+    return Flexible(
+      flex: 1,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SwButton(
+              color: primaryColor,
+              text: 'MAKE A BID',
+              onPressed: () => _onMakeABidPressed(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserStatus>(context);
     return Container(
       constraints: const BoxConstraints(minWidth: double.infinity),
-      color: primaryColor50,
+      color: pageBackgroundColor,
       child: Padding(
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).padding.top,
           bottom: MediaQuery.of(context).padding.bottom + 5,
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Divider(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: const Text(
-                    "TRAVEL DETAILS",
-                    style: itemDetailHeadingStyle,
-                  ),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: Divider(),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: _buildTravelDetails(),
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Divider(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: const Text(
-                    "PACKAGE DETAILS",
-                    style: itemDetailHeadingStyle,
-                  ),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: Divider(),
-                ),
-              ],
-            ),
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: _buildPackageDetails(context),
-              ),
-            ),
-            userProvider.currentUser.username != item.created_by
-                ? Container(
-                    child: Column(
-                      children: <Widget>[
-                        const Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SwButton(
-                              color: primaryColor,
-                              text: 'MAKE A BID',
-                              onPressed: () => _onMakeABidPressed(context),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                : Row(),
+            _buildCard("TRIP DETAILS", _buildTripDetails()),
+            _buildCard("PACKET DETAILS", _buildPackageDetails(context)),
+            _buildMakeABidButton(context)
           ],
         ),
       ),

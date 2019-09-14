@@ -41,9 +41,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 0, 0, 0.5),
-      body: SafeArea(
-        child: _buildAnimatedLoading(),
-      ),
+      body: _buildAnimatedLoading(),
     );
   }
 }

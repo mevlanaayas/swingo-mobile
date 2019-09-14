@@ -39,22 +39,26 @@ class _SwSearchState extends State<SwSearch> with SwScreen {
     return Container(
       child: Center(
         child: TextField(
-          style: secondaryColorTextStyle,
-          cursorColor: primaryColor,
+          style: messageWhiteTextStyle,
+          cursorColor: searchFieldColor,
           decoration: SmallFormFieldDecoration(
-              null,
-              null,
-              FontAwesomeIcons.search,
-              _textEditingController.text != ''
-                  ? IconButton(
-                      color: secondaryColor,
-                      splashColor: Colors.transparent,
-                      icon: Icon(
-                        FontAwesomeIcons.timesCircle,
-                        color: secondaryColor,
-                      ),
-                      onPressed: _cleanTextEditing)
-                  : null),
+            null,
+            null,
+            FontAwesomeIcons.search,
+            _textEditingController.text != ''
+                ? IconButton(
+                    color: searchFieldColor,
+                    splashColor: Colors.transparent,
+                    icon: Icon(
+                      FontAwesomeIcons.timesCircle,
+                      color: searchFieldColor,
+                    ),
+                    onPressed: _cleanTextEditing,
+                  )
+                : null,
+            primaryColor: searchFieldColor,
+            secondaryColor: primaryColor,
+          ),
           controller: _textEditingController,
           onChanged: (newText) => _onTextChanged(context, newText),
         ),
@@ -105,8 +109,11 @@ class _SwSearchState extends State<SwSearch> with SwScreen {
                 children: [
                   Row(
                     children: <Widget>[
-                      Icon(FontAwesomeIcons.city,
-                          color: primaryColor, size: 20.0),
+                      Icon(
+                        FontAwesomeIcons.solidBuilding,
+                        color: primaryColor,
+                        size: 20.0,
+                      ),
                       SizedBox(
                         width: 12.0,
                       ),

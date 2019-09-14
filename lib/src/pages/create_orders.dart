@@ -14,17 +14,7 @@ import 'package:swingo/src/services/option.dart';
 import 'package:swingo/src/services/order.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
-
-class CreateOrderForm {
-  //todo: backenddeki fieldlar ile senkron olmalı.
-  City fromCity;
-  City toCity;
-  DateTime fromDate;
-  DateTime toDate;
-  int weight;
-  PacketSize size;
-  String comments;
-}
+import 'package:swingo/src/utils/helpers.dart';
 
 class CreateOrders extends StatelessWidget with SwScreen {
   final String type;
@@ -38,10 +28,8 @@ class CreateOrders extends StatelessWidget with SwScreen {
         context,
         title: this.type,
       ),
-      body: SwPage(
-        child: CreateOrdersScreen(
-          type: this.type,
-        ),
+      body: CreateOrdersScreen(
+        type: this.type,
       ),
     );
   }
@@ -97,12 +85,12 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
 
   void _onFromDateSelected(DateTime fromDate) {
     setState(() => _form.fromDate = fromDate);
-    fromDateController.text = fromDate.toString();
+    fromDateController.text = formatDate(fromDate);
   }
 
   void _onToDateSelected(DateTime toDate) {
     setState(() => _form.toDate = toDate);
-    toDateController.text = toDate.toString();
+    toDateController.text = formatDate(toDate);
   }
 
   void _onPacketSizeSelected(PacketSize size) {
@@ -167,17 +155,11 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
   }
 
   _buildStepperContent(List<Widget> content) {
-    Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
-      padding: EdgeInsets.only(
-        top: size.width / 20,
-        left: size.width / 10,
-        right: size.width / 10,
-        bottom: size.width / 10,
-      ),
-      child: Center(
+      child: Align(
+        alignment: Alignment.topCenter,
         child: Wrap(
-          runSpacing: 20,
+          runSpacing: formSpacing,
           children: content,
         ),
       ),
@@ -324,21 +306,28 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
               VoidCallback onStepContinue,
               VoidCallback onStepCancel,
             }) {
-              return Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  SwButton(
-                    color: primaryColor,
-                    text: 'Back',
-                    onPressed: onStepCancel,
-                  ),
-                  SwButton(
-                    color: primaryColor,
-                    text: 'Next',
-                    onPressed: onStepContinue,
-                  )
-                ],
+              return Padding(
+                padding: EdgeInsets.only(top: swPadding),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    this.currentStepIndex > 0
+                        ? SwButton(
+                      color: secondaryColor,
+                            text: 'Back',
+                            onPressed: onStepCancel,
+                          )
+                        : SizedBox(),
+                    SwButton(
+                      color: secondaryColor,
+                      text: this.currentStepIndex == stepperLength - 1
+                          ? 'Submit'
+                          : 'Next',
+                      onPressed: onStepContinue,
+                    )
+                  ],
+                ),
               );
             },
           ),
@@ -346,4 +335,15 @@ class CreateOrdersScreenState extends State<CreateOrdersScreen> {
       ),
     );
   }
+}
+
+class CreateOrderForm {
+  //todo: backenddeki fieldlar ile senkron olmalı.
+  City fromCity;
+  City toCity;
+  DateTime fromDate;
+  DateTime toDate;
+  int weight;
+  PacketSize size;
+  String comments;
 }
