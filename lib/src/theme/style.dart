@@ -41,6 +41,12 @@ const Color chatMatchStatusBarTextColor = _primaryColor;
 const Color senderCardColor = _secondaryColor;
 const Color carrierCardColor = _quaternaryColor;
 
+// Loading Screen Colors
+const Color dot1Color = _primaryColor;
+const Color dot2Color = _secondaryColor;
+const Color dot3Color = _quaternaryColor;
+
+
 const Color textColor = Color.fromRGBO(111, 111, 118, 1);
 
 const Color contentColorDark = Color.fromRGBO(38, 38, 47, 1);
