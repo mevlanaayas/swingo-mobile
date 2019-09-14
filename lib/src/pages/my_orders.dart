@@ -5,6 +5,7 @@ import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/services/order.dart';
+import 'package:swingo/src/utils/constans.dart';
 
 class MyOrdersScreen extends StatelessWidget with SwScreen {
   @override
@@ -26,7 +27,6 @@ class MyOrders extends StatefulWidget {
 }
 
 class _MyOrdersState extends State<MyOrders> {
-  List<Order> orders = [];
   List<Order> sendOrders = [];
   List<Order> carryOrders = [];
 
@@ -58,8 +58,8 @@ class _MyOrdersState extends State<MyOrders> {
       final sendOrderJsonArray = responseData['results'];
       setState(() {
         sendOrders = List<Order>.from(sendOrders)
-        ..addAll(List<Order>.from(sendOrderJsonArray
-            .map((orderJson) => Order.fromJson(orderJson))));
+          ..addAll(List<Order>.from(sendOrderJsonArray
+              .map((orderJson) => Order.fromJson(orderJson))));
       });
     };
   }
@@ -75,14 +75,36 @@ class _MyOrdersState extends State<MyOrders> {
     };
   }
 
-  void _buildSection(List<Widget> slivers, double scale, List<Order> items) {
-    if (items != null && items.isNotEmpty) {
+  void _buildSection(
+    List<Widget> slivers,
+    double scale, {
+    List<Order> senderItems,
+    List<Order> carrierItems,
+  }) {
+    //TODO: carrier sender da bi takım bozukluklar var. yerleri farklı gibi. bir bak hele
+    if (senderItems != null && senderItems.isNotEmpty) {
       slivers.add(
         SliverList(
           delegate: SliverChildBuilderDelegate((context, index) {
-            Order item = items[index];
-            return ListItem(item: item);
-          }, childCount: items.length),
+            Order item = senderItems[index];
+            return ListItem(
+              item: item,
+              orderOwnerType: ORDER_OWNER_TYPES['CARRIER'],
+            );
+          }, childCount: senderItems.length),
+        ),
+      );
+    }
+    if (carrierItems != null && carrierItems.isNotEmpty) {
+      slivers.add(
+        SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+            Order item = carrierItems[index];
+            return ListItem(
+              item: item,
+              orderOwnerType: ORDER_OWNER_TYPES['SENDER'],
+            );
+          }, childCount: carrierItems.length),
         ),
       );
     }
@@ -90,10 +112,14 @@ class _MyOrdersState extends State<MyOrders> {
 
   @override
   Widget build(BuildContext context) {
-    orders = new List.from(sendOrders)..addAll(carryOrders);
     var slivers = <Widget>[];
     const scale = 1.0;
-    _buildSection(slivers, scale, orders);
+    _buildSection(
+      slivers,
+      scale,
+      senderItems: sendOrders,
+      carrierItems: carryOrders,
+    );
     return Container(
       padding: cardListMargin,
       constraints: const BoxConstraints(minWidth: double.infinity),
