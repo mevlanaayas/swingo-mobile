@@ -11,8 +11,15 @@ import 'package:swingo/src/utils/sliders.dart';
 class ListItem extends StatefulWidget {
   final Order item;
   final String orderOwnerType;
+  final onTap;
+  final Widget priceRow;
 
-  const ListItem({this.item, this.orderOwnerType});
+  const ListItem({
+    this.item,
+    this.orderOwnerType,
+    this.onTap,
+    this.priceRow,
+  });
 
   @override
   _ListItemState createState() => _ListItemState();
@@ -45,6 +52,10 @@ class _ListItemState extends State<ListItem> {
   }
 
   Widget _buildPriceRow() {
+    if(widget.priceRow != null){
+      return widget.priceRow;
+    }
+
     final price = widget.orderOwnerType == ORDER_OWNER_TYPES['SENDER']
         ? "${widget.item.price} \$"
         : "OFFER";
@@ -112,7 +123,9 @@ class _ListItemState extends State<ListItem> {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
-            onTap: () => _handleTap(context, widget.item),
+            onTap: () => widget.onTap != null
+                ? widget.onTap(context)
+                : _handleTap(context, widget.item),
             child: Padding(
               padding: cardPadding,
               child: _buildContent(context),
