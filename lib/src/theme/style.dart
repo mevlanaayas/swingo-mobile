@@ -98,8 +98,7 @@ const double idealCharacterWidth = 165;
 /// multiplied by the actual character width displayed.
 const double idealParticleSize = 10;
 
-const String primaryFont = 'Muli-Regular';
-const String primaryFontBold = 'Muli-Bold';
+const String primaryFont = 'Muli';
 
 const TextStyle contentSmallStyle = TextStyle(
   fontFamily: primaryFont,
@@ -230,7 +229,7 @@ const TextStyle contentLargeStyle = TextStyle(
 );
 
 const TextStyle buttonTextStyle = TextStyle(
-    fontFamily: 'MontserratMedium',
+    fontFamily: primaryFont,
     fontSize: 16,
     color: whiteColor,
     fontWeight: FontWeight.w100);
