@@ -17,16 +17,16 @@ class ListScreen extends StatefulWidget with SwScreen {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  List<Order> carriers;
-  List<Order> senders;
-  int currentPage = 1;
+  List<Order> carriers = [];
+  List<Order> senders = [];
+  String nextPage = null;
 
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       widget.type == ORDER_OWNER_TYPES["SENDER"]
-          ? _listSenders(context, currentPage)
-          : _listCarriers(context, currentPage);
+          ? _listSenders(context)
+          : _listCarriers(context);
     });
     super.initState();
   }
@@ -47,18 +47,18 @@ class _ListScreenState extends State<ListScreen> {
     }
   }
 
-  void _listSenders(BuildContext context, int page) async {
+  void _listSenders(BuildContext context, {String url}) async {
     OrderService.listSenders(
       context,
-      page: page,
+      url: url,
       onSuccess: _onRequestSuccess(context),
     );
   }
 
-  void _listCarriers(BuildContext context, int page) async {
+  void _listCarriers(BuildContext context, {String url}) async {
     OrderService.listCarriers(
       context,
-      page: page,
+      url: url,
       onSuccess: _onRequestSuccess(context),
     );
   }
@@ -68,13 +68,17 @@ class _ListScreenState extends State<ListScreen> {
       final orderJsonArray = responseData['results'];
       if (widget.type == ORDER_OWNER_TYPES["SENDER"]) {
         setState(() {
-          senders = List<Order>.from(
-              orderJsonArray.map((orderJson) => Order.fromJson(orderJson)));
+          nextPage = responseData['links']['next'];
+          senders = List<Order>.from(senders)
+            ..addAll(List<Order>.from(
+                orderJsonArray.map((orderJson) => Order.fromJson(orderJson))));
         });
       } else {
         setState(() {
-          carriers = List<Order>.from(
-              orderJsonArray.map((orderJson) => Order.fromJson(orderJson)));
+          nextPage = responseData['links']['next'];
+          carriers = List<Order>.from(carriers)
+            ..addAll(List<Order>.from(
+                orderJsonArray.map((orderJson) => Order.fromJson(orderJson))));
         });
       }
     };
@@ -98,35 +102,24 @@ class _ListScreenState extends State<ListScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            /*Row(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: ButtonTheme(
-                    minWidth: 0,
-                    child: FlatButton(
-                      splashColor: Colors.transparent,
-                      padding: const EdgeInsets.all(0),
-                      shape: null,
-                      onPressed: () => Navigator.pop(context, null),
-                      child: const Icon(
-                        FontAwesomeIcons.chevronLeft,
-                        color: secondaryColor,
-                      ),
-                    ),
-                  ),
-                ),
-                Text(
-                  widget.type.toUpperCase(),
-                  style: itemDetailHeadingStyle,
-                )
-              ],
-            ),*/
             Expanded(
               child: Padding(
                 padding: cardListMargin,
-                child: CustomScrollView(
-                  slivers: slivers,
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent &&
+                        nextPage != null) {
+                      String url = nextPage;
+                      setState(() {
+                        nextPage = null;
+                      });
+                      widget.type == ORDER_OWNER_TYPES["SENDER"]
+                          ? _listSenders(context, url: url)
+                          : _listCarriers(context, url: url);
+                    }
+                  },
+                  child: CustomScrollView(slivers: slivers),
                 ),
               ),
             ),

@@ -9,6 +9,7 @@ const Color _primaryColor50 = const Color(0xFFC6E4E1);
 const Color primaryColor100 = const Color(0xFFBAE9E3);
 
 const Color secondaryColor = Color(0xFFF9B232);
+const Color _secondaryColor = Color(0xFFF9B232);
 // TODO: alttakiler değiştirilecek
 const Color secondaryColor50 = Color(0xFFFEF9E3);
 const Color secondaryColor100 = Color(0xFFFCEEB8);
@@ -35,6 +36,16 @@ const Color buttonColor = _primaryColor;
 const Color searchFieldColor = _tertiaryColor;
 const Color chatMatchStatusBarColor = _tertiaryColor;
 const Color chatMatchStatusBarTextColor = _primaryColor;
+
+// Card Colors
+const Color senderCardColor = _secondaryColor;
+const Color carrierCardColor = _quaternaryColor;
+
+// Loading Screen Colors
+const Color dot1Color = _primaryColor;
+const Color dot2Color = _secondaryColor;
+const Color dot3Color = _quaternaryColor;
+
 
 const Color textColor = Color.fromRGBO(111, 111, 118, 1);
 
@@ -87,8 +98,7 @@ const double idealCharacterWidth = 165;
 /// multiplied by the actual character width displayed.
 const double idealParticleSize = 10;
 
-const String primaryFont = 'Muli-Regular';
-const String primaryFontBold = 'Muli-Bold';
+const String primaryFont = 'Muli';
 
 const TextStyle contentSmallStyle = TextStyle(
   fontFamily: primaryFont,
@@ -123,8 +133,8 @@ const TextStyle itemBodyTextContentStyle = TextStyle(
 
 const TextStyle itemBodyDateContentStyle = TextStyle(
   fontFamily: primaryFont,
-  fontSize: 14,
-  color: Colors.black26,
+  fontSize: 16,
+  color: Colors.black,
 );
 
 const TextStyle itemBodyDetailContentStyle = TextStyle(
@@ -147,8 +157,9 @@ const TextStyle blackItemDetailHeadingStyle = TextStyle(
 
 const TextStyle itemDetailCityStyle = TextStyle(
   fontFamily: primaryFont,
-  fontSize: 16,
-  color: secondaryColor,
+  fontSize: 18,
+  color: Colors.black,
+  fontWeight: FontWeight.bold,
 );
 
 const TextStyle packageDetailStyle = TextStyle(
@@ -218,7 +229,7 @@ const TextStyle contentLargeStyle = TextStyle(
 );
 
 const TextStyle buttonTextStyle = TextStyle(
-    fontFamily: 'MontserratMedium',
+    fontFamily: primaryFont,
     fontSize: 16,
     color: whiteColor,
     fontWeight: FontWeight.w100);

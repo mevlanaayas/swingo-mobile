@@ -26,31 +26,35 @@ class Matches extends StatefulWidget {
 }
 
 class _MatchesState extends State<Matches> {
-  List<SwMatch> matches;
+  List<SwMatch> matches = [];
+  var slivers = <Widget>[];
+  String nextPage;
 
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _listMatches(context);
     });
+    nextPage = null;
     super.initState();
   }
 
-  void _listMatches(BuildContext context) async {
+  void _listMatches(BuildContext context, {String url}) async {
     MatchService.listAll(
       context,
       onSuccess: _onRequestSuccess(context),
+      url: url,
     );
   }
 
   _onRequestSuccess(BuildContext context) {
     return (responseData) async {
       final matchJsonArray = responseData['results'];
-      print("***");
-      print(matchJsonArray);
       setState(() {
-        matches = List<SwMatch>.from(
-            matchJsonArray.map((orderJson) => SwMatch.fromJson(orderJson)));
+        nextPage = responseData['links']['next'];
+        matches = List<SwMatch>.from(matches)
+          ..addAll(List<SwMatch>.from(
+              matchJsonArray.map((orderJson) => SwMatch.fromJson(orderJson))));
       });
     };
   }
@@ -68,7 +72,8 @@ class _MatchesState extends State<Matches> {
 
   @override
   Widget build(BuildContext context) {
-    var slivers = <Widget>[];
+    // TODO: sliver'ı sıfırlamak yerine yeni gelenleri ekle sadece
+    slivers = [];
     const scale = 1.0;
     _buildSection(slivers, scale, matches);
     return Container(
@@ -82,7 +87,22 @@ class _MatchesState extends State<Matches> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Expanded(child: CustomScrollView(slivers: slivers)),
+            Expanded(
+                child: NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (scrollInfo.metrics.pixels ==
+                        scrollInfo.metrics.maxScrollExtent &&
+                    nextPage != null) {
+                  print("daha fazla yükle!!!");
+                  String url = nextPage;
+                  setState(() {
+                    nextPage = null;
+                  });
+                  _listMatches(context, url: url);
+                }
+              },
+              child: CustomScrollView(slivers: slivers),
+            )),
           ],
         ),
       ),

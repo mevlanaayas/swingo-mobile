@@ -8,13 +8,14 @@ import 'package:swingo/src/models/order.dart';
 
 abstract class OrderService extends SwNetwork {
   static listMySendOrders(BuildContext context,
-      {int page, onError, onSuccess}) async {
+      {String url, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    String requestUrl = url == null ? '$swBaseUrl/my_orders/send' : url;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
-              '$swBaseUrl/my_orders/send',
+              requestUrl,
               headers: {
                 "Content-type": "application/json",
                 "Authorization": 'Token ${userProvider.token}'
@@ -26,30 +27,32 @@ abstract class OrderService extends SwNetwork {
   }
 
   static listMyCarryOrders(BuildContext context,
-      {int page, onError, onSuccess}) async {
+      {String url, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    String requestUrl = url == null ? '$swBaseUrl/my_orders/carry' : url;
     final response = await SwNetwork.sendRequest(
         context,
-            () => http.get(
-          '$swBaseUrl/my_orders/carry',
-          headers: {
-            "Content-type": "application/json",
-            "Authorization": 'Token ${userProvider.token}'
-          },
-        ));
+        () => http.get(
+              requestUrl,
+              headers: {
+                "Content-type": "application/json",
+                "Authorization": 'Token ${userProvider.token}'
+              },
+            ));
 
     SwNetwork.handleResponse(context, response,
         onError: onError, onSuccess: onSuccess);
   }
 
   static listSenders(BuildContext context,
-      {int page, onError, onSuccess}) async {
+      {String url, onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    String requestUrl = url == null ? '$swBaseUrl/orders/send' : url;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
-              '$swBaseUrl/orders/send/?page=$page',
+              requestUrl,
               headers: {"Content-type": "application/json"},
             ));
 
@@ -58,12 +61,13 @@ abstract class OrderService extends SwNetwork {
   }
 
   static listCarriers(BuildContext context,
-      {int page, onError, onSuccess}) async {
+      {String url, onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    String requestUrl = url == null ? '$swBaseUrl/orders/carry' : url;
     final response = await SwNetwork.sendRequest(
       context,
       () => http.get(
-            '${swBaseUrl}/orders/carry/?page=$page',
+            requestUrl,
             headers: {"Content-type": "application/json"},
           ),
     );
@@ -102,25 +106,25 @@ abstract class OrderService extends SwNetwork {
 
   static createCarrier(BuildContext context,
       {from_city,
-        from_date,
-        to_city,
-        to_date,
-        size,
-        weight,
-        comments,
-        onError,
-        onSuccess}) async {
+      from_date,
+      to_city,
+      to_date,
+      size,
+      weight,
+      comments,
+      onError,
+      onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(
       context,
-          () => http.post('${swBaseUrl}/orders/carry/',
+      () => http.post('${swBaseUrl}/orders/carry/',
           headers: {
             "Content-type": "application/json",
             "Authorization": 'Token ${userProvider.token}'
           },
-          body: Order.toJson(from_city, from_date, to_city, to_date, null,
-              size, weight, comments)),
+          body: Order.toJson(from_city, from_date, to_city, to_date, null, size,
+              weight, comments)),
     );
 
     SwNetwork.handleResponse(context, response,

@@ -1,4 +1,5 @@
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/utils/constans.dart';
 
 class SwMatch {
   final int id;
@@ -39,6 +40,12 @@ class SwMatch {
 
   get order {
     return this.sendOrder != null ? this.sendOrder : this.carryOrder;
+  }
+
+  get orderType {
+    return this.sendOrder != null
+        ? ORDER_OWNER_TYPES['SENDER']
+        : ORDER_OWNER_TYPES['CARRIER'];
   }
 
   factory SwMatch.fromJson(Map<String, dynamic> json) {

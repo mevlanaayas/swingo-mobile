@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
       child: ChangeNotifierProvider(
         builder: (context) {
           UserStatus userStatus = UserStatus();
-          userStatus.init();
+          userStatus.init(context);
           return userStatus;
         },
         child: MaterialApp(

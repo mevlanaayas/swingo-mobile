@@ -6,8 +6,7 @@ import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/classes/SwNetwork.dart';
 
 abstract class ClientService extends SwNetwork {
-  static get(BuildContext context,
-      {onError, onSuccess}) async {
+  static get(BuildContext context, {onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final userProvider = Provider.of<UserStatus>(context);
     final response = await SwNetwork.sendRequest(
@@ -19,6 +18,24 @@ abstract class ClientService extends SwNetwork {
                 "Authorization": 'Token ${userProvider.token}',
               },
             ));
+
+    SwNetwork.handleResponse(context, response,
+        onError: onError, onSuccess: onSuccess);
+  }
+
+  static auth(BuildContext context, {token, onError, onSuccess}) async {
+    final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    final response = await SwNetwork.sendRequest(
+      context,
+      () => http.get(
+            '$swBaseUrl/client',
+            headers: {
+              "Content-type": "application/json",
+              "Authorization": 'Token ${token}',
+            },
+          ),
+      hideLoadingScreen: true,
+    );
 
     SwNetwork.handleResponse(context, response,
         onError: onError, onSuccess: onSuccess);

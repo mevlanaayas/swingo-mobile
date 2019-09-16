@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swingo/src/models/models.dart';
+import 'package:swingo/src/services/client.dart';
 
 const SW_TOKEN_KEY = 'swUserToken';
 const SW_USER_ID_KEY = 'swUserId';
@@ -26,13 +28,29 @@ class UserStatus with ChangeNotifier {
     notifyListeners();
   }
 
-  init() async {
+  _onGetClientRequestSuccess(BuildContext context) {
+    return (responseData) {};
+  }
+
+  _onGetClientRequestFail(BuildContext context) {
+    return (responseData) {
+      signout();
+    };
+  }
+
+  init(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     token = prefs.getString(SW_TOKEN_KEY) ?? null;
     int userId = prefs.getInt(SW_USER_ID_KEY) ?? null;
     String username = prefs.getString(SW_USERNAME_KEY) ?? null;
     if (userId != null && username != null) {
       currentUser = User(id: userId, username: username);
+      ClientService.auth(
+        context,
+        token: token,
+        onSuccess: _onGetClientRequestSuccess(context),
+        onError: _onGetClientRequestFail(context),
+      );
     } else {
       currentUser = User(id: null, username: null);
     }

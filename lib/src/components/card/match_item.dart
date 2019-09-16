@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:swingo/src/components/sw_card.dart';
+import 'package:swingo/src/models/match_status.dart';
+import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/user_status.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/chat.dart';
-import 'package:swingo/src/theme/decoration.dart';
-import 'package:swingo/src/theme/style.dart';
 import 'package:swingo/src/utils/constans.dart';
+import 'package:swingo/src/utils/helpers.dart';
 import 'package:swingo/src/utils/sliders.dart';
 
 class MatchItem extends StatefulWidget {
@@ -19,107 +20,6 @@ class MatchItem extends StatefulWidget {
 }
 
 class _MatchItemState extends State<MatchItem> {
-  Widget _buildHeading(String username) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                widget.item.sender.username == username
-                    ? const Icon(
-                        FontAwesomeIcons.moneyBillWave,
-                        color: secondaryColor,
-                        size: 11.0,
-                      )
-                    : const Icon(
-                        FontAwesomeIcons.babyCarriage,
-                        color: secondaryColor,
-                        size: 11.0,
-                      ),
-                const SizedBox(
-                  width: 5.0,
-                ),
-                widget.item.sender.username == username
-                    ? const Text(
-                        "PURCHASING",
-                        style: itemBodyDetailContentStyle,
-                      )
-                    : const Text(
-                        "CARRYING",
-                        style: itemBodyDetailContentStyle,
-                      ),
-              ],
-            ),
-            // Text("₺" + widget.item.price.toString(), style: itemPriceContentStyle)
-          ],
-        ),
-        Text("₺" + widget.item.value.toString(), style: itemPriceContentStyle)
-      ],
-    );
-  }
-
-  Widget _buildBody() {
-    return Column(
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Text(
-              widget.item.order.from_city,
-              style: itemBodyDetailContentStyle,
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: <Widget>[
-            Text(
-              widget.item.order.to_city,
-              style: itemBodyDetailContentStyle,
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: <Widget>[
-            const Text(
-              "Payment",
-              style: blackTextStyle,
-            ),
-            const SizedBox(
-              width: 5.0,
-            ),
-            Text(
-              widget.item.paymentType.toString(),
-              style: blackTextStyle,
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5.0,
-        ),
-        Row(
-          children: <Widget>[
-            const Text(
-              "Status",
-              style: blackTextStyle,
-            ),
-            const SizedBox(
-              width: 5.0,
-            ),
-            Text(
-              widget.item.status,
-              style: blackTextStyle,
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  bool isExpanded = false;
-
   _redirectToChat(BuildContext context, ChatRoom chatRoom, String status,
       String userType, int matchId, String chattedUsername) {
     final userProvider = Provider.of<UserStatus>(context);
@@ -138,6 +38,36 @@ class _MatchItemState extends State<MatchItem> {
     );
   }
 
+  _buildStatusRow(String userType) {
+    String status = getStatusKey(widget.item.status);
+    MatchStatus matchStatus = MATCH_STATUSES[status];
+    String statusMessage = userType == MATCH_STATUSES['SENDER']
+        ? matchStatus.senderText
+        : matchStatus.carrierText;
+
+    return Container(
+      margin: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.all(8),
+      decoration: new BoxDecoration(
+        borderRadius: new BorderRadius.all(Radius.circular(28)),
+        color: primaryColor,
+      ),
+      child: Column(
+        children: <Widget>[
+          Text(
+            statusMessage,
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontFamily: 'Muli',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserStatus>(context);
@@ -148,6 +78,7 @@ class _MatchItemState extends State<MatchItem> {
       secondUser: '',
       bidId: null,
     );
+    final status = widget.item.status;
     final matchId = widget.item.id;
     final String chattedUsername =
         widget.item.sender.username != userProvider.currentUser.username
@@ -158,33 +89,18 @@ class _MatchItemState extends State<MatchItem> {
       userType = ORDER_OWNER_TYPES['SENDER'];
     }
 
-    return Padding(
-      padding: cardMargin,
-      child: Container(
-        decoration: CardItemDecoration(),
-        child: Material(
-          elevation: 0.0,
-          type: MaterialType.transparency,
-          borderRadius: cardBorderRadius,
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            splashColor: Colors.transparent,
-            onTap: () => _redirectToChat(context, chatRoom, widget.item.status,
-                userType, matchId, chattedUsername),
-            child: Padding(
-              padding: cardPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHeading(userProvider.currentUser.username),
-                  const SizedBox(height: 12),
-                  _buildBody()
-                ],
-              ),
-            ),
+    return ListItem(
+      item: widget.item.order,
+      orderOwnerType: widget.item.orderType,
+      onTap: (BuildContext cardContext) => _redirectToChat(
+            context,
+            chatRoom,
+            status,
+            userType,
+            matchId,
+            chattedUsername,
           ),
-        ),
-      ),
+      priceRow: _buildStatusRow(userType),
     );
   }
 }

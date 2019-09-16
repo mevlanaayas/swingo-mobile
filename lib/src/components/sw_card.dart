@@ -1,124 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:swingo/src/card_paint.dart';
 import 'package:swingo/src/models/models.dart';
 import 'package:swingo/src/pages/pages.dart';
 import 'package:swingo/src/theme/decoration.dart';
 import 'package:swingo/src/theme/style.dart';
+import 'package:swingo/src/utils/constans.dart';
 import 'package:swingo/src/utils/formatters.dart';
 import 'package:swingo/src/utils/sliders.dart';
 
 class ListItem extends StatefulWidget {
   final Order item;
   final String orderOwnerType;
+  final onTap;
+  final Widget priceRow;
 
-  const ListItem({this.item, this.orderOwnerType});
+  const ListItem({
+    this.item,
+    this.orderOwnerType,
+    this.onTap,
+    this.priceRow,
+  });
 
   @override
   _ListItemState createState() => _ListItemState();
 }
 
 class _ListItemState extends State<ListItem> {
-  Widget _buildHeading() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            const Icon(
-              FontAwesomeIcons.user,
-              color: secondaryColor,
-              size: 11.0,
-            ),
-            SizedBox(
-              width: 5.0,
-            ),
-            widget.item.created_by.length > 20
-                ? Text(
-                    widget.item.created_by.substring(0, 20) + "...",
-                    style: itemUsernameContentStyle,
-                  )
-                : Text(
-                    widget.item.created_by,
-                    style: itemUsernameContentStyle,
-                  ),
-          ],
-        ),
-        Text(
-          widget.item.price != null
-              ? "₺" + widget.item.price.toString()
-              : ' YOU DECIDE!',
-          style: itemPriceContentStyle,
-        )
-      ],
-    );
-  }
-
-  Widget _buildBody() {
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Text(
-                widget.item.from_city,
-                style: itemDetailCityStyle,
-              ),
-            ),
-            const Icon(
-              FontAwesomeIcons.chevronRight,
-              color: Colors.grey,
-            ),
-            Expanded(
-              flex: 1,
-              child: Text(
-                widget.item.to_city,
-                style: itemDetailCityStyle,
-                textAlign: TextAlign.right,
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 12,
-        ),
-        Row(
-          children: <Widget>[
-            Text(
-              dateVerboseFormatter.format(widget.item.from_date),
-              style: itemBodyDateContentStyle,
-            ),
-            Text(
-              " ~ ",
-              style: itemBodyDateContentStyle,
-            ),
-            Text(
-              dateVerboseFormatter.format(widget.item.to_date),
-              style: itemBodyDateContentStyle,
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: <Widget>[
-            widget.item.comments.length > 30
-                ? Text(
-                    widget.item.comments.substring(0, 30) + "...",
-                    style: itemBodyDetailContentStyle,
-                  )
-                : Text(
-                    widget.item.comments,
-                    style: itemBodyDetailContentStyle,
-                  )
-          ],
-        ),
-      ],
-    );
-  }
-
-  bool isExpanded = false;
-
   Future<void> _handleTap(BuildContext context, Order item) async {
     Navigator.push(
       context,
@@ -130,12 +37,85 @@ class _ListItemState extends State<ListItem> {
     );
   }
 
+  Widget _buildCityRow() {
+    return Text(
+      "${widget.item.from_city.toUpperCase()} - ${widget.item.to_city.toUpperCase()}",
+      style: itemDetailCityStyle,
+    );
+  }
+
+  Widget _buildDateRow() {
+    return Text(
+      "${dateVerboseFormatter.format(widget.item.from_date)} - ${dateVerboseFormatter.format(widget.item.to_date)}",
+      style: itemBodyDateContentStyle,
+    );
+  }
+
+  Widget _buildPriceRow() {
+    if(widget.priceRow != null){
+      return widget.priceRow;
+    }
+
+    final price = widget.orderOwnerType == ORDER_OWNER_TYPES['SENDER']
+        ? "${widget.item.price} \$"
+        : "OFFER";
+    return Container(
+      margin: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.all(8),
+      decoration: new BoxDecoration(
+          borderRadius: new BorderRadius.all(Radius.circular(28)),
+          color: primaryColor),
+      child: Column(
+        children: <Widget>[
+          Text(
+            "payment",
+            style: TextStyle(
+              fontSize: 16,
+              fontFamily: 'Muli',
+            ),
+          ),
+          Text(
+            price,
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontFamily: 'Muli',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        _buildCityRow(),
+        SizedBox(
+          height: 5,
+        ),
+        _buildDateRow(),
+        SizedBox(
+          height: 5,
+        ),
+        _buildPriceRow(),
+      ],
+    );
+  }
+
+  _buildPainter() {
+    return CornerPainter(
+      orderType: widget.orderOwnerType,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: cardMargin,
-      child: Container(
-        decoration: CardItemDecoration(),
+    return Container(
+      margin: cardMargin,
+      decoration: CardItemDecoration(),
+      child: CustomPaint(
         child: Material(
           elevation: 0.0,
           type: MaterialType.transparency,
@@ -143,20 +123,16 @@ class _ListItemState extends State<ListItem> {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             splashColor: Colors.transparent,
-            onTap: () => _handleTap(context, widget.item),
+            onTap: () => widget.onTap != null
+                ? widget.onTap(context)
+                : _handleTap(context, widget.item),
             child: Padding(
               padding: cardPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHeading(),
-                  const SizedBox(height: 12),
-                  _buildBody()
-                ],
-              ),
+              child: _buildContent(context),
             ),
           ),
         ),
+        painter: _buildPainter(),
       ),
     );
   }
