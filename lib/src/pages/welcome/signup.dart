@@ -1,5 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:swingo/src/pages/terms_and_conditions.dart';
+import 'package:swingo/src/utils/sliders.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:swingo/src/components/components.dart';
 import 'package:swingo/src/services/authentication.dart';
@@ -17,6 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  bool _acceptTermsAndConditions = false;
 
   final FocusNode _usernameFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
@@ -24,6 +29,17 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
   final FocusNode _passwordConfirmFocus = FocusNode();
 
   void _submit(BuildContext context) {
+    if (_usernameController.text == '' ||
+        _emailController.text == '' ||
+        _passwordController.text == '' ||
+        _confirmPasswordController.text == '') {
+      SwScreen.showSnackBar(context, "Please fill all fields.");
+      return;
+    }
+    if(_acceptTermsAndConditions == false){
+      SwScreen.showSnackBar(context, "Please accept terms and conditions.");
+      return;
+    }
     AuthenticationService.signup(context,
         username: _usernameController.text,
         email: _emailController.text,
@@ -34,6 +50,48 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
 
   _onRequestSuccess(BuildContext context) {
     return (response) => Navigator.of(context).pushNamed('/signin');
+  }
+
+  Widget _buildTermsAndConditionsRow() {
+    return Row(
+      children: <Widget>[
+        Checkbox(
+          activeColor: secondaryColor,
+          value: _acceptTermsAndConditions,
+          onChanged: (bool value) {
+            setState(() {
+              _acceptTermsAndConditions = value;
+            });
+          },
+        ),
+        new RichText(
+            text: new TextSpan(
+          children: [
+            new TextSpan(
+              text: 'I agree to the ',
+              style: blackContentStyle,
+            ),
+            new TextSpan(
+              text: 'terms and conditions',
+              style: linkTextStyleStyle,
+              recognizer: new TapGestureRecognizer()
+                ..onTap = () async {
+                  final isAccepted = await Navigator.of(context).push(
+                    SlideRightRoute(
+                      page: TermsAndConditionsPage(),
+                    ),
+                  );
+                  if (isAccepted != null && isAccepted == true) {
+                    setState(() {
+                      _acceptTermsAndConditions = true;
+                    });
+                  }
+                },
+            ),
+          ],
+        )),
+      ],
+    );
   }
 
   Widget _buildBody(BuildContext context) {
@@ -80,6 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> with SwScreen {
                 focusNode: _passwordConfirmFocus,
                 controller: _confirmPasswordController,
               ),
+              _buildTermsAndConditionsRow(),
               SwButton(
                 text: 'SIGN UP',
                 onPressed: () => _submit(context),

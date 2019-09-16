@@ -112,6 +112,13 @@ const TextStyle blackContentStyle = TextStyle(
   color: Colors.black,
 );
 
+const TextStyle linkTextStyleStyle = TextStyle(
+  fontFamily: primaryFont,
+  fontSize: 16,
+  color: Colors.blue,
+  decoration: TextDecoration.underline,
+);
+
 const TextStyle itemUsernameContentStyle = TextStyle(
   fontFamily: primaryFont,
   fontSize: 15,

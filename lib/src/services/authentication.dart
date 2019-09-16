@@ -15,7 +15,7 @@ abstract class AuthenticationService extends SwNetwork {
       onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
     final response = await SwNetwork.sendRequest(context, () {
-      return http.post('${swBaseUrl}/auth/register/',
+      return http.post('${swBaseUrl}/auth/registration/',
           headers: {"Content-type": "application/json"},
           body: Signup.toJson(username, email, password, confirmPassword));
     });
