@@ -85,6 +85,8 @@ class UserStatus with ChangeNotifier {
       prefs.setString(key, value);
     } else if (value is int) {
       prefs.setInt(key, value);
+    } else if (value == null) {
+      prefs.setString(key, value);
     }
     print('saved $value');
   }
