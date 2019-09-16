@@ -143,7 +143,6 @@ class _MyOrdersState extends State<MyOrders> {
               onNotification: (ScrollNotification scrollInfo) {
                 if (scrollInfo.metrics.pixels ==
                         scrollInfo.metrics.maxScrollExtent) {
-                  print("*****");
                   if(nextSendOrderPage != null){
                     String url = nextSendOrderPage;
                     setState(() {

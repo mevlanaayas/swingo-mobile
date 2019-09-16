@@ -22,6 +22,8 @@ class MatchItem extends StatefulWidget {
 class _MatchItemState extends State<MatchItem> {
   _redirectToChat(BuildContext context, ChatRoom chatRoom, String status,
       String userType, int matchId, String chattedUsername) {
+    print("****");
+    print(matchId);
     final userProvider = Provider.of<UserStatus>(context);
 
     Navigator.of(context).push(
@@ -87,8 +89,6 @@ class _MatchItemState extends State<MatchItem> {
             ? widget.item.sender.username
             : widget.item.carrier.username;
     String userType = ORDER_OWNER_TYPES['CARRIER'];
-    print("****");
-    print(widget.item.sender.username);
     if (widget.item.sender.username == userProvider.currentUser.username) {
       userType = ORDER_OWNER_TYPES['SENDER'];
     }

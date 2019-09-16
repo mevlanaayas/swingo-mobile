@@ -72,8 +72,6 @@ class _CheckpointState extends State<Checkpoint> {
 
   @override
   Widget build(BuildContext context) {
-    print("*****");
-    print(_currentMatchStatus.stepIndex);
     return Stepper(
       steps: _buildSteps(context),
       type: StepperType.vertical,

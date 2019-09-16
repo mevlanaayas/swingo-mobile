@@ -83,6 +83,7 @@ abstract class MatchService extends SwNetwork {
   static accept(BuildContext context, {matchId, onError, onSuccess}) async {
     final userProvider = Provider.of<UserStatus>(context);
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    print(matchId);
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(

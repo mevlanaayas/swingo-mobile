@@ -281,12 +281,15 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
   }
 
   Widget _buildStatusText(String text) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontWeight: FontWeight.w700,
-        color: chatMatchStatusBarTextColor,
-        fontSize: 22,
+    return Expanded(
+      child: Text(
+        text,
+        style: TextStyle(
+          fontWeight: FontWeight.w700,
+          color: chatMatchStatusBarTextColor,
+          fontSize: 22,
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -399,6 +402,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
     print(widget.matchId);
     print(widget.chatRoom.id);
     String status = getStatusKey(this.status);
+    print(status);
     List<Widget> row = [];
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -417,7 +421,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.check, _passPayment(context)));
       } else if (this.status ==
-          MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_ON_DELIVERY"].status) {
+          MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_DELIVERY"].status) {
       } else if (this.status == MATCH_STATUSES["BOX_CHECK_PASSED"].status) {
       } else if (this.status ==
           MATCH_STATUSES["PACKET_TAKING_CODE_SENT"].status) {
@@ -440,7 +444,7 @@ class _ChatPageState extends State<ChatPage> with SwScreen {
         //TODO: chat kapatılmalı mı ?
       } else if (this.status == MATCH_STATUSES["WAITING_FOR_PAYMENT"].status) {
       } else if (this.status ==
-          MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_ON_DELIVERY"].status) {
+          MATCH_STATUSES["PAYMENT_PASSED_FOR_ON_DELIVERY"].status) {
         row.add(_buildStatusActionButton(
             FontAwesomeIcons.times, _checkBoxFail(context)));
         row.add(_buildStatusActionButton(

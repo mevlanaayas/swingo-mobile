@@ -41,7 +41,7 @@ Map<String, MatchStatus> MATCH_STATUSES = {
     carrierText: 'Waiting Sender To Make Payment',
     stepIndex: 2,
   ),
-  "PAYMENT_PASSED_FOR_ON_ON_DELIVERY": new MatchStatus(
+  "PAYMENT_PASSED_FOR_ON_DELIVERY": new MatchStatus(
     status: 'Payment Passed for On Delivery',
     senderText: 'Waiting Carrier To Check Box',
     carrierText: 'Accept Check Box',

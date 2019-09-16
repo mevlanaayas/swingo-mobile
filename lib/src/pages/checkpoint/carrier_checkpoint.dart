@@ -31,7 +31,7 @@ class CarrierCheckpoint extends CheckpointMethods {
         userType: userType,
       ),
       this.buildStep(
-        matchStatus: MATCH_STATUSES['PAYMENT_PASSED_FOR_ON_ON_DELIVERY'],
+        matchStatus: MATCH_STATUSES['PAYMENT_PASSED_FOR_ON_DELIVERY'],
         currentStepIndex: currentStepIndex,
         userType: userType,
       ),
