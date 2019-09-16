@@ -46,12 +46,13 @@ abstract class OrderService extends SwNetwork {
   }
 
   static listSenders(BuildContext context,
-      {int page, onError, onSuccess}) async {
+      {String url, onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    String requestUrl = url == null ? '$swBaseUrl/orders/send' : url;
     final response = await SwNetwork.sendRequest(
         context,
         () => http.get(
-              '$swBaseUrl/orders/send/?page=$page',
+              requestUrl,
               headers: {"Content-type": "application/json"},
             ));
 
@@ -60,12 +61,13 @@ abstract class OrderService extends SwNetwork {
   }
 
   static listCarriers(BuildContext context,
-      {int page, onError, onSuccess}) async {
+      {String url, onError, onSuccess}) async {
     final String swBaseUrl = AppConfig.of(context).apiBaseUrl;
+    String requestUrl = url == null ? '$swBaseUrl/orders/carry' : url;
     final response = await SwNetwork.sendRequest(
       context,
       () => http.get(
-            '${swBaseUrl}/orders/carry/?page=$page',
+            requestUrl,
             headers: {"Content-type": "application/json"},
           ),
     );

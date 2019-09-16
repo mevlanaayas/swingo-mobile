@@ -99,7 +99,6 @@ class _MatchesState extends State<Matches> {
                     nextPage = null;
                   });
                   _listMatches(context, url: url);
-                  //loadMore();
                 }
               },
               child: CustomScrollView(slivers: slivers),
