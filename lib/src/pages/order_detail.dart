@@ -162,32 +162,24 @@ class DetailScreen extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Text(
-                      dateVerboseFormatter.format(item.from_date),
-                      style: itemBodyDateContentStyle,
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    const Text(
-                      "~",
-                      style: itemBodyDateContentStyle,
-                    ),
-                    const SizedBox(
-                      width: 5.0,
-                    ),
-                    Text(
-                      dateVerboseFormatter.format(item.to_date),
-                      style: itemBodyDateContentStyle,
-                    )
-                  ],
-                )
-              ],
+           Expanded(
+             flex: 1,
+             child:  Text(
+               dateVerboseFormatter.format(item.from_date),
+               style: itemBodyDateContentStyle,
+             ),
+           ),
+            const Text(
+              "~",
+              style: itemBodyDateContentStyle,
             ),
+            Expanded(
+              flex: 1,
+              child: Text(
+                dateVerboseFormatter.format(item.to_date),
+                style: itemBodyDateContentStyle,
+              ),
+            )
           ],
         ),
       ],
