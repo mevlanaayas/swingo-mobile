@@ -41,7 +41,8 @@ class _MatchItemState extends State<MatchItem> {
   _buildStatusRow(String userType) {
     String status = getStatusKey(widget.item.status);
     MatchStatus matchStatus = MATCH_STATUSES[status];
-    String statusMessage = userType == MATCH_STATUSES['SENDER']
+    print(userType == MATCH_STATUSES['SENDER']);
+    String statusMessage = userType == ORDER_OWNER_TYPES['SENDER']
         ? matchStatus.senderText
         : matchStatus.carrierText;
 
@@ -62,6 +63,7 @@ class _MatchItemState extends State<MatchItem> {
               color: Colors.white,
               fontFamily: 'Muli',
             ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
@@ -85,6 +87,8 @@ class _MatchItemState extends State<MatchItem> {
             ? widget.item.sender.username
             : widget.item.carrier.username;
     String userType = ORDER_OWNER_TYPES['CARRIER'];
+    print("****");
+    print(widget.item.sender.username);
     if (widget.item.sender.username == userProvider.currentUser.username) {
       userType = ORDER_OWNER_TYPES['SENDER'];
     }

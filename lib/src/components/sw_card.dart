@@ -73,6 +73,7 @@ class _ListItemState extends State<ListItem> {
               fontSize: 16,
               fontFamily: 'Muli',
             ),
+            textAlign: TextAlign.center,
           ),
           Text(
             price,
@@ -82,6 +83,7 @@ class _ListItemState extends State<ListItem> {
               color: Colors.white,
               fontFamily: 'Muli',
             ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),
