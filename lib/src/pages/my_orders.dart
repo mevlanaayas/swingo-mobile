@@ -29,6 +29,8 @@ class MyOrders extends StatefulWidget {
 class _MyOrdersState extends State<MyOrders> {
   List<Order> sendOrders = [];
   List<Order> carryOrders = [];
+  String nextSendOrderPage = null;
+  String nextCarryOrderPage = null;
 
   @override
   void initState() {
@@ -39,16 +41,18 @@ class _MyOrdersState extends State<MyOrders> {
     super.initState();
   }
 
-  void _listSendOrders(BuildContext context) async {
+  void _listSendOrders(BuildContext context, {String url}) async {
     OrderService.listMySendOrders(
       context,
+      url: url,
       onSuccess: _onListSendOrderRequestSuccess(context),
     );
   }
 
-  void _listCarryOrders(BuildContext context) async {
+  void _listCarryOrders(BuildContext context, {String url}) async {
     OrderService.listMyCarryOrders(
       context,
+      url: url,
       onSuccess: _onListCarryOrderRequestSuccess(context),
     );
   }
@@ -57,6 +61,7 @@ class _MyOrdersState extends State<MyOrders> {
     return (responseData) async {
       final sendOrderJsonArray = responseData['results'];
       setState(() {
+        nextSendOrderPage = responseData['links']['next'];
         sendOrders = List<Order>.from(sendOrders)
           ..addAll(List<Order>.from(sendOrderJsonArray
               .map((orderJson) => Order.fromJson(orderJson))));
@@ -68,6 +73,7 @@ class _MyOrdersState extends State<MyOrders> {
     return (responseData) async {
       final carryOrderJsonArray = responseData['results'];
       setState(() {
+        nextCarryOrderPage = responseData['links']['next'];
         carryOrders = List<Order>.from(carryOrders)
           ..addAll(List<Order>.from(carryOrderJsonArray
               .map((orderJson) => Order.fromJson(orderJson))));
@@ -132,7 +138,30 @@ class _MyOrdersState extends State<MyOrders> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Expanded(child: CustomScrollView(slivers: slivers)),
+            Expanded(
+                child: NotificationListener<ScrollNotification>(
+              onNotification: (ScrollNotification scrollInfo) {
+                if (scrollInfo.metrics.pixels ==
+                        scrollInfo.metrics.maxScrollExtent) {
+                  print("*****");
+                  if(nextSendOrderPage != null){
+                    String url = nextSendOrderPage;
+                    setState(() {
+                      nextSendOrderPage = null;
+                    });
+                    _listSendOrders(context, url: url);
+                  }
+                  if(nextCarryOrderPage != null){
+                    String url = nextCarryOrderPage;
+                    setState(() {
+                      nextCarryOrderPage = null;
+                    });
+                    _listCarryOrders(context, url: url);
+                  }
+                }
+              },
+              child: CustomScrollView(slivers: slivers),
+            )),
           ],
         ),
       ),
